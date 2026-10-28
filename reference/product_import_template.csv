@@ -1,0 +1,9 @@
+Product ID,Category,Product Name,Description,Unit,Commercial Price,Academic Price,Currency,Active
+CA-RE-01,Software,ChemAIRS - Retrosynthesis,,License,85000,42000,INR,Y
+CA-CS-02,Software,ChemAIRS - Condition Search,,License,32000,14000,INR,Y
+CA-PR-03,Software,ChemAIRS - Process Chemistry,,License,95000,70000,INR,Y
+CA-SA-04,Software,ChemAIRS - SA Score,,License,62000,48000,INR,Y
+CA-IM-05,Software,ChemAIRS - Impurity Prediction,,License,18000,9000,INR,Y
+CA-FS-06,Software,ChemAIRS - Forward Synthesis,,License,25000,10000,INR,Y
+CA-BO-07,Software,ChemAIRS - Baeysian Optimisation,,License,3200,2800,INR,Y
+CA-BP-08,Software,ChemAIRS  Bundled Package,,License,22000,9500,INR,Y

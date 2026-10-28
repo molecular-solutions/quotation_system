@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in · Quotations</title><link rel="stylesheet" href="/assets/app.css">
+<style>
+  body { display: grid; place-items: center; min-height: 100vh; }
+  .box { width: min(380px, 92vw); text-align: center; }
+  .box img { height: 64px; margin-bottom: 18px; }
+  .box .card { text-align: left; padding: 26px; }
+</style></head>
+<body x-data="{ email: '', pw: '', busy: false, error: '', async go() {
+    this.busy = true; this.error = '';
+    try { await api('POST', '/api/login', { email: this.email, password: this.pw }); location.href = '/'; }
+    catch (e) { this.error = e.message; this.pw = ''; this.$refs.pw.focus(); }
+    this.busy = false; } }">
+  <div class="box">
+    <img src="/assets/logo.png" alt="Molecular Solutions">
+    <form class="card" @submit.prevent="go()">
+      <h1 style="margin-bottom:4px">Quotations</h1>
+      <p class="hint" style="margin:0 0 16px">Sign in with the email and password your administrator gave you.</p>
+      <label for="email">Email</label>
+      <input id="email" type="email" x-model="email" autofocus autocomplete="username" style="margin-bottom:12px">
+      <label for="pw">Password</label>
+      <input id="pw" x-ref="pw" type="password" x-model="pw" autocomplete="current-password" :class="{bad: error}">
+      <div class="err" x-show="error" x-text="error" x-cloak></div>
+      <button class="btn big" style="width:100%;margin-top:16px" :disabled="busy || !pw || !email">Sign in</button>
+    </form>
+  </div>
+  <script src="/assets/app.js"></script><script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

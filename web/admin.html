@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="adminPage()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main x-cloak>
+    <div class="head"><div><h1>Admin</h1><div class="sub">Every quotation, and who can sign in.</div></div></div>
+    <div class="tabs">
+      <button :class="{on: tab === 'quotes'}" @click="tab = 'quotes'">All quotations</button>
+      <button :class="{on: tab === 'users'}" @click="tab = 'users'">Users</button>
+    </div>
+
+    <!-- all quotations -->
+    <section class="card" x-show="tab === 'quotes'">
+      <div class="row" style="margin-bottom:12px">
+        <div class="grow"><input type="search" placeholder="Search number, customer or institution…" x-model="q" @input.debounce.250ms="loadQuotes()"></div>
+        <div style="flex:0 0 190px"><select x-model="userId" @change="loadQuotes()">
+          <option value="">All users</option>
+          <template x-for="u in users" :key="u.id"><option :value="u.id" x-text="u.name"></option></template></select></div>
+        <div style="flex:0 0 150px"><select x-model="status" @change="loadQuotes()">
+          <option value="">All statuses</option><option>Draft</option><option>Sent</option><option>Won</option><option>Lost</option></select></div>
+      </div>
+      <div class="hint" x-text="quotes.length + (quotes.length === 1 ? ' quotation' : ' quotations') + ' · total value ' + inr(quotes.reduce((s, r) => s + r.total, 0))"></div>
+      <div class="hint" x-show="!quotes.length" style="padding:28px 0;text-align:center">No quotations match.</div>
+      <table x-show="quotes.length" style="margin-top:8px">
+        <thead><tr><th>Quote no.</th><th>Customer</th><th>Created by</th><th>Date</th><th class="num">Total</th><th>Status</th><th></th></tr></thead>
+        <tbody><template x-for="r in quotes" :key="r.id"><tr>
+          <td><a :href="'/quote/' + r.id" style="font-weight:700;text-decoration:none" x-text="r.number"></a><div class="hint" x-text="r.tier"></div></td>
+          <td x-text="r.customer_name"></td>
+          <td x-text="r.created_by || '—'"></td>
+          <td x-text="r.date.split('-').reverse().join('/')"></td>
+          <td class="num" x-text="inr(r.total)"></td>
+          <td><span :class="'chip ' + r.status" x-text="r.status"></span></td>
+          <td style="white-space:nowrap;text-align:right">
+            <a :href="'/quote/' + r.id" class="btn ghost sm" style="text-decoration:none;display:inline-block;border-radius:8px;border:1px solid #c5ccd8;padding:5px 10px">Open</a>
+            <button class="ghost btn sm" @click="download(r, 'docx')">DOCX</button>
+            <button class="ghost btn sm" @click="download(r, 'pdf')">PDF</button>
+          </td></tr></template></tbody>
+      </table>
+    </section>
+
+    <!-- users -->
+    <section x-show="tab === 'users'">
+      <form class="card" @submit.prevent="createUser()">
+        <h2>Add a user</h2>
+        <div class="row">
+          <div><label>Name</label><input x-model="form.name" required autocomplete="off"></div>
+          <div><label>Email (their login)</label><input type="email" x-model="form.email" required autocomplete="off"></div>
+          <div style="flex:0 0 140px"><label>Role</label><select x-model="form.role"><option value="user">User</option><option value="admin">Admin</option></select></div>
+          <div><label>Password <span class="opt">(blank = generate)</span></label><input x-model="form.password" autocomplete="new-password" placeholder="min. 8 characters"></div>
+          <div style="flex:0 0 auto"><button class="btn big" :disabled="!!busy">Create user</button></div>
+        </div>
+        <div class="err" x-show="formError" x-text="formError"></div>
+        <p class="hint" style="margin-bottom:0">After creating, you get the login details to copy and send to the person. The password is shown only once; use <b>Reset password</b> later if it is lost.</p>
+      </form>
+
+      <div class="card">
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Role</th><th class="num">Quotes</th><th>Last sign-in</th><th></th></tr></thead>
+          <tbody><template x-for="u in users" :key="u.id"><tr :class="{inactive: !u.active}">
+            <td><b x-text="u.name"></b> <button class="link" style="font-size:12px;padding:0 4px" title="Rename" @click="rename(u)">edit</button>
+              <span class="chip off" x-show="!u.active">Deactivated</span></td>
+            <td x-text="u.email"></td>
+            <td><select style="width:auto;padding:3px 8px" :value="u.role" :disabled="u.id === me.id" @change="patch(u, {role: $event.target.value})">
+              <option value="user">User</option><option value="admin">Admin</option></select></td>
+            <td class="num" x-text="u.quotes"></td>
+            <td x-text="u.last_login_at ? u.last_login_at.split(' ')[0].split('-').reverse().join('/') + ' ' + u.last_login_at.split(' ')[1] : 'never'"></td>
+            <td style="white-space:nowrap;text-align:right">
+              <button class="ghost btn sm" @click="resetPassword(u)">Reset password</button>
+              <button class="ghost btn sm danger" x-show="u.active && u.id !== me.id" @click="patch(u, {active: false})">Deactivate</button>
+              <button class="ghost btn sm" x-show="!u.active" @click="patch(u, {active: true})">Reactivate</button>
+            </td></tr></template></tbody>
+        </table>
+        <p class="hint" style="margin-bottom:0">Deactivated users cannot sign in, but their quotations stay. Passwords are stored hashed, so they can only be reset, not looked up.</p>
+      </div>
+    </section>
+
+    <!-- credentials to hand over -->
+    <div class="veil" x-show="cred" x-cloak @keydown.escape.window="cred = null">
+      <div class="modal" style="width:min(520px,100%)">
+        <header><b x-text="cred && cred.title"></b><button class="x" @click="cred = null">×</button></header>
+        <div class="body">
+          <p style="margin-top:0">Send these details to the user. <b>The password will not be shown again.</b></p>
+          <div class="cred" x-text="cred && credText()"></div>
+          <div style="display:flex;gap:10px;margin-top:14px">
+            <button class="btn" @click="copyCred()" x-text="copied ? 'Copied ✓' : 'Copy login details'"></button>
+            <button class="btn ghost" @click="cred = null">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script>
+    topbar('Admin');
+    function adminPage() { return {
+      tab: 'quotes', users: [], quotes: [], q: '', status: '', userId: '', busy: false, me: { id: 0 },
+      form: { name: '', email: '', role: 'user', password: '' }, formError: '', cred: null, copied: false,
+      async init() { this.me = await api('GET', '/api/me'); await this.loadUsers(); await this.loadQuotes(); },
+      async loadUsers() { this.users = await api('GET', '/api/admin/users'); },
+      async loadQuotes() {
+        const p = new URLSearchParams({ q: this.q, status: this.status }); if (this.userId) p.set('user_id', this.userId);
+        this.quotes = await api('GET', '/api/admin/quotes?' + p); },
+      async createUser() { this.busy = true; this.formError = '';
+        try { const u = await api('POST', '/api/admin/users', this.form);
+          this.cred = { title: 'User created', name: u.name, email: u.email, password: u.password }; this.copied = false;
+          this.form = { name: '', email: '', role: 'user', password: '' }; await this.loadUsers(); }
+        catch (e) { this.formError = e.message; }
+        this.busy = false; },
+      async patch(u, body) {
+        if (body.active === false && !confirm('Deactivate ' + u.name + '? They will no longer be able to sign in.')) { await this.loadUsers(); return; }
+        try { await api('PATCH', '/api/admin/users/' + u.id, body); toast('Saved'); } catch (e) { toast(e.message, true); }
+        await this.loadUsers(); },
+      async rename(u) { const n = prompt('Name for ' + u.email, u.name); if (n && n.trim() && n.trim() !== u.name) await this.patch(u, { name: n.trim() }); },
+      async resetPassword(u) {
+        if (!confirm('Reset the password for ' + u.name + '? Their current password stops working and they are signed out.')) return;
+        try { const r = await api('POST', `/api/admin/users/${u.id}/reset-password`, {});
+          this.cred = { title: 'Password reset', name: r.name, email: r.email, password: r.password }; this.copied = false; }
+        catch (e) { toast(e.message, true); } },
+      credText() { return `Quotation system\nSign in: ${location.origin}/login\nName: ${this.cred.name}\nEmail: ${this.cred.email}\nPassword: ${this.cred.password}`; },
+      async copyCred() { this.copied = await copyText(this.credText()); if (!this.copied) toast('Select the text and copy it manually', true); },
+      async download(r, fmt) {
+        toast(fmt === 'pdf' ? 'Preparing PDF…' : 'Preparing Word file…');
+        try { const res = await api('GET', `/api/quotes/${r.id}/${fmt}`, undefined, { raw: true });
+          if (!res.ok) throw new Error((await res.json()).detail.message || 'Download failed');
+          saveBlob(await res.blob(), filenameFrom(res, r.number + '.' + fmt)); }
+        catch (e) { toast(e.message, true); } },
+    }; }
+  </script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

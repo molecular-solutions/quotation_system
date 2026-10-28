@@ -1,0 +1,59 @@
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+from pathlib import Path
+
+from fastapi import Depends, FastAPI, Request
+from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
+
+from sqlalchemy.orm import Session
+
+from app import auth, config
+from app import migrations
+from app.database import SessionLocal, get_db
+from app.routers import admin, auth_routes, data, lookup, prices, quotes
+from app.services import quotes as quotes_svc
+from app.services import users as users_svc
+
+WEB = Path(__file__).resolve().parents[1] / "web"
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    config.FILES_DIR.mkdir(parents=True, exist_ok=True)
+    migrations.upgrade()
+    with SessionLocal() as db:
+        users_svc.bootstrap_admin(db)
+        quotes_svc.ensure_counter(db)
+        db.commit()
+    yield
+
+
+app = FastAPI(title="Quotation System", lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
+for r in (auth_routes.router, lookup.router, data.router, prices.router, quotes.router, admin.router):
+    app.include_router(r)
+app.mount("/assets", StaticFiles(directory=WEB / "assets"), name="assets")
+
+
+def page(name: str, admin_only: bool = False):
+    def handler(request: Request, db: Session = Depends(get_db)):
+        user = auth.user_from_request(request, db)
+        if user is None:
+            return RedirectResponse("/login", status_code=303)
+        if admin_only and user.role != "admin":
+            return RedirectResponse("/", status_code=303)
+        return FileResponse(WEB / name)
+    return handler
+
+
+@app.get("/login")
+def login_page():
+    return FileResponse(WEB / "login.html")
+
+
+for path, file, admin_only in (("/", "quotes.html", False), ("/new", "builder.html", False),
+                               ("/quote/{quote_id}", "builder.html", False), ("/account", "account.html", False),
+                               ("/data", "data.html", True), ("/prices", "prices.html", True), ("/settings", "settings.html", True),
+                               ("/admin", "admin.html", True)):
+    app.add_api_route(path, page(file, admin_only), methods=["GET"], include_in_schema=False)

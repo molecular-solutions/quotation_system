@@ -1,0 +1,47 @@
+# Local test setup: the app is published on http://127.0.0.1:8100 only. No reverse proxy yet.
+#   cp .env.example .env   # set QUOTE_ADMIN_EMAIL, QUOTE_ADMIN_PASSWORD and QUOTE_SECRET_KEY
+#   docker compose up -d --build
+#
+# The app also joins the existing `molecular-discovery-network`, so the Caddy container already running there can
+# proxy to `quotation-app:8000` later (see README, "Putting it behind Caddy").
+services:
+  app:
+    build: .
+    restart: always
+    environment:
+      QUOTE_ADMIN_EMAIL: ${QUOTE_ADMIN_EMAIL:?set QUOTE_ADMIN_EMAIL in .env}   # first administrator, created on first start
+      QUOTE_ADMIN_NAME: ${QUOTE_ADMIN_NAME:-Administrator}
+      QUOTE_ADMIN_PASSWORD: ${QUOTE_ADMIN_PASSWORD:?set QUOTE_ADMIN_PASSWORD in .env}
+      QUOTE_SECRET_KEY: ${QUOTE_SECRET_KEY:?set QUOTE_SECRET_KEY in .env}
+      QUOTE_COOKIE_SECURE: ${QUOTE_COOKIE_SECURE:-0}   # 1 once served over HTTPS
+      QUOTE_SMTP_HOST: ${QUOTE_SMTP_HOST:-}            # outgoing mail for the Email button (optional)
+      QUOTE_SMTP_PORT: ${QUOTE_SMTP_PORT:-587}
+      QUOTE_SMTP_SECURITY: ${QUOTE_SMTP_SECURITY:-starttls}
+      QUOTE_SMTP_USER: ${QUOTE_SMTP_USER:-}
+      QUOTE_SMTP_PASSWORD: ${QUOTE_SMTP_PASSWORD:-}
+      QUOTE_SMTP_FROM: ${QUOTE_SMTP_FROM:-}
+      QUOTE_SMTP_FROM_NAME: ${QUOTE_SMTP_FROM_NAME:-Molecular Solutions}
+    volumes:
+      - quote-data:/data
+    ports: ["127.0.0.1:${QUOTE_PORT:-8100}:8000"]
+    networks:
+      default:
+      molecular-discovery-network:
+        aliases: [quotation-app]
+
+  backup:   # daily consistent copy of the database, 14 days kept (in the same volume: also copy it off-server)
+    build: .
+    restart: unless-stopped
+    environment:
+      QUOTE_SECRET_KEY: unused
+    volumes:
+      - quote-data:/data
+    healthcheck: {disable: true}
+    command: ["sh", "-c", "while true; do python scripts/backup.py; sleep 86400; done"]
+
+volumes:
+  quote-data:
+
+networks:
+  molecular-discovery-network:
+    external: true

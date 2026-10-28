@@ -1,0 +1,2109 @@
+Product Name,Tier,Users,Annual Price
+ChemAIRS - Retrosynthesis,Academic,1,42000
+ChemAIRS - Retrosynthesis,Academic,2,78000
+ChemAIRS - Retrosynthesis,Academic,3,109500
+ChemAIRS - Retrosynthesis,Academic,4,134500
+ChemAIRS - Retrosynthesis,Academic,5,168500
+ChemAIRS - Retrosynthesis,Academic,6,183000
+ChemAIRS - Retrosynthesis,Academic,7,222000
+ChemAIRS - Retrosynthesis,Academic,8,240000
+ChemAIRS - Retrosynthesis,Academic,9,268500
+ChemAIRS - Retrosynthesis,Academic,10,293000
+ChemAIRS - Retrosynthesis,Academic,11,319500
+ChemAIRS - Retrosynthesis,Academic,12,349000
+ChemAIRS - Retrosynthesis,Academic,13,353500
+ChemAIRS - Retrosynthesis,Academic,14,395500
+ChemAIRS - Retrosynthesis,Academic,15,412000
+ChemAIRS - Retrosynthesis,Academic,16,443000
+ChemAIRS - Retrosynthesis,Academic,17,462000
+ChemAIRS - Retrosynthesis,Academic,18,470500
+ChemAIRS - Retrosynthesis,Academic,19,502000
+ChemAIRS - Retrosynthesis,Academic,20,518500
+ChemAIRS - Retrosynthesis,Academic,21,556000
+ChemAIRS - Retrosynthesis,Academic,22,568000
+ChemAIRS - Retrosynthesis,Academic,23,580500
+ChemAIRS - Retrosynthesis,Academic,24,587500
+ChemAIRS - Retrosynthesis,Academic,25,641500
+ChemAIRS - Retrosynthesis,Commercial,1,85000
+ChemAIRS - Retrosynthesis,Commercial,2,144000
+ChemAIRS - Retrosynthesis,Commercial,3,199000
+ChemAIRS - Retrosynthesis,Commercial,4,249500
+ChemAIRS - Retrosynthesis,Commercial,5,287500
+ChemAIRS - Retrosynthesis,Commercial,6,341500
+ChemAIRS - Retrosynthesis,Commercial,7,380000
+ChemAIRS - Retrosynthesis,Commercial,8,418500
+ChemAIRS - Retrosynthesis,Commercial,9,452000
+ChemAIRS - Retrosynthesis,Commercial,10,501500
+ChemAIRS - Retrosynthesis,Commercial,11,524500
+ChemAIRS - Retrosynthesis,Commercial,12,579000
+ChemAIRS - Retrosynthesis,Commercial,13,581000
+ChemAIRS - Retrosynthesis,Commercial,14,629500
+ChemAIRS - Retrosynthesis,Commercial,15,651500
+ChemAIRS - Retrosynthesis,Commercial,16,688500
+ChemAIRS - Retrosynthesis,Commercial,17,755500
+ChemAIRS - Retrosynthesis,Commercial,18,795500
+ChemAIRS - Retrosynthesis,Commercial,19,818000
+ChemAIRS - Retrosynthesis,Commercial,20,843000
+ChemAIRS - Retrosynthesis,Commercial,21,843500
+ChemAIRS - Retrosynthesis,Commercial,22,866500
+ChemAIRS - Retrosynthesis,Commercial,23,953000
+ChemAIRS - Retrosynthesis,Commercial,24,953500
+ChemAIRS - Retrosynthesis,Commercial,25,988000
+ChemAIRS - Condition Search,Academic,1,14000
+ChemAIRS - Condition Search,Academic,2,24600
+ChemAIRS - Condition Search,Academic,3,32800
+ChemAIRS - Condition Search,Academic,4,40600
+ChemAIRS - Condition Search,Academic,5,46600
+ChemAIRS - Condition Search,Academic,6,54200
+ChemAIRS - Condition Search,Academic,7,61700
+ChemAIRS - Condition Search,Academic,8,68000
+ChemAIRS - Condition Search,Academic,9,72600
+ChemAIRS - Condition Search,Academic,10,83500
+ChemAIRS - Condition Search,Academic,11,85900
+ChemAIRS - Condition Search,Academic,12,97100
+ChemAIRS - Condition Search,Academic,13,97700
+ChemAIRS - Condition Search,Academic,14,105700
+ChemAIRS - Condition Search,Academic,15,111500
+ChemAIRS - Condition Search,Academic,16,112600
+ChemAIRS - Condition Search,Academic,17,122400
+ChemAIRS - Condition Search,Academic,18,123500
+ChemAIRS - Condition Search,Academic,19,130500
+ChemAIRS - Condition Search,Academic,20,136700
+ChemAIRS - Condition Search,Academic,21,147000
+ChemAIRS - Condition Search,Academic,22,147100
+ChemAIRS - Condition Search,Academic,23,152300
+ChemAIRS - Condition Search,Academic,24,162700
+ChemAIRS - Condition Search,Academic,25,167200
+ChemAIRS - Condition Search,Commercial,1,32000
+ChemAIRS - Condition Search,Commercial,2,55000
+ChemAIRS - Condition Search,Commercial,3,77000
+ChemAIRS - Condition Search,Commercial,4,103500
+ChemAIRS - Condition Search,Commercial,5,124000
+ChemAIRS - Condition Search,Commercial,6,137500
+ChemAIRS - Condition Search,Commercial,7,152000
+ChemAIRS - Condition Search,Commercial,8,178000
+ChemAIRS - Condition Search,Commercial,9,187500
+ChemAIRS - Condition Search,Commercial,10,213500
+ChemAIRS - Condition Search,Commercial,11,220500
+ChemAIRS - Condition Search,Commercial,12,249500
+ChemAIRS - Condition Search,Commercial,13,270000
+ChemAIRS - Condition Search,Commercial,14,270500
+ChemAIRS - Condition Search,Commercial,15,304500
+ChemAIRS - Condition Search,Commercial,16,313000
+ChemAIRS - Condition Search,Commercial,17,329500
+ChemAIRS - Condition Search,Commercial,18,349000
+ChemAIRS - Condition Search,Commercial,19,372500
+ChemAIRS - Condition Search,Commercial,20,387000
+ChemAIRS - Condition Search,Commercial,21,390000
+ChemAIRS - Condition Search,Commercial,22,395000
+ChemAIRS - Condition Search,Commercial,23,428500
+ChemAIRS - Condition Search,Commercial,24,429000
+ChemAIRS - Condition Search,Commercial,25,436500
+ChemAIRS - Process Chemistry,Academic,1,70000
+ChemAIRS - Process Chemistry,Academic,2,119500
+ChemAIRS - Process Chemistry,Academic,3,173500
+ChemAIRS - Process Chemistry,Academic,4,222500
+ChemAIRS - Process Chemistry,Academic,5,252500
+ChemAIRS - Process Chemistry,Academic,6,311000
+ChemAIRS - Process Chemistry,Academic,7,329000
+ChemAIRS - Process Chemistry,Academic,8,367000
+ChemAIRS - Process Chemistry,Academic,9,409000
+ChemAIRS - Process Chemistry,Academic,10,464500
+ChemAIRS - Process Chemistry,Academic,11,498500
+ChemAIRS - Process Chemistry,Academic,12,522500
+ChemAIRS - Process Chemistry,Academic,13,583000
+ChemAIRS - Process Chemistry,Academic,14,583500
+ChemAIRS - Process Chemistry,Academic,15,642000
+ChemAIRS - Process Chemistry,Academic,16,677000
+ChemAIRS - Process Chemistry,Academic,17,696500
+ChemAIRS - Process Chemistry,Academic,18,720500
+ChemAIRS - Process Chemistry,Academic,19,745000
+ChemAIRS - Process Chemistry,Academic,20,828000
+ChemAIRS - Process Chemistry,Academic,21,849500
+ChemAIRS - Process Chemistry,Academic,22,881500
+ChemAIRS - Process Chemistry,Academic,23,882000
+ChemAIRS - Process Chemistry,Academic,24,941500
+ChemAIRS - Process Chemistry,Academic,25,980500
+ChemAIRS - Process Chemistry,Commercial,1,95000
+ChemAIRS - Process Chemistry,Commercial,2,166500
+ChemAIRS - Process Chemistry,Commercial,3,239500
+ChemAIRS - Process Chemistry,Commercial,4,322000
+ChemAIRS - Process Chemistry,Commercial,5,380500
+ChemAIRS - Process Chemistry,Commercial,6,447500
+ChemAIRS - Process Chemistry,Commercial,7,491000
+ChemAIRS - Process Chemistry,Commercial,8,558500
+ChemAIRS - Process Chemistry,Commercial,9,630500
+ChemAIRS - Process Chemistry,Commercial,10,709500
+ChemAIRS - Process Chemistry,Commercial,11,733000
+ChemAIRS - Process Chemistry,Commercial,12,800500
+ChemAIRS - Process Chemistry,Commercial,13,864500
+ChemAIRS - Process Chemistry,Commercial,14,915500
+ChemAIRS - Process Chemistry,Commercial,15,961500
+ChemAIRS - Process Chemistry,Commercial,16,1062000
+ChemAIRS - Process Chemistry,Commercial,17,1062500
+ChemAIRS - Process Chemistry,Commercial,18,1164000
+ChemAIRS - Process Chemistry,Commercial,19,1164500
+ChemAIRS - Process Chemistry,Commercial,20,1272000
+ChemAIRS - Process Chemistry,Commercial,21,1272500
+ChemAIRS - Process Chemistry,Commercial,22,1319000
+ChemAIRS - Process Chemistry,Commercial,23,1391500
+ChemAIRS - Process Chemistry,Commercial,24,1473000
+ChemAIRS - Process Chemistry,Commercial,25,1473500
+ChemAIRS - SA Score,Academic,1,48000
+ChemAIRS - SA Score,Academic,2,90000
+ChemAIRS - SA Score,Academic,3,124000
+ChemAIRS - SA Score,Academic,4,162500
+ChemAIRS - SA Score,Academic,5,193500
+ChemAIRS - SA Score,Academic,6,223500
+ChemAIRS - SA Score,Academic,7,256000
+ChemAIRS - SA Score,Academic,8,282000
+ChemAIRS - SA Score,Academic,9,328500
+ChemAIRS - SA Score,Academic,10,365000
+ChemAIRS - SA Score,Academic,11,369500
+ChemAIRS - SA Score,Academic,12,425000
+ChemAIRS - SA Score,Academic,13,435000
+ChemAIRS - SA Score,Academic,14,482000
+ChemAIRS - SA Score,Academic,15,482500
+ChemAIRS - SA Score,Academic,16,540500
+ChemAIRS - SA Score,Academic,17,549500
+ChemAIRS - SA Score,Academic,18,577500
+ChemAIRS - SA Score,Academic,19,621500
+ChemAIRS - SA Score,Academic,20,663500
+ChemAIRS - SA Score,Academic,21,674000
+ChemAIRS - SA Score,Academic,22,700500
+ChemAIRS - SA Score,Academic,23,701000
+ChemAIRS - SA Score,Academic,24,736500
+ChemAIRS - SA Score,Academic,25,777500
+ChemAIRS - SA Score,Commercial,1,62000
+ChemAIRS - SA Score,Commercial,2,113000
+ChemAIRS - SA Score,Commercial,3,154500
+ChemAIRS - SA Score,Commercial,4,209500
+ChemAIRS - SA Score,Commercial,5,254000
+ChemAIRS - SA Score,Commercial,6,295500
+ChemAIRS - SA Score,Commercial,7,338000
+ChemAIRS - SA Score,Commercial,8,379500
+ChemAIRS - SA Score,Commercial,9,396500
+ChemAIRS - SA Score,Commercial,10,457000
+ChemAIRS - SA Score,Commercial,11,502000
+ChemAIRS - SA Score,Commercial,12,542500
+ChemAIRS - SA Score,Commercial,13,568000
+ChemAIRS - SA Score,Commercial,14,615000
+ChemAIRS - SA Score,Commercial,15,629000
+ChemAIRS - SA Score,Commercial,16,668000
+ChemAIRS - SA Score,Commercial,17,701000
+ChemAIRS - SA Score,Commercial,18,755000
+ChemAIRS - SA Score,Commercial,19,793500
+ChemAIRS - SA Score,Commercial,20,826500
+ChemAIRS - SA Score,Commercial,21,879000
+ChemAIRS - SA Score,Commercial,22,895500
+ChemAIRS - SA Score,Commercial,23,935000
+ChemAIRS - SA Score,Commercial,24,949500
+ChemAIRS - SA Score,Commercial,25,970500
+ChemAIRS - Impurity Prediction,Academic,1,9000
+ChemAIRS - Impurity Prediction,Academic,2,16500
+ChemAIRS - Impurity Prediction,Academic,3,22200
+ChemAIRS - Impurity Prediction,Academic,4,28900
+ChemAIRS - Impurity Prediction,Academic,5,34600
+ChemAIRS - Impurity Prediction,Academic,6,40300
+ChemAIRS - Impurity Prediction,Academic,7,45800
+ChemAIRS - Impurity Prediction,Academic,8,49800
+ChemAIRS - Impurity Prediction,Academic,9,55600
+ChemAIRS - Impurity Prediction,Academic,10,62500
+ChemAIRS - Impurity Prediction,Academic,11,63900
+ChemAIRS - Impurity Prediction,Academic,12,73000
+ChemAIRS - Impurity Prediction,Academic,13,74000
+ChemAIRS - Impurity Prediction,Academic,14,81500
+ChemAIRS - Impurity Prediction,Academic,15,86700
+ChemAIRS - Impurity Prediction,Academic,16,92800
+ChemAIRS - Impurity Prediction,Academic,17,98600
+ChemAIRS - Impurity Prediction,Academic,18,101900
+ChemAIRS - Impurity Prediction,Academic,19,105600
+ChemAIRS - Impurity Prediction,Academic,20,112600
+ChemAIRS - Impurity Prediction,Academic,21,112700
+ChemAIRS - Impurity Prediction,Academic,22,122700
+ChemAIRS - Impurity Prediction,Academic,23,126300
+ChemAIRS - Impurity Prediction,Academic,24,129200
+ChemAIRS - Impurity Prediction,Academic,25,133400
+ChemAIRS - Impurity Prediction,Commercial,1,18000
+ChemAIRS - Impurity Prediction,Commercial,2,32900
+ChemAIRS - Impurity Prediction,Commercial,3,47600
+ChemAIRS - Impurity Prediction,Commercial,4,61100
+ChemAIRS - Impurity Prediction,Commercial,5,76000
+ChemAIRS - Impurity Prediction,Commercial,6,85800
+ChemAIRS - Impurity Prediction,Commercial,7,99800
+ChemAIRS - Impurity Prediction,Commercial,8,110300
+ChemAIRS - Impurity Prediction,Commercial,9,123200
+ChemAIRS - Impurity Prediction,Commercial,10,136000
+ChemAIRS - Impurity Prediction,Commercial,11,151800
+ChemAIRS - Impurity Prediction,Commercial,12,159700
+ChemAIRS - Impurity Prediction,Commercial,13,180200
+ChemAIRS - Impurity Prediction,Commercial,14,180800
+ChemAIRS - Impurity Prediction,Commercial,15,193100
+ChemAIRS - Impurity Prediction,Commercial,16,218400
+ChemAIRS - Impurity Prediction,Commercial,17,218500
+ChemAIRS - Impurity Prediction,Commercial,18,238300
+ChemAIRS - Impurity Prediction,Commercial,19,238400
+ChemAIRS - Impurity Prediction,Commercial,20,263300
+ChemAIRS - Impurity Prediction,Commercial,21,267700
+ChemAIRS - Impurity Prediction,Commercial,22,287600
+ChemAIRS - Impurity Prediction,Commercial,23,292800
+ChemAIRS - Impurity Prediction,Commercial,24,295200
+ChemAIRS - Impurity Prediction,Commercial,25,310600
+ChemAIRS - Forward Synthesis,Academic,1,10000
+ChemAIRS - Forward Synthesis,Academic,2,17900
+ChemAIRS - Forward Synthesis,Academic,3,25700
+ChemAIRS - Forward Synthesis,Academic,4,33200
+ChemAIRS - Forward Synthesis,Academic,5,40700
+ChemAIRS - Forward Synthesis,Academic,6,47600
+ChemAIRS - Forward Synthesis,Academic,7,54100
+ChemAIRS - Forward Synthesis,Academic,8,64400
+ChemAIRS - Forward Synthesis,Academic,9,67600
+ChemAIRS - Forward Synthesis,Academic,10,75300
+ChemAIRS - Forward Synthesis,Academic,11,83200
+ChemAIRS - Forward Synthesis,Academic,12,86900
+ChemAIRS - Forward Synthesis,Academic,13,97400
+ChemAIRS - Forward Synthesis,Academic,14,102200
+ChemAIRS - Forward Synthesis,Academic,15,104500
+ChemAIRS - Forward Synthesis,Academic,16,117000
+ChemAIRS - Forward Synthesis,Academic,17,122100
+ChemAIRS - Forward Synthesis,Academic,18,128000
+ChemAIRS - Forward Synthesis,Academic,19,129900
+ChemAIRS - Forward Synthesis,Academic,20,139700
+ChemAIRS - Forward Synthesis,Academic,21,145100
+ChemAIRS - Forward Synthesis,Academic,22,146000
+ChemAIRS - Forward Synthesis,Academic,23,153800
+ChemAIRS - Forward Synthesis,Academic,24,156300
+ChemAIRS - Forward Synthesis,Academic,25,168300
+ChemAIRS - Forward Synthesis,Commercial,1,25000
+ChemAIRS - Forward Synthesis,Commercial,2,44900
+ChemAIRS - Forward Synthesis,Commercial,3,63000
+ChemAIRS - Forward Synthesis,Commercial,4,74800
+ChemAIRS - Forward Synthesis,Commercial,5,94300
+ChemAIRS - Forward Synthesis,Commercial,6,109400
+ChemAIRS - Forward Synthesis,Commercial,7,125300
+ChemAIRS - Forward Synthesis,Commercial,8,132300
+ChemAIRS - Forward Synthesis,Commercial,9,146200
+ChemAIRS - Forward Synthesis,Commercial,10,166500
+ChemAIRS - Forward Synthesis,Commercial,11,184300
+ChemAIRS - Forward Synthesis,Commercial,12,195400
+ChemAIRS - Forward Synthesis,Commercial,13,207300
+ChemAIRS - Forward Synthesis,Commercial,14,219400
+ChemAIRS - Forward Synthesis,Commercial,15,219500
+ChemAIRS - Forward Synthesis,Commercial,16,235900
+ChemAIRS - Forward Synthesis,Commercial,17,259900
+ChemAIRS - Forward Synthesis,Commercial,18,274700
+ChemAIRS - Forward Synthesis,Commercial,19,275700
+ChemAIRS - Forward Synthesis,Commercial,20,285000
+ChemAIRS - Forward Synthesis,Commercial,21,299700
+ChemAIRS - Forward Synthesis,Commercial,22,319400
+ChemAIRS - Forward Synthesis,Commercial,23,319500
+ChemAIRS - Forward Synthesis,Commercial,24,331900
+ChemAIRS - Forward Synthesis,Commercial,25,337800
+ChemAIRS - Bayesian Optimisation,Academic,1,2800
+ChemAIRS - Bayesian Optimisation,Academic,2,4800
+ChemAIRS - Bayesian Optimisation,Academic,3,6300
+ChemAIRS - Bayesian Optimisation,Academic,4,7600
+ChemAIRS - Bayesian Optimisation,Academic,5,9500
+ChemAIRS - Bayesian Optimisation,Academic,6,10400
+ChemAIRS - Bayesian Optimisation,Academic,7,11700
+ChemAIRS - Bayesian Optimisation,Academic,8,13000
+ChemAIRS - Bayesian Optimisation,Academic,9,14500
+ChemAIRS - Bayesian Optimisation,Academic,10,15600
+ChemAIRS - Bayesian Optimisation,Academic,11,16300
+ChemAIRS - Bayesian Optimisation,Academic,12,17600
+ChemAIRS - Bayesian Optimisation,Academic,13,19100
+ChemAIRS - Bayesian Optimisation,Academic,14,19900
+ChemAIRS - Bayesian Optimisation,Academic,15,21400
+ChemAIRS - Bayesian Optimisation,Academic,16,22200
+ChemAIRS - Bayesian Optimisation,Academic,17,23600
+ChemAIRS - Bayesian Optimisation,Academic,18,23800
+ChemAIRS - Bayesian Optimisation,Academic,19,24800
+ChemAIRS - Bayesian Optimisation,Academic,20,26000
+ChemAIRS - Bayesian Optimisation,Academic,21,27900
+ChemAIRS - Bayesian Optimisation,Academic,22,28600
+ChemAIRS - Bayesian Optimisation,Academic,23,28700
+ChemAIRS - Bayesian Optimisation,Academic,24,30900
+ChemAIRS - Bayesian Optimisation,Academic,25,31700
+ChemAIRS - Bayesian Optimisation,Commercial,1,3200
+ChemAIRS - Bayesian Optimisation,Commercial,2,5300
+ChemAIRS - Bayesian Optimisation,Commercial,3,7100
+ChemAIRS - Bayesian Optimisation,Commercial,4,9400
+ChemAIRS - Bayesian Optimisation,Commercial,5,10900
+ChemAIRS - Bayesian Optimisation,Commercial,6,12200
+ChemAIRS - Bayesian Optimisation,Commercial,7,13500
+ChemAIRS - Bayesian Optimisation,Commercial,8,15900
+ChemAIRS - Bayesian Optimisation,Commercial,9,16500
+ChemAIRS - Bayesian Optimisation,Commercial,10,17700
+ChemAIRS - Bayesian Optimisation,Commercial,11,19800
+ChemAIRS - Bayesian Optimisation,Commercial,12,21100
+ChemAIRS - Bayesian Optimisation,Commercial,13,22300
+ChemAIRS - Bayesian Optimisation,Commercial,14,23800
+ChemAIRS - Bayesian Optimisation,Commercial,15,23900
+ChemAIRS - Bayesian Optimisation,Commercial,16,25000
+ChemAIRS - Bayesian Optimisation,Commercial,17,26300
+ChemAIRS - Bayesian Optimisation,Commercial,18,29000
+ChemAIRS - Bayesian Optimisation,Commercial,19,30000
+ChemAIRS - Bayesian Optimisation,Commercial,20,30100
+ChemAIRS - Bayesian Optimisation,Commercial,21,31400
+ChemAIRS - Bayesian Optimisation,Commercial,22,31600
+ChemAIRS - Bayesian Optimisation,Commercial,23,32900
+ChemAIRS - Bayesian Optimisation,Commercial,24,34500
+ChemAIRS - Bayesian Optimisation,Commercial,25,34900
+ChemAIRS - Bundled Package,Academic,1,9500
+ChemAIRS - Bundled Package,Academic,2,17300
+ChemAIRS - Bundled Package,Academic,3,25100
+ChemAIRS - Bundled Package,Academic,4,31100
+ChemAIRS - Bundled Package,Academic,5,37600
+ChemAIRS - Bundled Package,Academic,6,45500
+ChemAIRS - Bundled Package,Academic,7,50200
+ChemAIRS - Bundled Package,Academic,8,57400
+ChemAIRS - Bundled Package,Academic,9,59800
+ChemAIRS - Bundled Package,Academic,10,70000
+ChemAIRS - Bundled Package,Academic,11,73400
+ChemAIRS - Bundled Package,Academic,12,77700
+ChemAIRS - Bundled Package,Academic,13,87700
+ChemAIRS - Bundled Package,Academic,14,93500
+ChemAIRS - Bundled Package,Academic,15,93600
+ChemAIRS - Bundled Package,Academic,16,101800
+ChemAIRS - Bundled Package,Academic,17,106900
+ChemAIRS - Bundled Package,Academic,18,109900
+ChemAIRS - Bundled Package,Academic,19,118900
+ChemAIRS - Bundled Package,Academic,20,123900
+ChemAIRS - Bundled Package,Academic,21,132100
+ChemAIRS - Bundled Package,Academic,22,132200
+ChemAIRS - Bundled Package,Academic,23,141700
+ChemAIRS - Bundled Package,Academic,24,142800
+ChemAIRS - Bundled Package,Academic,25,143300
+ChemAIRS - Bundled Package,Commercial,1,22000
+ChemAIRS - Bundled Package,Commercial,2,39200
+ChemAIRS - Bundled Package,Commercial,3,52700
+ChemAIRS - Bundled Package,Commercial,4,67200
+ChemAIRS - Bundled Package,Commercial,5,83100
+ChemAIRS - Bundled Package,Commercial,6,91700
+ChemAIRS - Bundled Package,Commercial,7,108300
+ChemAIRS - Bundled Package,Commercial,8,119800
+ChemAIRS - Bundled Package,Commercial,9,130000
+ChemAIRS - Bundled Package,Commercial,10,138900
+ChemAIRS - Bundled Package,Commercial,11,150300
+ChemAIRS - Bundled Package,Commercial,12,170800
+ChemAIRS - Bundled Package,Commercial,13,180900
+ChemAIRS - Bundled Package,Commercial,14,188100
+ChemAIRS - Bundled Package,Commercial,15,202100
+ChemAIRS - Bundled Package,Commercial,16,214700
+ChemAIRS - Bundled Package,Commercial,17,228500
+ChemAIRS - Bundled Package,Commercial,18,228600
+ChemAIRS - Bundled Package,Commercial,19,244300
+ChemAIRS - Bundled Package,Commercial,20,256400
+ChemAIRS - Bundled Package,Commercial,21,268200
+ChemAIRS - Bundled Package,Commercial,22,272300
+ChemAIRS - Bundled Package,Commercial,23,292700
+ChemAIRS - Bundled Package,Commercial,24,292800
+ChemAIRS - Bundled Package,Commercial,25,292900
+HPSee - Chemical Space Docking (128 Cores),Academic,1,51500
+HPSee - Chemical Space Docking (128 Cores),Commercial,1,117000
+XFEP & XMolGen,Academic,1,36000
+XFEP & XMolGen,Commercial,1,99000
+Koffee Binding Affinity & Unbinding Kinetics,Academic,1,43500
+Koffee Binding Affinity & Unbinding Kinetics,Commercial,1,85000
+YASARA Structure,Academic,1,38500
+YASARA Structure,Commercial,1,99500
+Nanome + MARA,Academic,1,12500
+Nanome + MARA,Academic,2,22300
+Nanome + MARA,Academic,3,33500
+Nanome + MARA,Academic,4,43000
+Nanome + MARA,Academic,5,52800
+Nanome + MARA,Academic,6,59000
+Nanome + MARA,Academic,7,70900
+Nanome + MARA,Academic,8,77300
+Nanome + MARA,Academic,9,83500
+Nanome + MARA,Academic,10,93900
+Nanome + MARA,Academic,11,105600
+Nanome + MARA,Academic,12,109200
+Nanome + MARA,Academic,13,119200
+Nanome + MARA,Academic,14,126400
+Nanome + MARA,Academic,15,131100
+Nanome + MARA,Academic,16,148900
+Nanome + MARA,Academic,17,157200
+Nanome + MARA,Academic,18,164800
+Nanome + MARA,Academic,19,164900
+Nanome + MARA,Academic,20,177700
+Nanome + MARA,Academic,21,184200
+Nanome + MARA,Academic,22,186200
+Nanome + MARA,Academic,23,198300
+Nanome + MARA,Academic,24,214000
+Nanome + MARA,Academic,25,222800
+Nanome + MARA,Commercial,1,34500
+Nanome + MARA,Commercial,2,64500
+Nanome + MARA,Commercial,3,90500
+Nanome + MARA,Commercial,4,120000
+Nanome + MARA,Commercial,5,136000
+Nanome + MARA,Commercial,6,172000
+Nanome + MARA,Commercial,7,188000
+Nanome + MARA,Commercial,8,211000
+Nanome + MARA,Commercial,9,233500
+Nanome + MARA,Commercial,10,261000
+Nanome + MARA,Commercial,11,271000
+Nanome + MARA,Commercial,12,293500
+Nanome + MARA,Commercial,13,321000
+Nanome + MARA,Commercial,14,348000
+Nanome + MARA,Commercial,15,359000
+Nanome + MARA,Commercial,16,400500
+Nanome + MARA,Commercial,17,407000
+Nanome + MARA,Commercial,18,425000
+Nanome + MARA,Commercial,19,468500
+Nanome + MARA,Commercial,20,469000
+Nanome + MARA,Commercial,21,498500
+Nanome + MARA,Commercial,22,522500
+Nanome + MARA,Commercial,23,531000
+Nanome + MARA,Commercial,24,545500
+Nanome + MARA,Commercial,25,557500
+Biolligence - BioTox,Academic,1,47000
+Biolligence - BioTox,Academic,2,86000
+Biolligence - BioTox,Academic,3,118500
+Biolligence - BioTox,Academic,4,156500
+Biolligence - BioTox,Academic,5,176500
+Biolligence - BioTox,Academic,6,216500
+Biolligence - BioTox,Academic,7,236000
+Biolligence - BioTox,Academic,8,274000
+Biolligence - BioTox,Academic,9,304500
+Biolligence - BioTox,Academic,10,336500
+Biolligence - BioTox,Academic,11,348000
+Biolligence - BioTox,Academic,12,368500
+Biolligence - BioTox,Academic,13,410500
+Biolligence - BioTox,Academic,14,434000
+Biolligence - BioTox,Academic,15,465500
+Biolligence - BioTox,Academic,16,466000
+Biolligence - BioTox,Academic,17,502500
+Biolligence - BioTox,Academic,18,523500
+Biolligence - BioTox,Academic,19,542500
+Biolligence - BioTox,Academic,20,589500
+Biolligence - BioTox,Academic,21,609000
+Biolligence - BioTox,Academic,22,634000
+Biolligence - BioTox,Academic,23,650000
+Biolligence - BioTox,Academic,24,705000
+Biolligence - BioTox,Academic,25,716000
+Biolligence - BioTox,Commercial,1,105000
+Biolligence - BioTox,Commercial,2,184000
+Biolligence - BioTox,Commercial,3,247500
+Biolligence - BioTox,Commercial,4,324000
+Biolligence - BioTox,Commercial,5,378500
+Biolligence - BioTox,Commercial,6,439500
+Biolligence - BioTox,Commercial,7,506000
+Biolligence - BioTox,Commercial,8,565000
+Biolligence - BioTox,Commercial,9,625000
+Biolligence - BioTox,Commercial,10,656500
+Biolligence - BioTox,Commercial,11,733000
+Biolligence - BioTox,Commercial,12,765000
+Biolligence - BioTox,Commercial,13,850500
+Biolligence - BioTox,Commercial,14,884500
+Biolligence - BioTox,Commercial,15,976500
+Biolligence - BioTox,Commercial,16,1037000
+Biolligence - BioTox,Commercial,17,1077000
+Biolligence - BioTox,Commercial,18,1077500
+Biolligence - BioTox,Commercial,19,1172500
+Biolligence - BioTox,Commercial,20,1222000
+Biolligence - BioTox,Commercial,21,1253500
+Biolligence - BioTox,Commercial,22,1291000
+Biolligence - BioTox,Commercial,23,1370000
+Biolligence - BioTox,Commercial,24,1390500
+Biolligence - BioTox,Commercial,25,1408500
+Commander,Academic,1,51500
+Commander,Academic,2,90500
+Commander,Academic,3,123500
+Commander,Academic,4,156000
+Commander,Academic,5,188500
+Commander,Academic,6,215000
+Commander,Academic,7,253500
+Commander,Academic,8,277000
+Commander,Academic,9,295000
+Commander,Academic,10,333000
+Commander,Academic,11,354000
+Commander,Academic,12,377500
+Commander,Academic,13,419000
+Commander,Academic,14,436000
+Commander,Academic,15,446500
+Commander,Academic,16,487500
+Commander,Academic,17,520500
+Commander,Academic,18,521000
+Commander,Academic,19,564000
+Commander,Academic,20,564500
+Commander,Academic,21,619000
+Commander,Academic,22,619500
+Commander,Academic,23,655500
+Commander,Academic,24,662000
+Commander,Academic,25,675500
+Commander,Commercial,1,109500
+Commander,Commercial,2,195500
+Commander,Commercial,3,269000
+Commander,Commercial,4,357500
+Commander,Commercial,5,404500
+Commander,Commercial,6,476000
+Commander,Commercial,7,572500
+Commander,Commercial,8,628500
+Commander,Commercial,9,657500
+Commander,Commercial,10,742500
+Commander,Commercial,11,827000
+Commander,Commercial,12,864000
+Commander,Commercial,13,892500
+Commander,Commercial,14,962500
+Commander,Commercial,15,1026000
+Commander,Commercial,16,1102500
+Commander,Commercial,17,1111000
+Commander,Commercial,18,1165500
+Commander,Commercial,19,1245000
+Commander,Commercial,20,1280000
+Commander,Commercial,21,1383000
+Commander,Commercial,22,1467500
+Commander,Commercial,23,1468000
+Commander,Commercial,24,1594500
+Commander,Commercial,25,1595000
+GastroPlus,Academic,1,63000
+GastroPlus,Academic,2,112000
+GastroPlus,Academic,3,164500
+GastroPlus,Academic,4,212000
+GastroPlus,Academic,5,271500
+GastroPlus,Academic,6,314500
+GastroPlus,Academic,7,366000
+GastroPlus,Academic,8,414000
+GastroPlus,Academic,9,449500
+GastroPlus,Academic,10,495000
+GastroPlus,Academic,11,534500
+GastroPlus,Academic,12,553000
+GastroPlus,Academic,13,629000
+GastroPlus,Academic,14,642500
+GastroPlus,Academic,15,685500
+GastroPlus,Academic,16,731500
+GastroPlus,Academic,17,778500
+GastroPlus,Academic,18,835000
+GastroPlus,Academic,19,895500
+GastroPlus,Academic,20,908500
+GastroPlus,Academic,21,943000
+GastroPlus,Academic,22,952500
+GastroPlus,Academic,23,1008500
+GastroPlus,Academic,24,1027000
+GastroPlus,Academic,25,1080000
+GastroPlus,Commercial,1,116500
+GastroPlus,Commercial,2,204000
+GastroPlus,Commercial,3,294500
+GastroPlus,Commercial,4,377000
+GastroPlus,Commercial,5,457500
+GastroPlus,Commercial,6,532000
+GastroPlus,Commercial,7,621000
+GastroPlus,Commercial,8,647000
+GastroPlus,Commercial,9,723500
+GastroPlus,Commercial,10,808500
+GastroPlus,Commercial,11,883000
+GastroPlus,Commercial,12,938000
+GastroPlus,Commercial,13,990500
+GastroPlus,Commercial,14,1045000
+GastroPlus,Commercial,15,1176000
+GastroPlus,Commercial,16,1217500
+GastroPlus,Commercial,17,1220000
+GastroPlus,Commercial,18,1300500
+GastroPlus,Commercial,19,1348500
+GastroPlus,Commercial,20,1443500
+GastroPlus,Commercial,21,1448500
+GastroPlus,Commercial,22,1533500
+GastroPlus,Commercial,23,1575000
+GastroPlus,Commercial,24,1644000
+GastroPlus,Commercial,25,1810500
+PK/PD Modelling,Academic,1,14500
+PK/PD Modelling,Academic,2,26300
+PK/PD Modelling,Academic,3,37000
+PK/PD Modelling,Academic,4,48200
+PK/PD Modelling,Academic,5,58200
+PK/PD Modelling,Academic,6,67100
+PK/PD Modelling,Academic,7,78700
+PK/PD Modelling,Academic,8,87100
+PK/PD Modelling,Academic,9,97700
+PK/PD Modelling,Academic,10,109100
+PK/PD Modelling,Academic,11,111600
+PK/PD Modelling,Academic,12,120000
+PK/PD Modelling,Academic,13,134800
+PK/PD Modelling,Academic,14,138100
+PK/PD Modelling,Academic,15,147100
+PK/PD Modelling,Academic,16,161500
+PK/PD Modelling,Academic,17,165700
+PK/PD Modelling,Academic,18,178200
+PK/PD Modelling,Academic,19,187400
+PK/PD Modelling,Academic,20,187500
+PK/PD Modelling,Academic,21,195600
+PK/PD Modelling,Academic,22,208000
+PK/PD Modelling,Academic,23,214300
+PK/PD Modelling,Academic,24,216700
+PK/PD Modelling,Academic,25,226300
+PK/PD Modelling,Commercial,1,32500
+PK/PD Modelling,Commercial,2,57000
+PK/PD Modelling,Commercial,3,78000
+PK/PD Modelling,Commercial,4,93500
+PK/PD Modelling,Commercial,5,112000
+PK/PD Modelling,Commercial,6,132500
+PK/PD Modelling,Commercial,7,148000
+PK/PD Modelling,Commercial,8,159000
+PK/PD Modelling,Commercial,9,184500
+PK/PD Modelling,Commercial,10,202500
+PK/PD Modelling,Commercial,11,215500
+PK/PD Modelling,Commercial,12,234000
+PK/PD Modelling,Commercial,13,234500
+PK/PD Modelling,Commercial,14,252000
+PK/PD Modelling,Commercial,15,272000
+PK/PD Modelling,Commercial,16,280500
+PK/PD Modelling,Commercial,17,291000
+PK/PD Modelling,Commercial,18,305500
+PK/PD Modelling,Commercial,19,320500
+PK/PD Modelling,Commercial,20,342500
+PK/PD Modelling,Commercial,21,351500
+PK/PD Modelling,Commercial,22,352000
+PK/PD Modelling,Commercial,23,373000
+PK/PD Modelling,Commercial,24,388500
+PK/PD Modelling,Commercial,25,395500
+Qrunch Pro,Academic,1,45000
+Qrunch Pro,Academic,2,74500
+Qrunch Pro,Academic,3,102000
+Qrunch Pro,Academic,4,124500
+Qrunch Pro,Academic,5,149500
+Qrunch Pro,Academic,6,175500
+Qrunch Pro,Academic,7,190500
+Qrunch Pro,Academic,8,217500
+Qrunch Pro,Academic,9,244000
+Qrunch Pro,Academic,10,256500
+Qrunch Pro,Academic,11,272000
+Qrunch Pro,Academic,12,290500
+Qrunch Pro,Academic,13,319000
+Qrunch Pro,Academic,14,331000
+Qrunch Pro,Academic,15,336000
+Qrunch Pro,Academic,16,379000
+Qrunch Pro,Academic,17,382000
+Qrunch Pro,Academic,18,399500
+Qrunch Pro,Academic,19,409500
+Qrunch Pro,Academic,20,420000
+Qrunch Pro,Academic,21,434000
+Qrunch Pro,Academic,22,459500
+Qrunch Pro,Academic,23,475000
+Qrunch Pro,Academic,24,492000
+Qrunch Pro,Academic,25,520500
+Qrunch Pro,Commercial,1,99000
+Qrunch Pro,Commercial,2,187000
+Qrunch Pro,Commercial,3,250500
+Qrunch Pro,Commercial,4,318000
+Qrunch Pro,Commercial,5,390500
+Qrunch Pro,Commercial,6,480500
+Qrunch Pro,Commercial,7,552500
+Qrunch Pro,Commercial,8,619500
+Qrunch Pro,Commercial,9,640500
+Qrunch Pro,Commercial,10,744500
+Qrunch Pro,Commercial,11,802500
+Qrunch Pro,Commercial,12,855500
+Qrunch Pro,Commercial,13,896500
+Qrunch Pro,Commercial,14,994500
+Qrunch Pro,Commercial,15,1072000
+Qrunch Pro,Commercial,16,1072500
+Qrunch Pro,Commercial,17,1135000
+Qrunch Pro,Commercial,18,1178500
+Qrunch Pro,Commercial,19,1277000
+Qrunch Pro,Commercial,20,1333500
+Qrunch Pro,Commercial,21,1404500
+Qrunch Pro,Commercial,22,1405000
+Qrunch Pro,Commercial,23,1443000
+Qrunch Pro,Commercial,24,1518000
+Qrunch Pro,Commercial,25,1645500
+FormSCI,Academic,1,8500
+FormSCI,Academic,2,14500
+FormSCI,Academic,3,20200
+FormSCI,Academic,4,25100
+FormSCI,Academic,5,31600
+FormSCI,Academic,6,36400
+FormSCI,Academic,7,39700
+FormSCI,Academic,8,43900
+FormSCI,Academic,9,49800
+FormSCI,Academic,10,53500
+FormSCI,Academic,11,59400
+FormSCI,Academic,12,63500
+FormSCI,Academic,13,67600
+FormSCI,Academic,14,69900
+FormSCI,Academic,15,71600
+FormSCI,Academic,16,77900
+FormSCI,Academic,17,79500
+FormSCI,Academic,18,84100
+FormSCI,Academic,19,86100
+FormSCI,Academic,20,95500
+FormSCI,Academic,21,95800
+FormSCI,Academic,22,96000
+FormSCI,Academic,23,105400
+FormSCI,Academic,24,105500
+FormSCI,Academic,25,109000
+FormSCI,Commercial,1,23000
+FormSCI,Commercial,2,43800
+FormSCI,Commercial,3,61000
+FormSCI,Commercial,4,78800
+FormSCI,Commercial,5,94400
+FormSCI,Commercial,6,108700
+FormSCI,Commercial,7,124700
+FormSCI,Commercial,8,141600
+FormSCI,Commercial,9,161800
+FormSCI,Commercial,10,167200
+FormSCI,Commercial,11,188900
+FormSCI,Commercial,12,194600
+FormSCI,Commercial,13,208700
+FormSCI,Commercial,14,222600
+FormSCI,Commercial,15,239900
+FormSCI,Commercial,16,257500
+FormSCI,Commercial,17,281600
+FormSCI,Commercial,18,281700
+FormSCI,Commercial,19,309500
+FormSCI,Commercial,20,311100
+FormSCI,Commercial,21,317700
+FormSCI,Commercial,22,351400
+FormSCI,Commercial,23,372000
+FormSCI,Commercial,24,372100
+FormSCI,Commercial,25,398500
+SoluDEM,Academic,1,35000
+SoluDEM,Academic,2,64000
+SoluDEM,Academic,3,86500
+SoluDEM,Academic,4,112500
+SoluDEM,Academic,5,135500
+SoluDEM,Academic,6,152000
+SoluDEM,Academic,7,183500
+SoluDEM,Academic,8,196000
+SoluDEM,Academic,9,213000
+SoluDEM,Academic,10,239000
+SoluDEM,Academic,11,253000
+SoluDEM,Academic,12,287500
+SoluDEM,Academic,13,294500
+SoluDEM,Academic,14,304000
+SoluDEM,Academic,15,323500
+SoluDEM,Academic,16,345500
+SoluDEM,Academic,17,383500
+SoluDEM,Academic,18,384000
+SoluDEM,Academic,19,406500
+SoluDEM,Academic,20,417000
+SoluDEM,Academic,21,427500
+SoluDEM,Academic,22,449000
+SoluDEM,Academic,23,489500
+SoluDEM,Academic,24,506000
+SoluDEM,Academic,25,508000
+SoluDEM,Commercial,1,84000
+SoluDEM,Commercial,2,155000
+SoluDEM,Commercial,3,221500
+SoluDEM,Commercial,4,299000
+SoluDEM,Commercial,5,344500
+SoluDEM,Commercial,6,415000
+SoluDEM,Commercial,7,485000
+SoluDEM,Commercial,8,531000
+SoluDEM,Commercial,9,602500
+SoluDEM,Commercial,10,673000
+SoluDEM,Commercial,11,728500
+SoluDEM,Commercial,12,806000
+SoluDEM,Commercial,13,830000
+SoluDEM,Commercial,14,922500
+SoluDEM,Commercial,15,955000
+SoluDEM,Commercial,16,1034500
+SoluDEM,Commercial,17,1035000
+SoluDEM,Commercial,18,1144500
+SoluDEM,Commercial,19,1207000
+SoluDEM,Commercial,20,1207500
+SoluDEM,Commercial,21,1239500
+SoluDEM,Commercial,22,1328000
+SoluDEM,Commercial,23,1402500
+SoluDEM,Commercial,24,1504000
+SoluDEM,Commercial,25,1551500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,1,14000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,2,24500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,3,32600
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,4,40000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,5,50400
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,6,55100
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,7,62400
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,8,71100
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,9,77700
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,10,88300
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,11,93900
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,12,96900
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,13,105600
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,14,115100
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,15,116500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,16,119500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,17,130400
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,18,131700
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,19,147000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,20,147100
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,21,156300
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,22,159900
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,23,160000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,24,166000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Academic,25,181000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,1,39000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,2,69500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,3,104000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,4,127000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,5,155500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,6,185000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,7,210000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,8,239000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,9,266000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,10,301000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,11,324000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,12,360500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,13,386000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,14,393000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,15,430500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,16,452000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,17,491500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,18,516500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,19,517000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,20,544000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,21,555000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,22,593000
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,23,602500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,24,654500
+TransGene IT & Dotmatics (Electronic Lab Notebook),Commercial,25,673000
+YASARA Modeller,Academic,1,12000
+YASARA Modeller,Academic,2,22500
+YASARA Modeller,Academic,3,31400
+YASARA Modeller,Academic,4,42300
+YASARA Modeller,Academic,5,51700
+YASARA Modeller,Academic,6,61000
+YASARA Modeller,Academic,7,67300
+YASARA Modeller,Academic,8,73300
+YASARA Modeller,Academic,9,83900
+YASARA Modeller,Academic,10,96200
+YASARA Modeller,Academic,11,100400
+YASARA Modeller,Academic,12,104500
+YASARA Modeller,Academic,13,120800
+YASARA Modeller,Academic,14,120900
+YASARA Modeller,Academic,15,130500
+YASARA Modeller,Academic,16,140400
+YASARA Modeller,Academic,17,148800
+YASARA Modeller,Academic,18,155100
+YASARA Modeller,Academic,19,158000
+YASARA Modeller,Academic,20,173100
+YASARA Modeller,Academic,21,175400
+YASARA Modeller,Academic,22,186400
+YASARA Modeller,Academic,23,189400
+YASARA Modeller,Academic,24,201100
+YASARA Modeller,Academic,25,205400
+YASARA Modeller,Commercial,1,30500
+YASARA Modeller,Commercial,2,56500
+YASARA Modeller,Commercial,3,80500
+YASARA Modeller,Commercial,4,103500
+YASARA Modeller,Commercial,5,127000
+YASARA Modeller,Commercial,6,140500
+YASARA Modeller,Commercial,7,163500
+YASARA Modeller,Commercial,8,184000
+YASARA Modeller,Commercial,9,211500
+YASARA Modeller,Commercial,10,221000
+YASARA Modeller,Commercial,11,235500
+YASARA Modeller,Commercial,12,255500
+YASARA Modeller,Commercial,13,283500
+YASARA Modeller,Commercial,14,309500
+YASARA Modeller,Commercial,15,315000
+YASARA Modeller,Commercial,16,344500
+YASARA Modeller,Commercial,17,367500
+YASARA Modeller,Commercial,18,368000
+YASARA Modeller,Commercial,19,405000
+YASARA Modeller,Commercial,20,424000
+YASARA Modeller,Commercial,21,424500
+YASARA Modeller,Commercial,22,444500
+YASARA Modeller,Commercial,23,450500
+YASARA Modeller,Commercial,24,474500
+YASARA Modeller,Commercial,25,509000
+YASARA Dynamics,Academic,1,50500
+YASARA Dynamics,Academic,2,88500
+YASARA Dynamics,Academic,3,128500
+YASARA Dynamics,Academic,4,168000
+YASARA Dynamics,Academic,5,198500
+YASARA Dynamics,Academic,6,228500
+YASARA Dynamics,Academic,7,263000
+YASARA Dynamics,Academic,8,288500
+YASARA Dynamics,Academic,9,344000
+YASARA Dynamics,Academic,10,375500
+YASARA Dynamics,Academic,11,406000
+YASARA Dynamics,Academic,12,423000
+YASARA Dynamics,Academic,13,464000
+YASARA Dynamics,Academic,14,493000
+YASARA Dynamics,Academic,15,521500
+YASARA Dynamics,Academic,16,540000
+YASARA Dynamics,Academic,17,569500
+YASARA Dynamics,Academic,18,620000
+YASARA Dynamics,Academic,19,620500
+YASARA Dynamics,Academic,20,632000
+YASARA Dynamics,Academic,21,689000
+YASARA Dynamics,Academic,22,721000
+YASARA Dynamics,Academic,23,756000
+YASARA Dynamics,Academic,24,781000
+YASARA Dynamics,Academic,25,819500
+YASARA Dynamics,Commercial,1,93500
+YASARA Dynamics,Commercial,2,152500
+YASARA Dynamics,Commercial,3,217000
+YASARA Dynamics,Commercial,4,268000
+YASARA Dynamics,Commercial,5,324500
+YASARA Dynamics,Commercial,6,366500
+YASARA Dynamics,Commercial,7,397000
+YASARA Dynamics,Commercial,8,451500
+YASARA Dynamics,Commercial,9,472000
+YASARA Dynamics,Commercial,10,520500
+YASARA Dynamics,Commercial,11,565000
+YASARA Dynamics,Commercial,12,618500
+YASARA Dynamics,Commercial,13,655500
+YASARA Dynamics,Commercial,14,658000
+YASARA Dynamics,Commercial,15,727500
+YASARA Dynamics,Commercial,16,731000
+YASARA Dynamics,Commercial,17,784500
+YASARA Dynamics,Commercial,18,791000
+YASARA Dynamics,Commercial,19,849000
+YASARA Dynamics,Commercial,20,916500
+YASARA Dynamics,Commercial,21,936500
+YASARA Dynamics,Commercial,22,937500
+YASARA Dynamics,Commercial,23,989500
+YASARA Dynamics,Commercial,24,1023000
+YASARA Dynamics,Commercial,25,1033500
+InfiniSee,Academic,1,48500
+InfiniSee,Academic,2,86500
+InfiniSee,Academic,3,119500
+InfiniSee,Academic,4,151500
+InfiniSee,Academic,5,187500
+InfiniSee,Academic,6,219000
+InfiniSee,Academic,7,248500
+InfiniSee,Academic,8,271500
+InfiniSee,Academic,9,284500
+InfiniSee,Academic,10,311000
+InfiniSee,Academic,11,359500
+InfiniSee,Academic,12,385500
+InfiniSee,Academic,13,391000
+InfiniSee,Academic,14,428500
+InfiniSee,Academic,15,463000
+InfiniSee,Academic,16,475000
+InfiniSee,Academic,17,503000
+InfiniSee,Academic,18,503500
+InfiniSee,Academic,19,539500
+InfiniSee,Academic,20,570500
+InfiniSee,Academic,21,595500
+InfiniSee,Academic,22,597000
+InfiniSee,Academic,23,641500
+InfiniSee,Academic,24,659500
+InfiniSee,Academic,25,660000
+InfiniSee,Commercial,1,108500
+InfiniSee,Commercial,2,199500
+InfiniSee,Commercial,3,280500
+InfiniSee,Commercial,4,340500
+InfiniSee,Commercial,5,427500
+InfiniSee,Commercial,6,492500
+InfiniSee,Commercial,7,543500
+InfiniSee,Commercial,8,613000
+InfiniSee,Commercial,9,685000
+InfiniSee,Commercial,10,763500
+InfiniSee,Commercial,11,806500
+InfiniSee,Commercial,12,833000
+InfiniSee,Commercial,13,934500
+InfiniSee,Commercial,14,1005000
+InfiniSee,Commercial,15,1024500
+InfiniSee,Commercial,16,1093000
+InfiniSee,Commercial,17,1102500
+InfiniSee,Commercial,18,1207000
+InfiniSee,Commercial,19,1229500
+InfiniSee,Commercial,20,1260500
+InfiniSee,Commercial,21,1313000
+InfiniSee,Commercial,22,1451000
+InfiniSee,Commercial,23,1502500
+InfiniSee,Commercial,24,1544500
+InfiniSee,Commercial,25,1608000
+XMolGen,Academic,1,14000
+XMolGen,Academic,2,24500
+XMolGen,Academic,3,32100
+XMolGen,Academic,4,40700
+XMolGen,Academic,5,49800
+XMolGen,Academic,6,55700
+XMolGen,Academic,7,63300
+XMolGen,Academic,8,71100
+XMolGen,Academic,9,77400
+XMolGen,Academic,10,84500
+XMolGen,Academic,11,90100
+XMolGen,Academic,12,99600
+XMolGen,Academic,13,105800
+XMolGen,Academic,14,111200
+XMolGen,Academic,15,111400
+XMolGen,Academic,16,123800
+XMolGen,Academic,17,125000
+XMolGen,Academic,18,136700
+XMolGen,Academic,19,136800
+XMolGen,Academic,20,142800
+XMolGen,Academic,21,151700
+XMolGen,Academic,22,155100
+XMolGen,Academic,23,155900
+XMolGen,Academic,24,162500
+XMolGen,Academic,25,164900
+XMolGen,Commercial,1,26500
+XMolGen,Commercial,2,47400
+XMolGen,Commercial,3,62000
+XMolGen,Commercial,4,79700
+XMolGen,Commercial,5,97100
+XMolGen,Commercial,6,106300
+XMolGen,Commercial,7,119900
+XMolGen,Commercial,8,139700
+XMolGen,Commercial,9,152000
+XMolGen,Commercial,10,165200
+XMolGen,Commercial,11,177000
+XMolGen,Commercial,12,186000
+XMolGen,Commercial,13,202700
+XMolGen,Commercial,14,214600
+XMolGen,Commercial,15,221900
+XMolGen,Commercial,16,246300
+XMolGen,Commercial,17,246400
+XMolGen,Commercial,18,254900
+XMolGen,Commercial,19,265300
+XMolGen,Commercial,20,293800
+XMolGen,Commercial,21,305000
+XMolGen,Commercial,22,320000
+XMolGen,Commercial,23,331300
+XMolGen,Commercial,24,331400
+XMolGen,Commercial,25,339600
+SeeSAR,Academic,1,16000
+SeeSAR,Academic,2,28800
+SeeSAR,Academic,3,40700
+SeeSAR,Academic,4,51300
+SeeSAR,Academic,5,61000
+SeeSAR,Academic,6,71500
+SeeSAR,Academic,7,84200
+SeeSAR,Academic,8,92800
+SeeSAR,Academic,9,104400
+SeeSAR,Academic,10,119400
+SeeSAR,Academic,11,126400
+SeeSAR,Academic,12,131000
+SeeSAR,Academic,13,140300
+SeeSAR,Academic,14,149600
+SeeSAR,Academic,15,162100
+SeeSAR,Academic,16,172600
+SeeSAR,Academic,17,174000
+SeeSAR,Academic,18,183900
+SeeSAR,Academic,19,201300
+SeeSAR,Academic,20,204600
+SeeSAR,Academic,21,213200
+SeeSAR,Academic,22,226600
+SeeSAR,Academic,23,240600
+SeeSAR,Academic,24,241800
+SeeSAR,Academic,25,259000
+SeeSAR,Commercial,1,45000
+SeeSAR,Commercial,2,79500
+SeeSAR,Commercial,3,120500
+SeeSAR,Commercial,4,147000
+SeeSAR,Commercial,5,191000
+SeeSAR,Commercial,6,217500
+SeeSAR,Commercial,7,243000
+SeeSAR,Commercial,8,288000
+SeeSAR,Commercial,9,311500
+SeeSAR,Commercial,10,331500
+SeeSAR,Commercial,11,369000
+SeeSAR,Commercial,12,387000
+SeeSAR,Commercial,13,440500
+SeeSAR,Commercial,14,447000
+SeeSAR,Commercial,15,489500
+SeeSAR,Commercial,16,525500
+SeeSAR,Commercial,17,534000
+SeeSAR,Commercial,18,582000
+SeeSAR,Commercial,19,602500
+SeeSAR,Commercial,20,623500
+SeeSAR,Commercial,21,685000
+SeeSAR,Commercial,22,709000
+SeeSAR,Commercial,23,715500
+SeeSAR,Commercial,24,723000
+SeeSAR,Commercial,25,746500
+Chemical Space Docking,Academic,1,29500
+Chemical Space Docking,Academic,2,53600
+Chemical Space Docking,Academic,3,73700
+Chemical Space Docking,Academic,4,95500
+Chemical Space Docking,Academic,5,115800
+Chemical Space Docking,Academic,6,131200
+Chemical Space Docking,Academic,7,153900
+Chemical Space Docking,Academic,8,168100
+Chemical Space Docking,Academic,9,190000
+Chemical Space Docking,Academic,10,208600
+Chemical Space Docking,Academic,11,222400
+Chemical Space Docking,Academic,12,247100
+Chemical Space Docking,Academic,13,255800
+Chemical Space Docking,Academic,14,278600
+Chemical Space Docking,Academic,15,296000
+Chemical Space Docking,Academic,16,306400
+Chemical Space Docking,Academic,17,321000
+Chemical Space Docking,Academic,18,340500
+Chemical Space Docking,Academic,19,355500
+Chemical Space Docking,Academic,20,364100
+Chemical Space Docking,Academic,21,380200
+Chemical Space Docking,Academic,22,412200
+Chemical Space Docking,Academic,23,423500
+Chemical Space Docking,Academic,24,435200
+Chemical Space Docking,Academic,25,461200
+Chemical Space Docking,Commercial,1,55000
+Chemical Space Docking,Commercial,2,102500
+Chemical Space Docking,Commercial,3,144500
+Chemical Space Docking,Commercial,4,176500
+Chemical Space Docking,Commercial,5,223500
+Chemical Space Docking,Commercial,6,253500
+Chemical Space Docking,Commercial,7,288000
+Chemical Space Docking,Commercial,8,328000
+Chemical Space Docking,Commercial,9,368500
+Chemical Space Docking,Commercial,10,393000
+Chemical Space Docking,Commercial,11,419500
+Chemical Space Docking,Commercial,12,461500
+Chemical Space Docking,Commercial,13,510000
+Chemical Space Docking,Commercial,14,527000
+Chemical Space Docking,Commercial,15,565500
+Chemical Space Docking,Commercial,16,593000
+Chemical Space Docking,Commercial,17,645000
+Chemical Space Docking,Commercial,18,680000
+Chemical Space Docking,Commercial,19,687500
+Chemical Space Docking,Commercial,20,714500
+Chemical Space Docking,Commercial,21,765000
+Chemical Space Docking,Commercial,22,765500
+Chemical Space Docking,Commercial,23,837500
+Chemical Space Docking,Commercial,24,838000
+Chemical Space Docking,Commercial,25,846500
+SARVISION,Academic,1,24500
+SARVISION,Academic,2,40600
+SARVISION,Academic,3,57400
+SARVISION,Academic,4,72100
+SARVISION,Academic,5,87900
+SARVISION,Academic,6,95600
+SARVISION,Academic,7,111400
+SARVISION,Academic,8,123200
+SARVISION,Academic,9,131400
+SARVISION,Academic,10,146300
+SARVISION,Academic,11,155900
+SARVISION,Academic,12,171700
+SARVISION,Academic,13,180200
+SARVISION,Academic,14,188700
+SARVISION,Academic,15,191900
+SARVISION,Academic,16,208200
+SARVISION,Academic,17,214300
+SARVISION,Academic,18,231100
+SARVISION,Academic,19,236700
+SARVISION,Academic,20,256100
+SARVISION,Academic,21,262300
+SARVISION,Academic,22,262400
+SARVISION,Academic,23,282000
+SARVISION,Academic,24,282100
+SARVISION,Academic,25,303900
+SARVISION,Commercial,1,58500
+SARVISION,Commercial,2,102500
+SARVISION,Commercial,3,139000
+SARVISION,Commercial,4,174000
+SARVISION,Commercial,5,195000
+SARVISION,Commercial,6,224000
+SARVISION,Commercial,7,248000
+SARVISION,Commercial,8,280000
+SARVISION,Commercial,9,304000
+SARVISION,Commercial,10,342500
+SARVISION,Commercial,11,352500
+SARVISION,Commercial,12,395500
+SARVISION,Commercial,13,396000
+SARVISION,Commercial,14,415500
+SARVISION,Commercial,15,443000
+SARVISION,Commercial,16,468500
+SARVISION,Commercial,17,499500
+SARVISION,Commercial,18,539500
+SARVISION,Commercial,19,558500
+SARVISION,Commercial,20,585500
+SARVISION,Commercial,21,586000
+SARVISION,Commercial,22,624500
+SARVISION,Commercial,23,651000
+SARVISION,Commercial,24,651500
+SARVISION,Commercial,25,652000
+VORTEX,Academic,1,12500
+VORTEX,Academic,2,23100
+VORTEX,Academic,3,32700
+VORTEX,Academic,4,40900
+VORTEX,Academic,5,49300
+VORTEX,Academic,6,56800
+VORTEX,Academic,7,62900
+VORTEX,Academic,8,69600
+VORTEX,Academic,9,78700
+VORTEX,Academic,10,88700
+VORTEX,Academic,11,91900
+VORTEX,Academic,12,104600
+VORTEX,Academic,13,108600
+VORTEX,Academic,14,113400
+VORTEX,Academic,15,121700
+VORTEX,Academic,16,125000
+VORTEX,Academic,17,133200
+VORTEX,Academic,18,138400
+VORTEX,Academic,19,149100
+VORTEX,Academic,20,154800
+VORTEX,Academic,21,169300
+VORTEX,Academic,22,171700
+VORTEX,Academic,23,180200
+VORTEX,Academic,24,190000
+VORTEX,Academic,25,190100
+VORTEX,Commercial,1,24500
+VORTEX,Commercial,2,42500
+VORTEX,Commercial,3,59400
+VORTEX,Commercial,4,71800
+VORTEX,Commercial,5,90400
+VORTEX,Commercial,6,102800
+VORTEX,Commercial,7,114800
+VORTEX,Commercial,8,123700
+VORTEX,Commercial,9,139400
+VORTEX,Commercial,10,152900
+VORTEX,Commercial,11,159200
+VORTEX,Commercial,12,171700
+VORTEX,Commercial,13,183700
+VORTEX,Commercial,14,196900
+VORTEX,Commercial,15,211600
+VORTEX,Commercial,16,218000
+VORTEX,Commercial,17,225400
+VORTEX,Commercial,18,237100
+VORTEX,Commercial,19,250700
+VORTEX,Commercial,20,258300
+VORTEX,Commercial,21,270200
+VORTEX,Commercial,22,273600
+VORTEX,Commercial,23,296700
+VORTEX,Commercial,24,309500
+VORTEX,Commercial,25,315300
+PKAnalyx,Academic,1,51500
+PKAnalyx,Academic,2,85500
+PKAnalyx,Academic,3,119500
+PKAnalyx,Academic,4,148000
+PKAnalyx,Academic,5,175000
+PKAnalyx,Academic,6,214000
+PKAnalyx,Academic,7,226000
+PKAnalyx,Academic,8,257000
+PKAnalyx,Academic,9,293500
+PKAnalyx,Academic,10,304500
+PKAnalyx,Academic,11,336000
+PKAnalyx,Academic,12,356000
+PKAnalyx,Academic,13,380000
+PKAnalyx,Academic,14,402000
+PKAnalyx,Academic,15,440000
+PKAnalyx,Academic,16,448500
+PKAnalyx,Academic,17,452000
+PKAnalyx,Academic,18,495000
+PKAnalyx,Academic,19,503500
+PKAnalyx,Academic,20,517500
+PKAnalyx,Academic,21,562500
+PKAnalyx,Academic,22,571500
+PKAnalyx,Academic,23,615000
+PKAnalyx,Academic,24,625000
+PKAnalyx,Academic,25,636500
+PKAnalyx,Commercial,1,118000
+PKAnalyx,Commercial,2,204000
+PKAnalyx,Commercial,3,269000
+PKAnalyx,Commercial,4,325500
+PKAnalyx,Commercial,5,382500
+PKAnalyx,Commercial,6,438500
+PKAnalyx,Commercial,7,501000
+PKAnalyx,Commercial,8,566500
+PKAnalyx,Commercial,9,586000
+PKAnalyx,Commercial,10,673500
+PKAnalyx,Commercial,11,710500
+PKAnalyx,Commercial,12,730000
+PKAnalyx,Commercial,13,786500
+PKAnalyx,Commercial,14,848000
+PKAnalyx,Commercial,15,882500
+PKAnalyx,Commercial,16,910000
+PKAnalyx,Commercial,17,959500
+PKAnalyx,Commercial,18,980000
+PKAnalyx,Commercial,19,1079000
+PKAnalyx,Commercial,20,1109000
+PKAnalyx,Commercial,21,1109500
+PKAnalyx,Commercial,22,1144000
+PKAnalyx,Commercial,23,1207500
+PKAnalyx,Commercial,24,1221500
+PKAnalyx,Commercial,25,1340000
+DILIsym,Academic,1,23000
+DILIsym,Academic,2,41100
+DILIsym,Academic,3,58400
+DILIsym,Academic,4,77100
+DILIsym,Academic,5,89200
+DILIsym,Academic,6,106100
+DILIsym,Academic,7,121800
+DILIsym,Academic,8,138300
+DILIsym,Academic,9,153500
+DILIsym,Academic,10,175100
+DILIsym,Academic,11,189200
+DILIsym,Academic,12,202600
+DILIsym,Academic,13,217600
+DILIsym,Academic,14,217700
+DILIsym,Academic,15,236900
+DILIsym,Academic,16,259100
+DILIsym,Academic,17,271000
+DILIsym,Academic,18,274600
+DILIsym,Academic,19,304800
+DILIsym,Academic,20,304900
+DILIsym,Academic,21,329500
+DILIsym,Academic,22,329600
+DILIsym,Academic,23,343900
+DILIsym,Academic,24,352400
+DILIsym,Academic,25,371800
+DILIsym,Commercial,1,48500
+DILIsym,Commercial,2,89000
+DILIsym,Commercial,3,121000
+DILIsym,Commercial,4,160500
+DILIsym,Commercial,5,192500
+DILIsym,Commercial,6,223500
+DILIsym,Commercial,7,242000
+DILIsym,Commercial,8,286000
+DILIsym,Commercial,9,297000
+DILIsym,Commercial,10,335000
+DILIsym,Commercial,11,355500
+DILIsym,Commercial,12,376500
+DILIsym,Commercial,13,430500
+DILIsym,Commercial,14,431000
+DILIsym,Commercial,15,462000
+DILIsym,Commercial,16,481000
+DILIsym,Commercial,17,510500
+DILIsym,Commercial,18,550000
+DILIsym,Commercial,19,554000
+DILIsym,Commercial,20,602500
+DILIsym,Commercial,21,617000
+DILIsym,Commercial,22,621000
+DILIsym,Commercial,23,655500
+DILIsym,Commercial,24,699500
+DILIsym,Commercial,25,725000
+Monolix Suite,Academic,1,21000
+Monolix Suite,Academic,2,40200
+Monolix Suite,Academic,3,55500
+Monolix Suite,Academic,4,73500
+Monolix Suite,Academic,5,89700
+Monolix Suite,Academic,6,103700
+Monolix Suite,Academic,7,121800
+Monolix Suite,Academic,8,128500
+Monolix Suite,Academic,9,146800
+Monolix Suite,Academic,10,158500
+Monolix Suite,Academic,11,176700
+Monolix Suite,Academic,12,190800
+Monolix Suite,Academic,13,200900
+Monolix Suite,Academic,14,218400
+Monolix Suite,Academic,15,242100
+Monolix Suite,Academic,16,247000
+Monolix Suite,Academic,17,260000
+Monolix Suite,Academic,18,268000
+Monolix Suite,Academic,19,290200
+Monolix Suite,Academic,20,294300
+Monolix Suite,Academic,21,319100
+Monolix Suite,Academic,22,341800
+Monolix Suite,Academic,23,351200
+Monolix Suite,Academic,24,358800
+Monolix Suite,Academic,25,380600
+Monolix Suite,Commercial,1,59500
+Monolix Suite,Commercial,2,109500
+Monolix Suite,Commercial,3,153500
+Monolix Suite,Commercial,4,190500
+Monolix Suite,Commercial,5,233000
+Monolix Suite,Commercial,6,272000
+Monolix Suite,Commercial,7,305000
+Monolix Suite,Commercial,8,327000
+Monolix Suite,Commercial,9,360500
+Monolix Suite,Commercial,10,392000
+Monolix Suite,Commercial,11,418000
+Monolix Suite,Commercial,12,476000
+Monolix Suite,Commercial,13,508000
+Monolix Suite,Commercial,14,538500
+Monolix Suite,Commercial,15,549000
+Monolix Suite,Commercial,16,599000
+Monolix Suite,Commercial,17,623500
+Monolix Suite,Commercial,18,657000
+Monolix Suite,Commercial,19,708000
+Monolix Suite,Commercial,20,716000
+Monolix Suite,Commercial,21,747500
+Monolix Suite,Commercial,22,780500
+Monolix Suite,Commercial,23,781000
+Monolix Suite,Commercial,24,855500
+Monolix Suite,Commercial,25,856000
+Thales,Academic,1,11000
+Thales,Academic,2,20600
+Thales,Academic,3,29600
+Thales,Academic,4,38100
+Thales,Academic,5,46600
+Thales,Academic,6,55400
+Thales,Academic,7,61600
+Thales,Academic,8,68700
+Thales,Academic,9,74500
+Thales,Academic,10,87000
+Thales,Academic,11,94900
+Thales,Academic,12,99900
+Thales,Academic,13,105300
+Thales,Academic,14,113900
+Thales,Academic,15,121700
+Thales,Academic,16,128800
+Thales,Academic,17,138400
+Thales,Academic,18,146000
+Thales,Academic,19,146800
+Thales,Academic,20,152400
+Thales,Academic,21,164200
+Thales,Academic,22,164300
+Thales,Academic,23,168300
+Thales,Academic,24,186800
+Thales,Academic,25,189600
+Thales,Commercial,1,23500
+Thales,Commercial,2,42300
+Thales,Commercial,3,60300
+Thales,Commercial,4,76100
+Thales,Commercial,5,95100
+Thales,Commercial,6,106900
+Thales,Commercial,7,126600
+Thales,Commercial,8,138300
+Thales,Commercial,9,161700
+Thales,Commercial,10,172800
+Thales,Commercial,11,186500
+Thales,Commercial,12,195300
+Thales,Commercial,13,217000
+Thales,Commercial,14,229000
+Thales,Commercial,15,239700
+Thales,Commercial,16,254300
+Thales,Commercial,17,277300
+Thales,Commercial,18,285100
+Thales,Commercial,19,295400
+Thales,Commercial,20,312800
+Thales,Commercial,21,315700
+Thales,Commercial,22,324100
+Thales,Commercial,23,347400
+Thales,Commercial,24,358200
+Thales,Commercial,25,381900
+Kvantify Binding,Academic,1,46500
+Kvantify Binding,Academic,2,82000
+Kvantify Binding,Academic,3,108000
+Kvantify Binding,Academic,4,141500
+Kvantify Binding,Academic,5,158500
+Kvantify Binding,Academic,6,192500
+Kvantify Binding,Academic,7,203500
+Kvantify Binding,Academic,8,227500
+Kvantify Binding,Academic,9,257500
+Kvantify Binding,Academic,10,284500
+Kvantify Binding,Academic,11,293500
+Kvantify Binding,Academic,12,316000
+Kvantify Binding,Academic,13,347000
+Kvantify Binding,Academic,14,362000
+Kvantify Binding,Academic,15,382500
+Kvantify Binding,Academic,16,402500
+Kvantify Binding,Academic,17,426500
+Kvantify Binding,Academic,18,427000
+Kvantify Binding,Academic,19,466500
+Kvantify Binding,Academic,20,471500
+Kvantify Binding,Academic,21,481000
+Kvantify Binding,Academic,22,513000
+Kvantify Binding,Academic,23,544000
+Kvantify Binding,Academic,24,544500
+Kvantify Binding,Academic,25,578500
+Kvantify Binding,Commercial,1,103500
+Kvantify Binding,Commercial,2,170000
+Kvantify Binding,Commercial,3,234000
+Kvantify Binding,Commercial,4,296000
+Kvantify Binding,Commercial,5,350000
+Kvantify Binding,Commercial,6,395000
+Kvantify Binding,Commercial,7,444000
+Kvantify Binding,Commercial,8,489000
+Kvantify Binding,Commercial,9,558500
+Kvantify Binding,Commercial,10,603500
+Kvantify Binding,Commercial,11,654500
+Kvantify Binding,Commercial,12,690500
+Kvantify Binding,Commercial,13,703000
+Kvantify Binding,Commercial,14,784500
+Kvantify Binding,Commercial,15,825500
+Kvantify Binding,Commercial,16,840000
+Kvantify Binding,Commercial,17,901000
+Kvantify Binding,Commercial,18,920000
+Kvantify Binding,Commercial,19,926500
+Kvantify Binding,Commercial,20,1035500
+Kvantify Binding,Commercial,21,1067000
+Kvantify Binding,Commercial,22,1078000
+Kvantify Binding,Commercial,23,1108000
+Kvantify Binding,Commercial,24,1111500
+Kvantify Binding,Commercial,25,1207500
+Kvantify Unbinding,Academic,1,26500
+Kvantify Unbinding,Academic,2,49300
+Kvantify Unbinding,Academic,3,69200
+Kvantify Unbinding,Academic,4,87400
+Kvantify Unbinding,Academic,5,102200
+Kvantify Unbinding,Academic,6,117200
+Kvantify Unbinding,Academic,7,134900
+Kvantify Unbinding,Academic,8,159600
+Kvantify Unbinding,Academic,9,170600
+Kvantify Unbinding,Academic,10,180400
+Kvantify Unbinding,Academic,11,204600
+Kvantify Unbinding,Academic,12,219500
+Kvantify Unbinding,Academic,13,234000
+Kvantify Unbinding,Academic,14,245500
+Kvantify Unbinding,Academic,15,264100
+Kvantify Unbinding,Academic,16,285800
+Kvantify Unbinding,Academic,17,287800
+Kvantify Unbinding,Academic,18,306000
+Kvantify Unbinding,Academic,19,331000
+Kvantify Unbinding,Academic,20,331100
+Kvantify Unbinding,Academic,21,353600
+Kvantify Unbinding,Academic,22,374700
+Kvantify Unbinding,Academic,23,374800
+Kvantify Unbinding,Academic,24,387900
+Kvantify Unbinding,Academic,25,413900
+Kvantify Unbinding,Commercial,1,61000
+Kvantify Unbinding,Commercial,2,110000
+Kvantify Unbinding,Commercial,3,167500
+Kvantify Unbinding,Commercial,4,211500
+Kvantify Unbinding,Commercial,5,262000
+Kvantify Unbinding,Commercial,6,296500
+Kvantify Unbinding,Commercial,7,358500
+Kvantify Unbinding,Commercial,8,377500
+Kvantify Unbinding,Commercial,9,436500
+Kvantify Unbinding,Commercial,10,467000
+Kvantify Unbinding,Commercial,11,507500
+Kvantify Unbinding,Commercial,12,573500
+Kvantify Unbinding,Commercial,13,612500
+Kvantify Unbinding,Commercial,14,641000
+Kvantify Unbinding,Commercial,15,677000
+Kvantify Unbinding,Commercial,16,723500
+Kvantify Unbinding,Commercial,17,780000
+Kvantify Unbinding,Commercial,18,831500
+Kvantify Unbinding,Commercial,19,832000
+Kvantify Unbinding,Commercial,20,868500
+Kvantify Unbinding,Commercial,21,943500
+Kvantify Unbinding,Commercial,22,959500
+Kvantify Unbinding,Commercial,23,977500
+Kvantify Unbinding,Commercial,24,1018000
+Kvantify Unbinding,Commercial,25,1061000
+Kvantify Qrunch,Academic,1,35000
+Kvantify Qrunch,Academic,2,63000
+Kvantify Qrunch,Academic,3,93000
+Kvantify Qrunch,Academic,4,116000
+Kvantify Qrunch,Academic,5,149000
+Kvantify Qrunch,Academic,6,166000
+Kvantify Qrunch,Academic,7,200500
+Kvantify Qrunch,Academic,8,216000
+Kvantify Qrunch,Academic,9,233500
+Kvantify Qrunch,Academic,10,264000
+Kvantify Qrunch,Academic,11,290000
+Kvantify Qrunch,Academic,12,311500
+Kvantify Qrunch,Academic,13,338000
+Kvantify Qrunch,Academic,14,357000
+Kvantify Qrunch,Academic,15,372000
+Kvantify Qrunch,Academic,16,415500
+Kvantify Qrunch,Academic,17,416000
+Kvantify Qrunch,Academic,18,438000
+Kvantify Qrunch,Academic,19,470000
+Kvantify Qrunch,Academic,20,475000
+Kvantify Qrunch,Academic,21,513500
+Kvantify Qrunch,Academic,22,522000
+Kvantify Qrunch,Academic,23,544000
+Kvantify Qrunch,Academic,24,596000
+Kvantify Qrunch,Academic,25,605000
+Kvantify Qrunch,Commercial,1,86000
+Kvantify Qrunch,Commercial,2,157500
+Kvantify Qrunch,Commercial,3,222000
+Kvantify Qrunch,Commercial,4,284500
+Kvantify Qrunch,Commercial,5,346500
+Kvantify Qrunch,Commercial,6,401000
+Kvantify Qrunch,Commercial,7,453500
+Kvantify Qrunch,Commercial,8,503500
+Kvantify Qrunch,Commercial,9,572500
+Kvantify Qrunch,Commercial,10,581500
+Kvantify Qrunch,Commercial,11,635000
+Kvantify Qrunch,Commercial,12,674500
+Kvantify Qrunch,Commercial,13,724000
+Kvantify Qrunch,Commercial,14,797500
+Kvantify Qrunch,Commercial,15,880500
+Kvantify Qrunch,Commercial,16,931000
+Kvantify Qrunch,Commercial,17,961500
+Kvantify Qrunch,Commercial,18,1007500
+Kvantify Qrunch,Commercial,19,1022500
+Kvantify Qrunch,Commercial,20,1061500
+Kvantify Qrunch,Commercial,21,1117000
+Kvantify Qrunch,Commercial,22,1183500
+Kvantify Qrunch,Commercial,23,1235000
+Kvantify Qrunch,Commercial,24,1296000
+Kvantify Qrunch,Commercial,25,1306500
+XFEP,Academic,1,49500
+XFEP,Academic,2,81000
+XFEP,Academic,3,112000
+XFEP,Academic,4,144500
+XFEP,Academic,5,162000
+XFEP,Academic,6,195000
+XFEP,Academic,7,219000
+XFEP,Academic,8,240000
+XFEP,Academic,9,254000
+XFEP,Academic,10,276000
+XFEP,Academic,11,304000
+XFEP,Academic,12,314000
+XFEP,Academic,13,348000
+XFEP,Academic,14,354500
+XFEP,Academic,15,374000
+XFEP,Academic,16,377500
+XFEP,Academic,17,424500
+XFEP,Academic,18,425000
+XFEP,Academic,19,447500
+XFEP,Academic,20,448000
+XFEP,Academic,21,470500
+XFEP,Academic,22,509000
+XFEP,Academic,23,509500
+XFEP,Academic,24,526000
+XFEP,Academic,25,539000
+XFEP,Commercial,1,97000
+XFEP,Commercial,2,171000
+XFEP,Commercial,3,222500
+XFEP,Commercial,4,271000
+XFEP,Commercial,5,336500
+XFEP,Commercial,6,371000
+XFEP,Commercial,7,429000
+XFEP,Commercial,8,496500
+XFEP,Commercial,9,521000
+XFEP,Commercial,10,562000
+XFEP,Commercial,11,590500
+XFEP,Commercial,12,630500
+XFEP,Commercial,13,714000
+XFEP,Commercial,14,734000
+XFEP,Commercial,15,766000
+XFEP,Commercial,16,812500
+XFEP,Commercial,17,824500
+XFEP,Commercial,18,909000
+XFEP,Commercial,19,956000
+XFEP,Commercial,20,970000
+XFEP,Commercial,21,1003000
+XFEP,Commercial,22,1077000
+XFEP,Commercial,23,1077500
+XFEP,Commercial,24,1078000
+XFEP,Commercial,25,1179000
+TransGene IT,Academic,1,46500
+TransGene IT,Academic,2,82000
+TransGene IT,Academic,3,109000
+TransGene IT,Academic,4,140000
+TransGene IT,Academic,5,171500
+TransGene IT,Academic,6,189500
+TransGene IT,Academic,7,222000
+TransGene IT,Academic,8,235000
+TransGene IT,Academic,9,259500
+TransGene IT,Academic,10,294500
+TransGene IT,Academic,11,313500
+TransGene IT,Academic,12,324000
+TransGene IT,Academic,13,349500
+TransGene IT,Academic,14,390000
+TransGene IT,Academic,15,390500
+TransGene IT,Academic,16,409000
+TransGene IT,Academic,17,427500
+TransGene IT,Academic,18,461000
+TransGene IT,Academic,19,485500
+TransGene IT,Academic,20,514500
+TransGene IT,Academic,21,518500
+TransGene IT,Academic,22,546500
+TransGene IT,Academic,23,580000
+TransGene IT,Academic,24,589500
+TransGene IT,Academic,25,590000
+TransGene IT,Commercial,1,102500
+TransGene IT,Commercial,2,175500
+TransGene IT,Commercial,3,245500
+TransGene IT,Commercial,4,304500
+TransGene IT,Commercial,5,359500
+TransGene IT,Commercial,6,405000
+TransGene IT,Commercial,7,462000
+TransGene IT,Commercial,8,523500
+TransGene IT,Commercial,9,567500
+TransGene IT,Commercial,10,593000
+TransGene IT,Commercial,11,672000
+TransGene IT,Commercial,12,726500
+TransGene IT,Commercial,13,727000
+TransGene IT,Commercial,14,791500
+TransGene IT,Commercial,15,817500
+TransGene IT,Commercial,16,901500
+TransGene IT,Commercial,17,902000
+TransGene IT,Commercial,18,930000
+TransGene IT,Commercial,19,1025000
+TransGene IT,Commercial,20,1058000
+TransGene IT,Commercial,21,1075500
+TransGene IT,Commercial,22,1147000
+TransGene IT,Commercial,23,1178500
+TransGene IT,Commercial,24,1205000
+TransGene IT,Commercial,25,1292500
+Dotmatics,Academic,1,23000
+Dotmatics,Academic,2,42100
+Dotmatics,Academic,3,58000
+Dotmatics,Academic,4,74300
+Dotmatics,Academic,5,92800
+Dotmatics,Academic,6,106400
+Dotmatics,Academic,7,119500
+Dotmatics,Academic,8,132500
+Dotmatics,Academic,9,153100
+Dotmatics,Academic,10,169000
+Dotmatics,Academic,11,182200
+Dotmatics,Academic,12,185400
+Dotmatics,Academic,13,205600
+Dotmatics,Academic,14,217400
+Dotmatics,Academic,15,239500
+Dotmatics,Academic,16,245800
+Dotmatics,Academic,17,253600
+Dotmatics,Academic,18,278300
+Dotmatics,Academic,19,289000
+Dotmatics,Academic,20,305100
+Dotmatics,Academic,21,310900
+Dotmatics,Academic,22,311000
+Dotmatics,Academic,23,322100
+Dotmatics,Academic,24,331600
+Dotmatics,Academic,25,349600
+Dotmatics,Commercial,1,42500
+Dotmatics,Commercial,2,80500
+Dotmatics,Commercial,3,109500
+Dotmatics,Commercial,4,148000
+Dotmatics,Commercial,5,171500
+Dotmatics,Commercial,6,210500
+Dotmatics,Commercial,7,229000
+Dotmatics,Commercial,8,261500
+Dotmatics,Commercial,9,308000
+Dotmatics,Commercial,10,327000
+Dotmatics,Commercial,11,365500
+Dotmatics,Commercial,12,388500
+Dotmatics,Commercial,13,422000
+Dotmatics,Commercial,14,445000
+Dotmatics,Commercial,15,480500
+Dotmatics,Commercial,16,494500
+Dotmatics,Commercial,17,512000
+Dotmatics,Commercial,18,528000
+Dotmatics,Commercial,19,561000
+Dotmatics,Commercial,20,598500
+Dotmatics,Commercial,21,605500
+Dotmatics,Commercial,22,651000
+Dotmatics,Commercial,23,685000
+Dotmatics,Commercial,24,713000
+Dotmatics,Commercial,25,735000
+LUMA,Academic,1,13500
+LUMA,Academic,2,24600
+LUMA,Academic,3,36100
+LUMA,Academic,4,47700
+LUMA,Academic,5,55000
+LUMA,Academic,6,69100
+LUMA,Academic,7,77200
+LUMA,Academic,8,87800
+LUMA,Academic,9,95800
+LUMA,Academic,10,108600
+LUMA,Academic,11,117600
+LUMA,Academic,12,119200
+LUMA,Academic,13,130200
+LUMA,Academic,14,141500
+LUMA,Academic,15,155600
+LUMA,Academic,16,161000
+LUMA,Academic,17,169900
+LUMA,Academic,18,172800
+LUMA,Academic,19,186900
+LUMA,Academic,20,198900
+LUMA,Academic,21,199400
+LUMA,Academic,22,220500
+LUMA,Academic,23,220600
+LUMA,Academic,24,237400
+LUMA,Academic,25,240600
+LUMA,Commercial,1,24500
+LUMA,Commercial,2,43500
+LUMA,Commercial,3,62000
+LUMA,Commercial,4,81000
+LUMA,Commercial,5,100200
+LUMA,Commercial,6,112500
+LUMA,Commercial,7,134300
+LUMA,Commercial,8,146700
+LUMA,Commercial,9,160800
+LUMA,Commercial,10,177400
+LUMA,Commercial,11,195900
+LUMA,Commercial,12,212000
+LUMA,Commercial,13,220200
+LUMA,Commercial,14,240900
+LUMA,Commercial,15,268000
+LUMA,Commercial,16,268100
+LUMA,Commercial,17,294100
+LUMA,Commercial,18,298800
+LUMA,Commercial,19,312400
+LUMA,Commercial,20,325700
+LUMA,Commercial,21,351900
+LUMA,Commercial,22,357200
+LUMA,Commercial,23,383300
+LUMA,Commercial,24,383400
+LUMA,Commercial,25,408800
+Nanome,Academic,1,32500
+Nanome,Academic,2,56500
+Nanome,Academic,3,79500
+Nanome,Academic,4,105500
+Nanome,Academic,5,128500
+Nanome,Academic,6,149000
+Nanome,Academic,7,164500
+Nanome,Academic,8,182500
+Nanome,Academic,9,197000
+Nanome,Academic,10,212000
+Nanome,Academic,11,244000
+Nanome,Academic,12,248000
+Nanome,Academic,13,273500
+Nanome,Academic,14,282000
+Nanome,Academic,15,312500
+Nanome,Academic,16,321000
+Nanome,Academic,17,355000
+Nanome,Academic,18,360000
+Nanome,Academic,19,380500
+Nanome,Academic,20,404500
+Nanome,Academic,21,405000
+Nanome,Academic,22,420000
+Nanome,Academic,23,429000
+Nanome,Academic,24,467500
+Nanome,Academic,25,471000
+Nanome,Commercial,1,75000
+Nanome,Commercial,2,138000
+Nanome,Commercial,3,200000
+Nanome,Commercial,4,251000
+Nanome,Commercial,5,304000
+Nanome,Commercial,6,355000
+Nanome,Commercial,7,397000
+Nanome,Commercial,8,465500
+Nanome,Commercial,9,503500
+Nanome,Commercial,10,537500
+Nanome,Commercial,11,618500
+Nanome,Commercial,12,656000
+Nanome,Commercial,13,678000
+Nanome,Commercial,14,766000
+Nanome,Commercial,15,766500
+Nanome,Commercial,16,823000
+Nanome,Commercial,17,875000
+Nanome,Commercial,18,909000
+Nanome,Commercial,19,1002500
+Nanome,Commercial,20,1009000
+Nanome,Commercial,21,1045500
+Nanome,Commercial,22,1090000
+Nanome,Commercial,23,1138500
+Nanome,Commercial,24,1197000
+Nanome,Commercial,25,1204500
+MARA,Academic,1,20500
+MARA,Academic,2,37200
+MARA,Academic,3,51700
+MARA,Academic,4,66500
+MARA,Academic,5,79600
+MARA,Academic,6,92400
+MARA,Academic,7,101800
+MARA,Academic,8,120300
+MARA,Academic,9,135800
+MARA,Academic,10,140100
+MARA,Academic,11,155100
+MARA,Academic,12,163300
+MARA,Academic,13,175700
+MARA,Academic,14,183500
+MARA,Academic,15,208700
+MARA,Academic,16,216600
+MARA,Academic,17,222400
+MARA,Academic,18,226600
+MARA,Academic,19,248200
+MARA,Academic,20,263100
+MARA,Academic,21,263200
+MARA,Academic,22,288800
+MARA,Academic,23,295900
+MARA,Academic,24,296000
+MARA,Academic,25,314400
+MARA,Commercial,1,41500
+MARA,Commercial,2,72500
+MARA,Commercial,3,98000
+MARA,Commercial,4,118500
+MARA,Commercial,5,140500
+MARA,Commercial,6,166500
+MARA,Commercial,7,185000
+MARA,Commercial,8,206000
+MARA,Commercial,9,212500
+MARA,Commercial,10,233000
+MARA,Commercial,11,256500
+MARA,Commercial,12,266000
+MARA,Commercial,13,290000
+MARA,Commercial,14,313500
+MARA,Commercial,15,336000
+MARA,Commercial,16,336500
+MARA,Commercial,17,358500
+MARA,Commercial,18,370000
+MARA,Commercial,19,402000
+MARA,Commercial,20,402500
+MARA,Commercial,21,408000
+MARA,Commercial,22,432000
+MARA,Commercial,23,443500
+MARA,Commercial,24,475000
+MARA,Commercial,25,475500
+FormDEM,Academic,1,47500
+FormDEM,Academic,2,81000
+FormDEM,Academic,3,106500
+FormDEM,Academic,4,139000
+FormDEM,Academic,5,156000
+FormDEM,Academic,6,180500
+FormDEM,Academic,7,217500
+FormDEM,Academic,8,228000
+FormDEM,Academic,9,255000
+FormDEM,Academic,10,285500
+FormDEM,Academic,11,306000
+FormDEM,Academic,12,312500
+FormDEM,Academic,13,330000
+FormDEM,Academic,14,353000
+FormDEM,Academic,15,381000
+FormDEM,Academic,16,385500
+FormDEM,Academic,17,406000
+FormDEM,Academic,18,440000
+FormDEM,Academic,19,463500
+FormDEM,Academic,20,464000
+FormDEM,Academic,21,487000
+FormDEM,Academic,22,523000
+FormDEM,Academic,23,528000
+FormDEM,Academic,24,535500
+FormDEM,Academic,25,571000
+FormDEM,Commercial,1,119500
+FormDEM,Commercial,2,201000
+FormDEM,Commercial,3,281000
+FormDEM,Commercial,4,372000
+FormDEM,Commercial,5,434000
+FormDEM,Commercial,6,501000
+FormDEM,Commercial,7,541500
+FormDEM,Commercial,8,633000
+FormDEM,Commercial,9,709500
+FormDEM,Commercial,10,768000
+FormDEM,Commercial,11,782000
+FormDEM,Commercial,12,869500
+FormDEM,Commercial,13,901500
+FormDEM,Commercial,14,1006500
+FormDEM,Commercial,15,1048000
+FormDEM,Commercial,16,1056500
+FormDEM,Commercial,17,1162500
+FormDEM,Commercial,18,1180500
+FormDEM,Commercial,19,1222000
+FormDEM,Commercial,20,1305500
+FormDEM,Commercial,21,1383500
+FormDEM,Commercial,22,1438500
+FormDEM,Commercial,23,1439000
+FormDEM,Commercial,24,1497500
+FormDEM,Commercial,25,1554000
+XtalGazer,Academic,1,34500
+XtalGazer,Academic,2,62500
+XtalGazer,Academic,3,87000
+XtalGazer,Academic,4,108000
+XtalGazer,Academic,5,128000
+XtalGazer,Academic,6,149500
+XtalGazer,Academic,7,162500
+XtalGazer,Academic,8,188000
+XtalGazer,Academic,9,203000
+XtalGazer,Academic,10,223000
+XtalGazer,Academic,11,251500
+XtalGazer,Academic,12,252500
+XtalGazer,Academic,13,283000
+XtalGazer,Academic,14,298000
+XtalGazer,Academic,15,307500
+XtalGazer,Academic,16,336500
+XtalGazer,Academic,17,360000
+XtalGazer,Academic,18,360500
+XtalGazer,Academic,19,394500
+XtalGazer,Academic,20,408000
+XtalGazer,Academic,21,408500
+XtalGazer,Academic,22,414500
+XtalGazer,Academic,23,444500
+XtalGazer,Academic,24,448000
+XtalGazer,Academic,25,486000
+XtalGazer,Commercial,1,71500
+XtalGazer,Commercial,2,120500
+XtalGazer,Commercial,3,166000
+XtalGazer,Commercial,4,208500
+XtalGazer,Commercial,5,258500
+XtalGazer,Commercial,6,293500
+XtalGazer,Commercial,7,317000
+XtalGazer,Commercial,8,357500
+XtalGazer,Commercial,9,404000
+XtalGazer,Commercial,10,443500
+XtalGazer,Commercial,11,475000
+XtalGazer,Commercial,12,495500
+XtalGazer,Commercial,13,513000
+XtalGazer,Commercial,14,584500
+XtalGazer,Commercial,15,585000
+XtalGazer,Commercial,16,612000
+XtalGazer,Commercial,17,679000
+XtalGazer,Commercial,18,705500
+XtalGazer,Commercial,19,725000
+XtalGazer,Commercial,20,741000
+XtalGazer,Commercial,21,765500
+XtalGazer,Commercial,22,799000
+XtalGazer,Commercial,23,828500
+XtalGazer,Commercial,24,843500
+XtalGazer,Commercial,25,854500
+PatSnap,Academic,1,52500
+PatSnap,Academic,2,94000
+PatSnap,Academic,3,132500
+PatSnap,Academic,4,165500
+PatSnap,Academic,5,200500
+PatSnap,Academic,6,239000
+PatSnap,Academic,7,263500
+PatSnap,Academic,8,311500
+PatSnap,Academic,9,329000
+PatSnap,Academic,10,378000
+PatSnap,Academic,11,396500
+PatSnap,Academic,12,424000
+PatSnap,Academic,13,458000
+PatSnap,Academic,14,508500
+PatSnap,Academic,15,509000
+PatSnap,Academic,16,549000
+PatSnap,Academic,17,568500
+PatSnap,Academic,18,626500
+PatSnap,Academic,19,647000
+PatSnap,Academic,20,685500
+PatSnap,Academic,21,693000
+PatSnap,Academic,22,735000
+PatSnap,Academic,23,735500
+PatSnap,Academic,24,777000
+PatSnap,Academic,25,778500
+PatSnap,Commercial,1,109500
+PatSnap,Commercial,2,197500
+PatSnap,Commercial,3,275000
+PatSnap,Commercial,4,367500
+PatSnap,Commercial,5,423000
+PatSnap,Commercial,6,490500
+PatSnap,Commercial,7,576500
+PatSnap,Commercial,8,660000
+PatSnap,Commercial,9,702000
+PatSnap,Commercial,10,804000
+PatSnap,Commercial,11,862500
+PatSnap,Commercial,12,880500
+PatSnap,Commercial,13,951000
+PatSnap,Commercial,14,1062500
+PatSnap,Commercial,15,1102000
+PatSnap,Commercial,16,1166000
+PatSnap,Commercial,17,1232500
+PatSnap,Commercial,18,1258000
+PatSnap,Commercial,19,1399000
+PatSnap,Commercial,20,1399500
+PatSnap,Commercial,21,1421000
+PatSnap,Commercial,22,1536500
+PatSnap,Commercial,23,1619500
+PatSnap,Commercial,24,1707500
+PatSnap,Commercial,25,1727000
+PatSight,Academic,1,46500
+PatSight,Academic,2,80500
+PatSight,Academic,3,112500
+PatSight,Academic,4,145500
+PatSight,Academic,5,176000
+PatSight,Academic,6,200500
+PatSight,Academic,7,231500
+PatSight,Academic,8,267000
+PatSight,Academic,9,283000
+PatSight,Academic,10,302000
+PatSight,Academic,11,339500
+PatSight,Academic,12,351000
+PatSight,Academic,13,379000
+PatSight,Academic,14,422000
+PatSight,Academic,15,448000
+PatSight,Academic,16,468000
+PatSight,Academic,17,468500
+PatSight,Academic,18,505500
+PatSight,Academic,19,544000
+PatSight,Academic,20,546000
+PatSight,Academic,21,546500
+PatSight,Academic,22,573500
+PatSight,Academic,23,606000
+PatSight,Academic,24,652000
+PatSight,Academic,25,672000
+PatSight,Commercial,1,101000
+PatSight,Commercial,2,166000
+PatSight,Commercial,3,238500
+PatSight,Commercial,4,289500
+PatSight,Commercial,5,345000
+PatSight,Commercial,6,407000
+PatSight,Commercial,7,446000
+PatSight,Commercial,8,496500
+PatSight,Commercial,9,531000
+PatSight,Commercial,10,591500
+PatSight,Commercial,11,606500
+PatSight,Commercial,12,683500
+PatSight,Commercial,13,730000
+PatSight,Commercial,14,730500
+PatSight,Commercial,15,804000
+PatSight,Commercial,16,833000
+PatSight,Commercial,17,880500
+PatSight,Commercial,18,881000
+PatSight,Commercial,19,918500
+PatSight,Commercial,20,957000
+PatSight,Commercial,21,1019500
+PatSight,Commercial,22,1035500
+PatSight,Commercial,23,1087500
+PatSight,Commercial,24,1088000
+PatSight,Commercial,25,1155500

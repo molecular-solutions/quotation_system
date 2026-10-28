@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="dataPage()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main x-cloak>
+    <div class="head"><div><h1>Data</h1>
+      <div class="sub">Everything quotations are built from. Upload a file or edit the table directly. Prices by number of users are on the <a href="/prices">Prices</a> page.</div></div></div>
+
+    <div class="tabs">
+      <template x-for="t in tables" :key="t.name"><button :class="{on: tab === t.name}" @click="switchTab(t.name)" x-text="t.title"></button></template>
+      <button :class="{on: tab === 'blocks'}" @click="switchTab('blocks')">Catalog blocks</button>
+    </div>
+
+    <!-- catalog block reference -->
+    <section class="card" x-show="tab === 'blocks'" x-cloak>
+      <p class="hint" style="margin-top:0">These are the sections of “Our Software Offering” in the Word template. When a product is quoted, the blocks listed
+        in its <b>Catalog Blocks</b> column turn red in the document. Use the keys below in that column (comma-separated).</p>
+      <table><thead><tr><th>Key</th><th>Section in the document</th></tr></thead>
+        <tbody><template x-for="b in blocks" :key="b.key"><tr><td><code x-text="b.key"></code></td><td x-text="b.label"></td></tr></template></tbody></table>
+    </section>
+
+    <section x-show="tab !== 'blocks' && cur" x-cloak>
+      <!-- upload -->
+      <div class="card">
+        <div class="row" style="align-items:center">
+          <div class="drop grow" :class="{over}" @dragover.prevent="over = true" @dragleave="over = false" @drop.prevent="over = false; pick($event.dataTransfer.files[0])">
+            <b>Drop a .csv or .xlsx file here</b> or <button class="link" @click="$refs.file.click()">choose a file</button>
+            <input type="file" x-ref="file" accept=".csv,.xlsx,.xlsm" hidden @change="pick($event.target.files[0]); $event.target.value = ''">
+            <div class="hint" style="margin-top:4px">Existing items are updated by <span x-text="tab === 'customers' ? 'name + email' : tab === 'packages' ? 'package + product' : 'product name'"></span>; nothing is deleted.</div>
+          </div>
+          <div style="flex:0 0 auto;display:grid;gap:8px">
+            <a class="btn ghost" style="text-decoration:none;text-align:center" :href="`/api/data/${tab}/template.csv`">⬇ Template (.csv)</a>
+            <div style="display:flex;gap:8px"><a class="btn ghost sm" style="text-decoration:none" :href="`/api/data/${tab}/export.csv`">Export CSV</a>
+              <a class="btn ghost sm" style="text-decoration:none" :href="`/api/data/${tab}/export.xlsx`">Export Excel</a></div>
+          </div>
+        </div>
+        <div class="err" x-show="uploadError" x-text="uploadError"></div>
+      </div>
+
+      <!-- grid -->
+      <div class="card">
+        <div class="row" style="margin-bottom:12px;align-items:center">
+          <div class="grow"><input type="search" placeholder="Filter…" x-model="filter"></div>
+          <div style="flex:0 0 auto;display:flex;gap:8px;align-items:center">
+            <span class="hint" x-show="dirtyCount" x-text="dirtyCount + (dirtyCount === 1 ? ' unsaved row' : ' unsaved rows')"></span>
+            <button class="btn ghost" @click="addRow()">＋ Add row</button>
+            <button class="btn" @click="saveAll()" :disabled="!dirtyCount || !!saving"><span x-show="saving" class="spin"></span> Save changes</button>
+          </div>
+        </div>
+        <div class="gridwrap"><table class="grid">
+          <thead><tr><th></th><template x-for="c in (cur?.columns || [])" :key="c.key"><th x-text="c.label + (c.required ? ' *' : '')"></th></template><th class="act"></th></tr></thead>
+          <tbody>
+            <template x-for="r in visibleRows" :key="r._k">
+              <tr :class="{dirty: r._dirty, newrow: !r.id}" @keydown.enter="save(r)">
+                <td style="width:28px;text-align:center"><span x-show="r._busy" class="spin"></span></td>
+                <template x-for="c in (cur?.columns || [])" :key="c.key">
+                  <td>
+                    <template x-if="c.kind === 'bool'"><input type="checkbox" x-model="r[c.key]" @change="r._dirty = true"></template>
+                    <template x-if="c.kind === 'choice'"><select x-model="r[c.key]" @change="r._dirty = true" :class="{bad: r._err && r._err[c.key]}" style="min-width:150px">
+                      <option value=""></option><template x-for="o in c.choices" :key="o"><option :value="o" x-text="choiceLabel(o)"></option></template></select></template>
+                    <template x-if="c.kind !== 'bool' && c.kind !== 'choice'"><input :type="c.kind === 'money' ? 'number' : 'text'" :step="c.kind === 'money' ? '0.01' : null"
+                        x-model="r[c.key]" @input="r._dirty = true" :class="{bad: r._err && r._err[c.key]}" :title="r._err && r._err[c.key]"
+                        :style="'min-width:' + (colw[c.key] || 100) + 'px'"></template>
+                    <div class="err" style="padding:0 6px" x-show="r._err && r._err[c.key]" x-text="r._err && r._err[c.key]"></div>
+                  </td>
+                </template>
+                <td class="act" style="white-space:nowrap">
+                  <button class="btn sm" x-show="r._dirty" @click="save(r)" :disabled="r._busy">Save</button>
+                  <button class="x" @click="remove(r)" :title="tab === 'products' ? 'Hide (mark inactive)' : 'Delete'">✕</button>
+                </td>
+              </tr>
+            </template>
+          </tbody></table></div>
+        <div class="hint" style="margin-top:8px" x-show="!rows.length">Nothing here yet — upload a file or add a row.</div>
+        <div class="hint" style="margin-top:8px" x-show="tab === 'products'">Prices are no longer here: they depend on the number of users and are entered on the <a href="/prices"><b>Prices</b> page</a>. Edit any cell, then press <b>Save changes</b> (or Enter in a row). The product name must be unique. “Description” prints under the name on the quotation. “✕” hides a product (it stays on old quotes); untick Active to bring it back later.</div>
+      </div>
+
+      <div class="card" x-show="history.length">
+        <h2>Recent uploads</h2>
+        <table><thead><tr><th>When</th><th>Table</th><th>File</th><th class="num">Imported</th><th class="num">Skipped</th></tr></thead>
+          <tbody><template x-for="h in history" :key="h.at + h.filename"><tr><td x-text="h.at"></td><td x-text="h.table"></td><td x-text="h.filename"></td>
+            <td class="num ok" x-text="h.ok"></td><td class="num" :class="{badtxt: h.failed}" x-text="h.failed"></td></tr></template></tbody></table>
+      </div>
+    </section>
+  </main>
+
+  <!-- upload preview -->
+  <div class="veil" x-show="prev" x-cloak @keydown.escape.window="prev = null">
+    <div class="modal" style="max-height:90vh" x-show="prev">
+      <header><b>Check before importing — <span x-text="prev && prev.filename"></span></b><button class="x" @click="prev = null">✕</button></header>
+      <div class="body">
+        <p style="margin-top:0"><span class="ok" x-text="prev && prev.ok_count"></span> <span x-text="prev && prev.ok_count === 1 ? 'row is' : 'rows are'"></span> ready to import<template x-if="prev && prev.failed_count">
+          <span>, <span class="badtxt" x-text="prev.failed_count + ' have problems'"></span> and will be skipped</span></template>.
+          <template x-if="prev && prev.ignored_columns.length"><span class="hint"> Ignored columns: <span x-text="prev.ignored_columns.join(', ')"></span>.</span></template></p>
+        <div class="gridwrap" style="max-height:50vh"><table>
+          <thead><tr><th>Row</th><th>Status</th><template x-for="c in (prev ? prev.columns : [])" :key="c"><th x-text="c"></th></template></tr></thead>
+          <tbody><template x-for="r in (prev ? prev.rows : [])" :key="r.n"><tr :class="{rowbad: Object.keys(r.errors).length}">
+            <td x-text="r.n"></td>
+            <td><span class="ok" x-show="!Object.keys(r.errors).length">OK</span>
+              <span class="badtxt" x-show="Object.keys(r.errors).length" x-text="Object.entries(r.errors).map(([k, v]) => (k === '_row' ? '' : colLabel(k) + ': ') + v).join('; ')"></span></td>
+            <template x-for="c in (cur ? (cur?.columns || []).filter(c => prev.columns.includes(c.label)) : [])" :key="c.key">
+              <td x-text="fmt(r.data[c.key])"></td></template>
+          </tr></template></tbody></table></div>
+      </div>
+      <div style="padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn ghost" @click="prev = null">Cancel</button>
+        <button class="btn" :disabled="!prev || !prev.ok_count || importing" @click="commit()">
+          <span x-show="importing" class="spin"></span> Import <span x-text="prev ? prev.ok_count : 0"></span> <span x-text="prev && prev.ok_count === 1 ? 'row' : 'rows'"></span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script src="/assets/data.js"></script>
+  <script>topbar('Data')</script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

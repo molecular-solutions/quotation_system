@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prices · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="pricesPage()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main x-cloak>
+    <div class="head"><div><h1>Prices</h1>
+      <div class="sub">The price for each number of users, per bundle. Type each price — there is no formula. Years are multiplied on the quotation.</div></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn ghost" @click="$refs.file.click()">⬆ Upload prices</button>
+        <input type="file" x-ref="file" accept=".csv,.xlsx,.xlsm" hidden @change="pick($event.target.files[0]); $event.target.value = ''">
+        <button class="btn ghost" onclick="location.href='/api/prices/export.xlsx'">⬇ Excel</button>
+        <button class="btn ghost" onclick="location.href='/api/prices/export.csv'">⬇ CSV</button>
+      </div>
+    </div>
+    <div class="err" x-show="uploadError" x-text="uploadError"></div>
+
+    <div class="pricegrid">
+      <!-- products by vendor -->
+      <aside class="card plist">
+        <input type="search" placeholder="Find a product…" x-model="filter">
+        <template x-for="g in groups" :key="g.vendor">
+          <div>
+            <div class="vendor" x-text="g.vendor || 'No vendor'"></div>
+            <template x-for="p in g.items" :key="p.id">
+              <button type="button" class="pitem" :class="{on: cur && cur.id === p.id}" @click="open(p.id)">
+                <span x-text="p.name"></span>
+                <span class="st" :class="statusClass(p)" :title="statusTitle(p)" x-text="statusText(p)"></span>
+              </button>
+            </template>
+          </div>
+        </template>
+        <div class="hint" x-show="!groups.length">No products.</div>
+      </aside>
+
+      <!-- one product -->
+      <section class="card" x-show="cur" x-cloak>
+        <template x-if="cur">
+          <div>
+            <h2 style="margin:0" x-text="cur.name"></h2>
+            <div class="hint" x-text="(cur.vendor || 'No vendor') + ' · ' + (cur.max_users === 1 ? 'licence: one price' : 'prices for 1 – ' + cur.max_users + ' users')"></div>
+            <div class="tabs" style="margin:14px 0 10px">
+              <template x-for="t in tiers" :key="t"><button :class="{on: tier === t}" @click="tier = t" x-text="t + (dirty(t) ? ' •' : '')"></button></template>
+            </div>
+            <table class="pricetable">
+              <thead><tr><th>Users</th><th class="num">Annual price (₹) for this many users</th><th class="num">Per user</th><th></th></tr></thead>
+              <tbody>
+                <template x-for="n in userRange" :key="n">
+                  <tr>
+                    <td x-text="cur.max_users === 1 ? 'Licence' : n"></td>
+                    <td class="num"><input type="text" inputmode="decimal" :data-n="n" x-model="edit[tier][n]" @input="errs[tier + n] = ''"
+                          @paste.prevent="paste($event, n)" :class="{bad: errs[tier + n]}" placeholder="—"></td>
+                    <td class="num hint" x-text="perUser(n)"></td>
+                    <td class="rowwarn"><span class="badtxt" x-text="errs[tier + n] || rowWarn(n)"></span></td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+            <div class="hint" style="margin-top:8px">Select a cell and paste a column from Excel to fill downwards. Leave a cell empty if there is no price for that many users;
+              for more than <span x-text="maxUsers"></span> users the price is typed on the quotation.</div>
+            <div class="savebar">
+              <button class="btn" :disabled="saving || !anyDirty" @click="save()"><span x-show="saving" class="spin"></span> Save prices</button>
+              <button class="btn ghost" :disabled="!anyDirty" @click="reset()">Undo changes</button>
+              <span class="hint" x-show="anyDirty">Unsaved changes</span>
+            </div>
+          </div>
+        </template>
+      </section>
+      <section class="card" x-show="!cur" x-cloak><div class="hint">Choose a product on the left.</div></section>
+    </div>
+  </main>
+
+  <!-- upload preview -->
+  <div class="veil" x-show="prev" x-cloak @keydown.escape.window="prev = null">
+    <div class="modal" style="max-height:90vh" x-show="prev">
+      <header><b>Check before importing — <span x-text="prev && prev.filename"></span></b><button class="x" @click="prev = null">✕</button></header>
+      <div class="body">
+        <p style="margin-top:0"><span class="ok" x-text="prev && prev.ok_count"></span> prices for <span x-text="prev && prev.products"></span> products are ready to import<template x-if="prev && prev.failed_count">
+          <span>, <span class="badtxt" x-text="prev.failed_count + ' have problems'"></span> and will be skipped</span></template>. Existing prices for the same product, bundle and users are replaced; nothing is deleted.</p>
+        <div class="gridwrap" style="max-height:45vh" x-show="prev && prev.problems.length"><table>
+          <thead><tr><th>Row</th><th>Product</th><th>Bundle</th><th>Users</th><th>Problem</th></tr></thead>
+          <tbody><template x-for="r in (prev ? prev.problems : [])" :key="r.n + r.product + r.tier + r.users"><tr class="rowbad">
+            <td x-text="r.n"></td><td x-text="r.product"></td><td x-text="r.tier"></td><td x-text="r.users"></td><td class="badtxt" x-text="r.error"></td></tr></template></tbody></table></div>
+        <p class="hint" x-show="prev && prev.failed_count > 200">Showing the first 200 problems.</p>
+      </div>
+      <div style="padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end">
+        <button class="btn ghost" @click="prev = null">Cancel</button>
+        <button class="btn" :disabled="!prev || !prev.ok_count || importing" @click="commit()"><span x-show="importing" class="spin"></span> Import <span x-text="prev ? prev.ok_count : 0"></span> prices</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script src="/assets/prices.js"></script>
+  <script>topbar('Prices')</script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

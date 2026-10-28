@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quotes · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="quotesPage()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main>
+    <div class="head">
+      <div><h1>Quotations</h1><div class="sub" x-text="rows.length + (rows.length === 1 ? ' quote' : ' quotes')"></div></div>
+      <a href="/new" class="btn big" style="text-decoration:none;display:inline-block;padding:11px 20px;border-radius:8px;color:#fff;background:var(--navy);font-weight:600">＋ New quotation</a>
+    </div>
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <div class="grow"><input type="search" placeholder="Search number, customer or institution…" x-model="q" @input.debounce.250ms="load()"></div>
+        <div style="flex:0 0 160px"><select x-model="status" @change="load()">
+          <option value="">All statuses</option><option>Draft</option><option>Sent</option><option>Won</option><option>Lost</option></select></div>
+      </div>
+      <div class="hint" x-show="!rows.length && !loading" x-cloak style="padding:28px 0;text-align:center">
+        No quotations yet. Click <b>New quotation</b> to create the first one.</div>
+      <table x-show="rows.length" x-cloak>
+        <thead><tr><th>Quote no.</th><th>Customer</th><th>Date</th><th class="num">Total</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <template x-for="r in rows" :key="r.id">
+            <tr>
+              <td><a :href="'/quote/' + r.id" style="font-weight:700;text-decoration:none" x-text="r.number"></a>
+                <div class="hint" x-text="r.tier"></div></td>
+              <td x-text="r.customer_name"></td>
+              <td x-text="r.date.split('-').reverse().join('/')"></td>
+              <td class="num" x-text="inr(r.total)"></td>
+              <td><select :class="'chip ' + r.status" style="width:auto;padding:3px 8px;border:0" x-model="r.status" @change="setStatus(r)">
+                  <option>Draft</option><option>Sent</option><option>Won</option><option>Lost</option></select></td>
+              <td style="white-space:nowrap;text-align:right">
+                <button class="ghost btn sm" @click="download(r, 'docx')">DOCX</button>
+                <button class="ghost btn sm" @click="download(r, 'pdf')">PDF</button>
+                <button class="ghost btn sm" @click="email(r)" :title="r.emailed_at ? 'Last e-mailed ' + r.emailed_at : 'E-mail the PDF to the saved recipients'">✉ Email<span x-show="r.emailed_at"> ✓</span></button>
+                <button class="ghost btn sm" @click="act(r, 'revise')" title="New revision of this quote">Revise</button>
+                <button class="ghost btn sm" @click="act(r, 'duplicate')" title="Copy as a new quote number">Copy</button>
+                <button class="x" x-show="r.status === 'Draft'" @click="remove(r)" title="Delete draft">✕</button>
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script>
+    topbar('Quotes');
+    function quotesPage() { return {
+      rows: [], q: '', status: '', loading: true,
+      init() { this.load(); },
+      async load() { this.loading = true;
+        this.rows = await api('GET', '/api/quotes?q=' + encodeURIComponent(this.q) + '&status=' + this.status); this.loading = false; },
+      async setStatus(r) { try { await api('PATCH', `/api/quotes/${r.id}/status`, { status: r.status }); } catch (e) { toast(e.message, true); this.load(); } },
+      async download(r, fmt) {
+        toast(fmt === 'pdf' ? 'Preparing PDF…' : 'Preparing Word file…');
+        try { const res = await api('GET', `/api/quotes/${r.id}/${fmt}`, undefined, { raw: true });
+          if (!res.ok) throw new Error((await res.json()).detail.message || 'Download failed');
+          saveBlob(await res.blob(), filenameFrom(res, r.number + '.' + fmt)); }
+        catch (e) { toast(e.message, true); } },
+      async email(r) {
+        try { const m = await api('GET', '/api/mail');
+          if (!m.configured) return toast('E-mail is not set up on this server yet. Ask the administrator.', true);
+          if (!m.recipients.length) return toast('No e-mail recipients are saved. An administrator can add them in Settings.', true);
+          if (!confirm('E-mail ' + r.number + ' (PDF) to:\n\n' + m.recipients.join('\n'))) return;
+          const x = await api('POST', `/api/quotes/${r.id}/email`); r.emailed_at = x.emailed_at; toast('E-mailed ' + r.number); }
+        catch (e) { toast(e.message, true); } },
+      async act(r, what) { try {
+          let body;
+          if (what === 'duplicate' && r.tier === 'Commercial') {
+            const v = prompt('Quote number for the copy (MS- is fixed):', r.number.replace(/\d+$/, ''));
+            if (v === null) return;
+            body = { number: v.trim().toUpperCase().startsWith('MS-') ? v.trim() : 'MS-' + v.trim() };
+          }
+          const n = await api('POST', `/api/quotes/${r.id}/${what}`, body); location.href = '/quote/' + n.id; } catch (e) { toast(e.message, true); } },
+      async remove(r) { if (!confirm('Delete draft ' + r.number + '?')) return;
+        try { await api('DELETE', '/api/quotes/' + r.id); this.load(); } catch (e) { toast(e.message, true); } },
+    }; }
+  </script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quotation · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="builder()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main x-cloak x-show="!loading">
+    <div class="head">
+      <div>
+        <h1><span x-text="number || 'New quotation'"></span>
+          <span class="chip" :class="status" style="margin-left:8px;vertical-align:middle" x-show="id" x-text="status"></span></h1>
+        <div class="sub" x-text="id ? 'Changes are saved when you press Save or download.' : 'Fill in the customer and products — everything else is filled in for you.'"></div>
+      </div>
+      <div x-show="id"><button class="btn ghost" @click="revise()">New revision</button></div>
+    </div>
+
+    <div class="builder">
+      <div>
+        <!-- 1 Customer -->
+        <section class="card">
+          <h2>1 · Customer</h2>
+          <div class="row">
+            <div class="grow combo">
+              <label for="cname">Name <span class="opt">— type to find a saved customer</span></label>
+              <input id="cname" x-model="customer.name" autocomplete="off" placeholder="e.g. Dr. Adam" :class="{bad: showErrors && !customer.name.trim()}"
+                     @input="customer.id = null; findCustomers()" @focus="findCustomers()" @keydown.escape="custOpen=false" @click.outside="custOpen=false">
+              <div class="pop" x-show="custOpen && custResults.length" x-cloak>
+                <template x-for="c in custResults" :key="c.id">
+                  <button type="button" @click="pickCustomer(c)"><span x-text="c.name"></span>
+                    <small x-text="[c.institution, c.department].filter(Boolean).join(' · ') || c.email"></small></button>
+                </template>
+              </div>
+              <div class="err" x-show="showErrors && !customer.name.trim()">Enter the customer's name</div>
+            </div>
+            <div style="flex:0 0 auto">
+              <label>Licence type</label>
+              <div class="seg"><button type="button" :class="{on: tier==='Academic'}" @click="tier='Academic'">Academic</button>
+                <button type="button" :class="{on: tier==='Commercial'}" @click="tier='Commercial'">Commercial</button></div>
+            </div>
+            <div style="flex:0 0 auto" x-show="tier==='Commercial'" x-cloak>
+              <label>Quote number</label>
+              <div class="numbox" :class="{bad: showErrors && tier==='Commercial' && !numberSuffix.trim()}">
+                <span>MS-</span>
+                <input x-model="numberSuffix" @input="numberSuffix = numberSuffix.toUpperCase().replace(/[^A-Z0-9-]/g, '')"
+                       placeholder="CA-26-058" maxlength="36" :disabled="revision > 0" autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <div><label>Department <span class="opt">optional</span></label><input x-model="customer.department" placeholder="Department of Biophysics"></div>
+            <div><label>Institution / company</label><input x-model="customer.institution" placeholder="AIIMS"></div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <div class="grow"><label>Address <span class="opt">optional</span></label><input x-model="customer.address" placeholder="Ansari Nagar, New Delhi – 110029"></div>
+            <div><label>Email</label><input type="email" x-model="customer.email" placeholder="adam@example.com"></div>
+          </div>
+        </section>
+
+        <!-- 2 Products -->
+        <section class="card">
+          <h2>2 · Products</h2>
+          <div class="lines" x-show="lines.length" style="overflow-x:auto">
+            <table>
+              <thead><tr><th>#</th><th>Product</th><th>Deployment</th><th>Users</th><th>Years</th><th class="num" title="The price for this many users for one year. Years multiply it.">Price / yr</th><th title="Complimentary">Free</th><th class="num" title="Type a total and the unit price is worked out from it">Total amount</th><th></th></tr></thead>
+              <template x-for="(l, i) in lines" :key="l.key">
+                  <tbody>
+                    <tr>
+                      <td class="hint" x-text="i + 1"></td>
+                      <td><input class="label" x-model="l.label" :class="{bad: showErrors && !l.label.trim()}"></td>
+                      <td><input list="deployments" class="w-md" x-model="l.deployment"></td>
+                      <td><input class="w-md" x-model="l.users_label" placeholder="1"></td>
+                      <td><input type="number" min="1" max="20" class="w-sm" x-model.number="l.years"></td>
+                      <td class="num" x-show="!l.complimentary"><input type="number" min="0" step="0.01" class="w-price" :value="priceShown(l, i)"
+                            @input="l.unit_price = $event.target.value === '' ? null : Number($event.target.value); l.amount = null">
+                        <button type="button" class="reset" x-show="(l.unit_price !== null || l.amount !== null) && l.product_id" @click="l.unit_price = null; l.amount = null" title="Use the catalogue price">↺</button></td>
+                      <td class="num hint" x-show="l.complimentary">Complimentary</td>
+                      <td><input type="checkbox" style="width:18px" x-model="l.complimentary" @change="l.unit_price = null; l.amount = null"></td>
+                      <td class="num" x-show="!l.complimentary"><input type="number" min="0" step="0.01" class="w-price" style="font-weight:600" :value="amountShown(l, i)"
+                            @input="l.amount = $event.target.value === '' ? null : Number($event.target.value); if (l.amount !== null) l.unit_price = null"></td>
+                      <td class="num" x-show="l.complimentary"><b x-text="inr(calc.lines[i]?.amount)"></b></td>
+                      <td><button type="button" class="x" @click="lines.splice(i, 1)" title="Remove">✕</button></td>
+                    </tr>
+                    <tr x-show="calc.lines[i]?.error"><td colspan="9" class="line-err" x-text="calc.lines[i]?.error"></td></tr>
+                  </tbody>
+              </template>
+            </table>
+            <datalist id="deployments"><option>Local</option><option>Cloud</option><option>Local / Cloud</option></datalist>
+          </div>
+          <div class="err" x-show="showErrors && !lines.length">Add at least one product</div>
+          <div class="addbar">
+            <div class="combo">
+              <input placeholder="＋ Add a product — type a name" x-model="prodQuery" autocomplete="off"
+                     @focus="prodOpen = true; hi = 0" @input="prodOpen = true; hi = 0" @click.outside="prodOpen = false"
+                     @keydown.down.prevent="hi = Math.min(hi + 1, filtered.length - 1)" @keydown.up.prevent="hi = Math.max(hi - 1, 0)"
+                     @keydown.enter.prevent="filtered[hi] && addProduct(filtered[hi])" @keydown.escape="prodOpen = false">
+              <div class="pop" x-show="prodOpen" x-cloak>
+                <template x-for="(p, n) in filtered" :key="p.id">
+                  <button type="button" :class="{hi: n === hi}" @mouseenter="hi = n" @click="addProduct(p)">
+                    <span><b x-text="p.label"></b> <small x-text="p.vendor"></small></span>
+                    <small x-text="priceFor(p, tier, p.default_users) != null ? inr(priceFor(p, tier, p.default_users)) + ' / yr · ' + p.default_users + (p.default_users === '1' ? ' user' : ' users') : (p.price_basis === 'complimentary' ? 'complimentary' : 'no ' + tier + ' price')"></small>
+                  </button>
+                </template>
+                <div class="none" x-show="!filtered.length">No matching product. Add it on the Data page, or use “Custom item”.</div>
+              </div>
+            </div>
+            <select style="flex:0 0 210px" x-show="packages.length" @change="addPackage($event.target.value); $event.target.value = ''">
+              <option value="">＋ Add a package…</option>
+              <template x-for="pk in packages" :key="pk.id"><option :value="pk.id" x-text="pk.name + ' (' + pk.items.length + ')'"></option></template>
+            </select>
+            <button type="button" class="btn ghost" @click="addCustom()">Custom item</button>
+          </div>
+        </section>
+
+        <!-- 3 Terms -->
+        <section class="card">
+          <h2>3 · Terms</h2>
+          <div class="row">
+            <div><label>Discount %</label><input type="number" min="0" max="100" step="0.5" x-model.number="discount"></div>
+            <div><label>Default years <span class="opt">for new rows</span></label><input type="number" min="1" max="20" x-model.number="defaultYears"></div>
+          </div>
+          <details style="margin-top:14px">
+            <summary>More options</summary>
+            <div class="row" style="margin-top:10px">
+              <div><label>Quote date</label><input type="date" x-model="more.date"></div>
+              <div><label>Valid until</label><input type="date" x-model="more.validUntil"></div>
+              <div><label>GST %</label><input type="number" min="0" max="100" step="0.5" x-model.number="gstPct"></div>
+            </div>
+            <div class="row" style="margin-top:12px">
+              <div class="grow"><label>Payment terms</label><input x-model="more.paymentTerms" placeholder="15 days from the date of Invoice"></div>
+              <div><label>Prepared by</label><input x-model="more.preparedBy" placeholder="Your name"></div>
+            </div>
+          </details>
+        </section>
+      </div>
+
+      <!-- Summary -->
+      <aside class="card summary">
+        <h2>Summary</h2>
+        <dl x-show="calc.totals" x-cloak>
+          <template x-if="calc.totals && calc.totals.discount_amount > 0">
+            <div><div class="l"><dt>List total</dt><dd style="margin:0" x-text="inr(calc.totals.list_total)"></dd></div>
+              <div class="l minus"><dt x-text="'Discount ' + discount + '%'"></dt><dd style="margin:0" x-text="inr(-calc.totals.discount_amount)"></dd></div></div>
+          </template>
+          <div class="l total"><dt>Total inc. GST</dt><dd style="margin:0" x-text="inr(calc.totals?.total)"></dd></div>
+        </dl>
+        <div class="hint" x-show="!lines.length">Add products to see the total.</div>
+        <div class="actions">
+          <button class="btn big" :disabled="!!busy" @click="save()"><span x-show="busy === 'save'" class="spin"></span> Save</button>
+          <button class="btn ghost" :disabled="!!busy" @click="preview()"><span x-show="busy === 'preview'" class="spin"></span> Preview</button>
+          <button class="btn ghost" :disabled="!!busy" @click="emailQuote()" title="Send the PDF to the saved recipients">
+            <span x-show="busy === 'email'" class="spin"></span> ✉ Email to recipients</button>
+          <div class="hint" x-show="emailedAt" x-cloak x-text="'Last e-mailed ' + emailedAt"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <button class="btn ghost" :disabled="!!busy" @click="download('docx')"><span x-show="busy === 'docx'" class="spin"></span> ⬇ Word</button>
+            <button class="btn ghost" :disabled="!!busy" @click="download('pdf')"><span x-show="busy === 'pdf'" class="spin"></span> ⬇ PDF</button>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:12px" x-show="!id" x-text="tier === 'Commercial' ? 'Type the quote number above; it is checked when you save.' : 'The quote number is assigned when you save.'"></div>
+        <div class="err" x-show="error" x-text="error" style="margin-top:10px"></div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="veil" x-show="showPreview" x-cloak @keydown.escape.window="showPreview = false">
+    <div class="modal" style="height:92vh">
+      <header><b>Preview <span class="hint">(not saved, no number used)</span></b>
+        <span><button class="btn ghost sm" @click="download('pdf')">⬇ PDF</button> <button class="x" @click="showPreview = false">✕</button></span></header>
+      <iframe :src="previewUrl" style="border:0;flex:1;width:100%"></iframe>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script src="/assets/builder.js"></script>
+  <script>topbar('Quotes')</script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

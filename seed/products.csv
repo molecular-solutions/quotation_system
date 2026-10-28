@@ -1,0 +1,48 @@
+Product Name,Category,Vendor,Segment,Unit,Description,Quote Label,Deployment,Default Users,Price Basis,Catalog Blocks,Active
+ChemAIRS - Retrosynthesis,Software,Chemical.AI,Chemical Synthesis,License,Explore Retrosynthetic Pathways Faster - AI Powered,Retrosynthesis Modules,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - Condition Search,Software,Chemical.AI,Chemical Synthesis,License,"Smarter, Faster, and Easier Reaction optimisation",Condition Search Module,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - Process Chemistry,Software,Chemical.AI,Chemical Synthesis,License,Optimizing Synthesis for Efficiency and Scalability,,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - SA Score,Software,Chemical.AI,Chemical Synthesis,License,Predict the Synthetic Feasibility before You Synthesize,,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - Impurity Prediction,Software,Chemical.AI,Chemical Synthesis,License,Predict impurities in advance,,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - Forward Synthesis,Software,Chemical.AI,Chemical Synthesis,License,Streamline Molecular Library Creation,,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - Bayesian Optimisation,Software,Chemical.AI,Chemical Synthesis,License,,,Cloud,1,per_user_year,chemairs,Y
+ChemAIRS - Bundled Package,Software,Chemical.AI,Chemical Synthesis,License,,,Cloud,1,per_user_year,chemairs,Y
+HPSee - Chemical Space Docking (128 Cores),Software,BioSolveIT,Ultra-High Throughput Virtual Screening,License,,HPSee-Chemical Space Docking (128 Cores),Local,Floating,per_license_year,seesar_csd,Y
+XFEP & XMolGen,Software,XtalPi,Hit to Lead Transformation,License,,"XFEP (Free Energy Perturbation) & XMolGen (20,000 Xunits valid for 3 years only)",Cloud,Floating,per_license_year,"xfep, xmolgen",Y
+Koffee Binding Affinity & Unbinding Kinetics,Software,Kvantify,Kvantify,License,,Koffee Binding Affinity (Unlimited Concurrent Usage) & Koffee Unbinding Kinetics (1 GPU),Local,Concurrent Usage & 1 GPU,per_license_year,kvantify,Y
+YASARA Structure,Software,YASARA,Molecular Modelling,License,,"YASARA Structure (Includes Protein Modelling, Docking & Dynamics)",Local,1 Group License,per_license_year,yasara,Y
+Nanome + MARA,Software,Nanome,Virtual Reality,License,,Nanome + MARA,Cloud,1,per_user_year,nanome,Y
+Biolligence - BioTox,Software,Biolligence,,License,"Predicts multi-organ toxicity. Trained on human iPSC assays, omics data, and clinical evidence",Biolligence - BioTox,Cloud,1,per_user_year,,Y
+ADMET Predictor,Software,Simulations Plus,Lead Optimization,License,Worlds No.1 AI/ML based ADMET Prediction software,ADMET Predictor,Local,1,complimentary,admet,Y
+Commander,Software,Genotypic,Target Identification,License,NGS data analysis platform.,,Local,1,per_user_year,commander,Y
+GastroPlus,Software,Simulations Plus,Lead Optimization,License,Worlds No.1 PBPK/PBBM modeling software.,,Local,1,per_user_year,gastroplus,Y
+PK/PD Modelling,Software,Simulations Plus,Lead Optimization,License,,,Local,1,per_user_year,pkpd,Y
+Qrunch Pro,Software,Kvantify,Kvantify,License,,,Local,1,per_user_year,kvantify,Y
+FormSCI,Software,,Formulation development,License,,,Cloud,1,per_user_year,formulation,Y
+SoluDEM,Software,,Formulation development,License,Leading Solubility prediction Software,,Cloud,1,per_user_year,formulation,Y
+TransGene IT & Dotmatics (Electronic Lab Notebook),Software,TransGene IT & Dotmatics,Electronic Lab Notebook,License,,,Local / Cloud,1,per_user_year,eln,Y
+YASARA Modeller,Software,,"Docking, Dynamics, R Group Replacement, Virtual Screening",,Molecular docking and protein modeling.,,,,,,Y
+YASARA Dynamics,Software,,"Docking, Dynamics, R Group Replacement, Virtual Screening",,A super-fast MD simulations software,,,,,,Y
+InfiniSee,Software,BioSolveIT,"Docking, Dynamics, R Group Replacement, Virtual Screening",License,Ligand based ultrafast virtual screening platform,,Local,1,per_user_year,infinisee,Y
+XMolGen,Software,,"Docking, Dynamics, R Group Replacement, Virtual Screening",,Gen AI-powered molecule generation and virtual screening,,,,,,Y
+SeeSAR,Software,BioSolveIT,"Docking, Dynamics, R Group Replacement, Virtual Screening",License,"Docking, R Group replacement, Scaffold hopping",,Local,1,per_user_year,seesar_csd,Y
+Chemical Space Docking,Software,,"Docking, Dynamics, R Group Replacement, Virtual Screening",,Ultra-Large library screening of 10+ Trillion molecules,,,,,,Y
+SARVISION,Software,,"Docking, Dynamics, R Group Replacement, Virtual Screening",,SAR Analysis & Chemical Data analysis,,,,,,Y
+VORTEX,Software,,"Docking, Dynamics, R Group Replacement, Virtual Screening",,"Cheminformatics, Data analysis and visualisation",,,,,,Y
+PKAnalyx,Software,,"ADMET, DMPK, QSP, DILI",,Simulates PK/PD to optimize dosing regimens.,,,,,,Y
+DILIsym,Software,,"ADMET, DMPK, QSP, DILI",,Quantitative Systems Toxicology,,,,,,Y
+Monolix Suite,Software,,"ADMET, DMPK, QSP, DILI",,Pharmacometrics analysis,,,,,,Y
+Thales,Software,,"ADMET, DMPK, QSP, DILI",,Quantitative Systems Pharmacology,,,,,,Y
+Kvantify Binding,Software,,"Binding Affinity, Residence Time, FEP",,Ultrafast Binding affinity prediction software,,,,,,Y
+Kvantify Unbinding,Software,,"Binding Affinity, Residence Time, FEP",,Untra fast Unbinding kinetics prediction software,,,,,,Y
+Kvantify Qrunch,Software,,"Binding Affinity, Residence Time, FEP",,Advanced quantum chemistry calculations,,,,,,Y
+XFEP,Software,,"Binding Affinity, Residence Time, FEP",,Accurate predicting binding affinity Prediction - FEP Method,,,,,,Y
+TransGene IT,Software,,"ELN, Chemical Inventory, Analytical Ticketing System",,ELN and Chemical Inventory System,,,,,,Y
+Dotmatics,Software,,"ELN, Chemical Inventory, Analytical Ticketing System",,Cloud-based ELN and computational Biology tools,,,,,,Y
+LUMA,Software,,"ELN, Chemical Inventory, Analytical Ticketing System",,AI-Native Multimodal Research Platform for Scientific Intelligence,,,,,,Y
+Nanome,Software,,"VR, LLM, Agentic AI, Scientific Co-pilot",,The Ultimate Interface for Scientific Discovery,,,,,,Y
+MARA,Software,,"VR, LLM, Agentic AI, Scientific Co-pilot",,AI assisted scientific copilot,,,,,,Y
+FormDEM,Software,,"Formulation Design, Solubility Prediction, CSP",,Worlds first AI Powered formulation design software,,,,,,Y
+XtalGazer,Software,,"Formulation Design, Solubility Prediction, CSP",,A total solution for solid state study,,,,,,Y
+PatSnap,Software,,Patent Analysis,,AI-powered patent analysis tool for drug discovery,,,,,,Y
+PatSight,Software,,Patent Analysis,,A global AI-driven innovation intelligence platform,,,,,,Y

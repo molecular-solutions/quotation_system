@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="accountPage()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main style="max-width:520px" x-cloak>
+    <div class="head"><div><h1>Account</h1><div class="sub" x-text="me.name + ' · ' + me.email"></div></div></div>
+    <form class="card" @submit.prevent="save()">
+      <h2>Change password</h2>
+      <label for="cur">Current password</label>
+      <input id="cur" type="password" x-model="cur" autocomplete="current-password" style="margin-bottom:12px">
+      <label for="new1">New password <span class="opt">(min. 8 characters)</span></label>
+      <input id="new1" type="password" x-model="new1" autocomplete="new-password" style="margin-bottom:12px">
+      <label for="new2">New password again</label>
+      <input id="new2" type="password" x-model="new2" autocomplete="new-password" :class="{bad: new2 && new1 !== new2}">
+      <div class="err" x-show="error" x-text="error"></div>
+      <button class="btn big" style="margin-top:16px" :disabled="busy || !cur || new1.length < 8 || new1 !== new2">Change password</button>
+    </form>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script>
+    topbar('');
+    function accountPage() { return { me: { name: '', email: '' }, cur: '', new1: '', new2: '', busy: false, error: '',
+      async init() { this.me = await api('GET', '/api/me'); },
+      async save() { this.busy = true; this.error = '';
+        try { await api('POST', '/api/me/password', { current_password: this.cur, new_password: this.new1 });
+          toast('Password changed'); this.cur = this.new1 = this.new2 = ''; }
+        catch (e) { this.error = e.message; }
+        this.busy = false; } }; }
+  </script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>

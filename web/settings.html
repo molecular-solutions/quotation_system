@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings · Quotations</title><link rel="stylesheet" href="/assets/app.css"></head>
+<body x-data="settingsPage()" x-init="init()">
+  <div class="top" id="top"></div>
+  <main style="max-width:760px">
+    <div class="head"><div><h1>Settings</h1><div class="sub">Defaults used for every new quotation.</div></div></div>
+    <form class="card" @submit.prevent="save()">
+      <template x-for="(label, key) in labels" :key="key">
+        <div style="margin-bottom:14px">
+          <label :for="key" x-text="label"></label>
+          <input :id="key" x-model="values[key]">
+        </div>
+      </template>
+      <p class="hint">Academic numbers run in one shared sequence; Commercial numbers are typed on the quote. Changing the next sequence number takes effect on the next Academic quote.
+        Company address, logo and the standard terms printed on the document come from the Word template (<code>templates/master_quotation.docx</code>).</p>
+      <button class="btn big" :disabled="busy">Save settings</button>
+    </form>
+
+    <section class="card">
+      <h2 style="margin-top:0">E-mail recipients</h2>
+      <p class="hint">The <b>Email</b> button on a quotation sends the PDF to these addresses. One per line (or separated by commas).</p>
+      <textarea rows="5" x-model="mailText" placeholder="accounts@your-company.com&#10;md@your-company.com" style="width:100%"></textarea>
+      <div class="err" x-show="mailError" x-text="mailError"></div>
+      <p class="hint" x-show="mailInfo.loaded && !mailInfo.configured" x-cloak>
+        This server has no outgoing mail set up yet: add <code>QUOTE_SMTP_HOST</code>, <code>QUOTE_SMTP_USER</code>,
+        <code>QUOTE_SMTP_PASSWORD</code> and <code>QUOTE_SMTP_FROM</code> to <code>.env</code> and restart (see the README).</p>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button type="button" class="btn" @click="saveMail()" :disabled="busyMail">Save recipients</button>
+        <button type="button" class="btn ghost" @click="testMail()" :disabled="busyMail || !mailInfo.configured" title="Sends a test message to your own address">Send me a test e-mail</button>
+      </div>
+    </section>
+
+    <details class="card" @toggle="$event.target.open && !terms.length && loadTerms()" style="padding:0">
+      <summary style="padding:16px 22px;font-size:15px;list-style-position:inside">Terms &amp; Conditions <span class="hint" style="font-weight:400">— the points printed on page 2 of every quotation</span></summary>
+      <div style="padding:0 22px 20px" x-show="terms.length" x-cloak>
+        <p class="hint" style="margin-top:0">One point per box. Formatting: <code>**bold**</code> <code>__italic__</code> <code>==highlight==</code>. Placeholders filled in per quotation:
+          <code>{validity_date}</code> <code>{payment_terms}</code> <code>{license_term}</code>. E-mail addresses turn blue automatically.
+          Quotations already issued keep the terms they were created with.</p>
+        <template x-for="(t, i) in terms" :key="t._k">
+          <div class="row" style="margin-bottom:10px;align-items:flex-start;flex-wrap:nowrap">
+            <div class="hint" style="flex:0 0 20px;padding-top:9px" x-text="i + 1"></div>
+            <textarea rows="2" x-model="t.text" style="flex:1 1 auto;resize:vertical" :class="{bad: showErr && !t.text.trim()}"></textarea>
+            <select x-model="t.style" style="flex:0 0 120px" title="Indented = the narrower, more spaced layout used for the purchase-order line">
+              <option value="bullet">Bullet</option><option value="indent">Indented</option></select>
+            <div style="flex:0 0 auto;white-space:nowrap">
+              <button type="button" class="x" @click="move(i, -1)" :disabled="i === 0" title="Move up">↑</button>
+              <button type="button" class="x" @click="move(i, 1)" :disabled="i === terms.length - 1" title="Move down">↓</button>
+              <button type="button" class="x" @click="terms.splice(i, 1)" title="Remove">✕</button></div>
+          </div>
+        </template>
+        <div class="err" x-show="termsError" x-text="termsError"></div>
+        <div style="display:flex;gap:10px;margin-top:6px;flex-wrap:wrap">
+          <button type="button" class="btn ghost" @click="terms.push(blank())">＋ Add point</button>
+          <button type="button" class="btn" @click="saveTerms()" :disabled="!!busyTerms">Save terms</button>
+          <button type="button" class="btn ghost" @click="resetTerms()">Reset to the standard text</button>
+        </div>
+      </div>
+      <div class="hint" style="padding:0 22px 18px" x-show="!terms.length">Loading…</div>
+    </details>
+  </main>
+  <script src="/assets/app.js"></script>
+  <script>
+    topbar('Settings');
+    function settingsPage() { let k = 0; return { values: {}, labels: {}, busy: false, terms: [], defaults: [], termsError: '', showErr: false, busyTerms: false,
+      mailText: '', mailInfo: { loaded: false, configured: false }, mailError: '', busyMail: false,
+      wrap(it) { return { text: it.text, style: it.style, _k: ++k }; }, blank() { return this.wrap({ text: '', style: 'bullet' }); },
+      async loadTerms() { const r = await api('GET', '/api/settings/terms'); this.defaults = r.default; this.terms = r.items.map(i => this.wrap(i)); },
+      move(i, d) { const j = i + d; if (j < 0 || j >= this.terms.length) return; [this.terms[i], this.terms[j]] = [this.terms[j], this.terms[i]]; },
+      resetTerms() { if (confirm('Replace the terms below with the standard text? (Not saved until you press Save terms.)')) this.terms = this.defaults.map(i => this.wrap(i)); },
+      async saveTerms() { this.termsError = ''; this.showErr = true;
+        if (this.terms.some(t => !t.text.trim())) { this.termsError = 'Fill in or remove the empty point.'; return; }
+        this.busyTerms = true;
+        try { await api('PUT', '/api/settings/terms', { items: this.terms.map(t => ({ text: t.text, style: t.style })) }); toast('Terms saved'); this.showErr = false; }
+        catch (e) { this.termsError = e.message; }
+        this.busyTerms = false; },
+      async init() { const s = await api('GET', '/api/settings'); this.values = s.values; this.labels = s.labels;
+        const m = await api('GET', '/api/mail'); this.mailInfo = { loaded: true, configured: m.configured }; this.mailText = m.recipients.join('\n'); },
+      async saveMail() { this.mailError = ''; this.busyMail = true;
+        try { const r = await api('PUT', '/api/mail/recipients', { recipients: this.mailText.split(/[\s,;]+/).filter(Boolean) });
+          this.mailText = r.recipients.join('\n'); toast(r.recipients.length + ' recipient(s) saved'); }
+        catch (e) { this.mailError = e.message; }
+        this.busyMail = false; },
+      async testMail() { this.busyMail = true;
+        try { const r = await api('POST', '/api/mail/test'); toast('Test e-mail sent to ' + r.sent_to); } catch (e) { toast(e.message, true); }
+        this.busyMail = false; },
+      async save() { this.busy = true;
+        try { await api('PUT', '/api/settings', this.values); toast('Settings saved'); } catch (e) { toast(e.message, true); }
+        this.busy = false; } }; }
+  </script>
+  <script defer src="/assets/vendor/alpine.min.js"></script>
+</body></html>
