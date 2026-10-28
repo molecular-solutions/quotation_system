@@ -56,6 +56,7 @@ class DocQuote:
     validity_date: str
     payment_terms: str
     license_term: str
+    license_duration: str = ""   # "3 Years", shown in the details box
     quoted_blocks: set[str] = field(default_factory=set)
     terms: list[dict] | None = None  # None / the default list = keep the template's own Terms & Conditions
 
@@ -85,8 +86,10 @@ ANCHORS = {
     1: "QUOTATION", 2: "PRICING", 3: None,
     6: "TERMS", 7: "• Validity", 9: "• Payment", 11: "• License Term", 13: "OUR SOFTWARE",
 }
-# The header (body[1]) is a 2-cell table: left = title, quote no, date, TO block; right = logo + company.
-HEADER_LEFT = {"title": 0, "number": 1, "date": 2, "to": 3, "name": 4, "address": 5, "email": 6, "license": 7}
+# The header (body[1]) is a 2 x 2 table. Row 1: title | logo. Row 2 (the paragraphs below; each starts with a spacer):
+#   left  = TO bar, customer name, address, e-mail          right = the details box (label, tab, value per row)
+HEADER_LEFT = {"to": 1, "name": 2, "address": 3, "email": 4}
+HEADER_RIGHT = {"number": 1, "date": 2, "license": 3, "duration": 4}
 
 
 # ── low-level helpers ─────────────────────────────────────────────────────
@@ -300,21 +303,25 @@ def _apply_terms(kids, q: DocQuote) -> bool:
 
 # ── header ────────────────────────────────────────────────────────────────
 def _header_paras(header_tbl) -> dict:
-    left = header_tbl.find(f".//{_w('tc')}").findall(_w("p"))
-    return {k: left[i] for k, i in HEADER_LEFT.items()}
+    left, right = header_tbl.findall(_w("tr"))[1].findall(_w("tc"))
+    lp, rp = left.findall(_w("p")), right.findall(_w("p"))
+    return {**{k: lp[i] for k, i in HEADER_LEFT.items()}, **{k: rp[i] for k, i in HEADER_RIGHT.items()}}
 
 
 def _fill_header(header_tbl, q: DocQuote) -> None:
     p = _header_paras(header_tbl)
     _set_para_runs(p["number"], {2: q.number})
     _set_para_runs(p["date"], {2: q.date})
-    _set_para_runs(p["name"], {0: f"{q.customer_name},"})
+    _set_para_runs(p["license"], {2: q.license_type})
+    _set_para_runs(p["duration"], {2: q.license_duration})
+    _set_para_runs(p["name"], {0: q.customer_name})
     _set_para_runs(p["address"], {0: q.customer_address})
     if q.customer_email.strip():
         _set_para_runs(p["email"], {0: q.customer_email})
     else:
         p["email"].getparent().remove(p["email"])
-    _set_para_runs(p["license"], {0: q.license_type})
+    if not q.customer_address.strip():
+        p["address"].getparent().remove(p["address"])
 
 
 # ── pricing table ─────────────────────────────────────────────────────────
@@ -431,10 +438,11 @@ def template_sample(template_path: Path = TEMPLATE_PATH) -> DocQuote:
     return DocQuote(
         number=run_text(hp["number"], 2),
         date=run_text(hp["date"], 2),
-        customer_name=run_text(hp["name"], 0).removesuffix(","),
+        customer_name=run_text(hp["name"], 0),
         customer_address=run_text(hp["address"], 0),
         customer_email=run_text(hp["email"], 0),
-        license_type=run_text(hp["license"], 0),
+        license_type=run_text(hp["license"], 2),
+        license_duration=run_text(hp["duration"], 2),
         lines=lines,
         summary=summary,
         validity_date=runs(7)[2].rstrip(),

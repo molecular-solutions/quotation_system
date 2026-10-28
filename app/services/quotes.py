@@ -360,8 +360,10 @@ def to_doc_quote(q: Quote) -> DocQuote:
     if len(years) == 1:
         y = next(iter(years))
         license_term = f"{y} year{'s' if y != 1 else ''} from date of activation."
+        license_duration = _years_text(y)
     else:
         license_term = "As per the duration stated against each product, from date of activation."
+        license_duration = "As per product"
     blocks = {k for l in q.lines for k in l.block_keys.split(",") if k}
     return DocQuote(
         number=q.number,
@@ -376,6 +378,7 @@ def to_doc_quote(q: Quote) -> DocQuote:
         validity_date=f"{q.valid_until.day} {q.valid_until.strftime('%b %Y')}",
         payment_terms=q.payment_terms,
         license_term=license_term,
+        license_duration=license_duration,
         quoted_blocks=blocks,
         terms=json.loads(q.terms) if q.terms else None,
     )

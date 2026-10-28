@@ -67,26 +67,48 @@ def test_header_and_pricing_table_share_page_one_whatever_the_address(tmp_path, 
         assert needle in text, f"{needle!r} not on page 1"
 
 
-# Where the Word-made reference PDF (MS-AB-174) puts the header lines on page 1, in points from the top-left.
-REFERENCE_HEADER = {  # first word of the line -> (x, y)
-    "QUOTATION": (19.9, 56.4), "QUOTE": (21.1, 113.4), "DATE": (21.1, 129.5), "TO": (21.1, 173.4),
-    "Molecular": (350.5, 106.2), "No": (367.8, 120.4), "PRICING": (21.1, 311.0),
-}
-
-
-def test_header_matches_the_word_designed_reference(tmp_path):
+def _words(pdf_path, page):
+    """{word: [(x, y), ...]} for every word on a page, in points from the top-left."""
     import re
+    html = subprocess.run(["pdftotext", "-f", str(page), "-l", str(page), "-bbox", str(pdf_path), "-"],
+                          capture_output=True, text=True, check=True).stdout
+    out = {}
+    for m in re.finditer(r'<word xMin="([\d.]+)" yMin="([\d.]+)"[^>]*>([^<]+)</word>', html):
+        out.setdefault(m.group(3), []).append((float(m.group(1)), float(m.group(2))))
+    return out
+
+
+def test_header_follows_the_purchase_order_layout(tmp_path):
+    """TO block on the left and the details box on the right, level with each other; no company address under the
+    logo and no Bill To / Deliver To; the company details live in the footer."""
     q = template_sample()
+    q.customer_name, q.customer_address, q.customer_email = "Patsnap Pte Ltd", "75 High Street\n#04-00\nSingapore 179435", "k@x.in"
+    q.number, q.license_type, q.license_duration = "MS-CA-26-058", "Commercial License", "1 Year"
     pdf = tmp_path / "q.pdf"
     pdf.write_bytes(docx_to_pdf(render_quote(q)))
-    html = subprocess.run(["pdftotext", "-f", "1", "-l", "1", "-bbox-layout", str(pdf), "-"],
-                          capture_output=True, text=True, check=True).stdout
-    first = {}
-    for m in re.finditer(r'<line xMin="([\d.]+)" yMin="([\d.]+)"[^>]*>\s*<word[^>]*>([^<]+)</word>', html):
-        first.setdefault(m.group(3), (float(m.group(1)), float(m.group(2))))
-    for word, (x, y) in REFERENCE_HEADER.items():
-        gx, gy = first[word]
-        assert abs(gx - x) < 2 and abs(gy - y) < 2, f"{word}: at ({gx}, {gy}), reference ({x}, {y})"
+    w = _words(pdf, 1)
+    (to_x, to_y), (box_x, box_y) = w["TO"][0], w["Quote"][0]
+    assert to_x < 40 and box_x > 330 and abs(box_y - to_y) < 25, "TO block left, details box right, side by side"
+    assert w["Number"][0][0] > box_x and w["Date"][0][0] > box_x            # labels: Quote Number / Quote Date
+    assert w["License"][0][0] >= box_x - 1 and w["Duration"][0][0] > box_x       # License Type / License Duration
+    assert w["Patsnap"][0][1] > to_y and w["Singapore"][0][1] > w["Patsnap"][0][1]   # name, then the address, under the bar
+    for gone in ("BILL", "DELIVER", "Deliver", "Bill"):
+        assert gone not in w
+    # the company address is only in the footer now: every occurrence is near the bottom of the page
+    assert all(y > 740 for _, y in w["Kodipalya,"]) and w["Kodipalya,"]
+    assert all(y > 740 for _, y in w["sales@molecularsolutions.co.in"])
+    text = subprocess.run(["pdftotext", "-f", "1", "-l", "1", "-layout", str(pdf), "-"], capture_output=True, text=True).stdout
+    assert "rraghu@" not in text and "1 Year" in text and "Commercial License" in text
+
+
+def test_every_page_has_the_footer(tmp_path):
+    pdf = tmp_path / "q.pdf"
+    pdf.write_bytes(docx_to_pdf(render_quote(template_sample())))
+    n = int(subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True).stdout.split("Pages:")[1].split()[0])
+    assert n >= 4
+    for page in range(1, n + 1):
+        w = _words(pdf, page)
+        assert w.get("molecularsolutions.co.in") and "+91-99000" in w, f"page {page} has no footer"
 
 
 def test_header_has_banner_logo_and_no_column_flow(tmp_path):
