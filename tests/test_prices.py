@@ -23,8 +23,8 @@ def test_price_row_is_the_total_for_that_many_users_and_has_no_formula(authed):
     assert any("no price for 2" in w for w in d["warnings"]["Academic"])           # a hole between 1 and 3 users is flagged
     r = authed.put(f"/api/prices/{ids['SeeSAR']}/Academic", json={"prices": {"1": "1,000", "2": "1900", "3": "", "4": 2000, "25": 25000}})
     assert r.status_code == 200 and r.json()["prices"]["Academic"] == {"1": 1000.0, "2": 1900.0, "4": 2000.0, "25": 25000.0}
-    q = authed.post("/api/quotes", json={**payload(ids), "lines": [{"product_id": ids["SeeSAR"], "years": 2, "users_label": "2"}]}).json()
-    assert q["lines"][0]["unit_price"] == 1900.0 and q["lines"][0]["amount"] == 3800.0   # 2 users = 1,900, not 2 x 1,000
+    q = authed.post("/api/quotes", json={**payload(ids), "lines": [{"product_id": ids["SeeSAR"], "years": 1, "users_label": "2"}]}).json()
+    assert q["lines"][0]["unit_price"] == 1900.0 and q["lines"][0]["amount"] == 1900.0   # 2 users = 1,900, not 2 x 1,000
 
 
 def test_price_validation(authed):
@@ -80,9 +80,9 @@ def test_export_round_trips_through_upload(authed):
     x = authed.get("/api/prices/export.xlsx")
     assert x.status_code == 200 and x.content[:2] == b"PK"
     r = authed.post("/api/prices/upload", files={"file": ("prices.xlsx", x.content)}).json()
-    assert r["failed_count"] == 0 and r["ok_count"] == 3 + 2 + 1 + 1 == 7     # SeeSAR 3 + 2, Retro 1 + 1
+    assert r["failed_count"] == 0 and r["ok_count"] == 2 * (3 + 2 + 1 + 1) == 14   # SeeSAR 3 + 2, Retro 1 + 1: each a 1-year and a 3-year price
     csv = authed.get("/api/prices/export.csv").content.decode("utf-8-sig")
-    assert csv.splitlines()[0] == "Product Name,Tier,Users,Annual Price" and "SeeSAR,Academic,25,25000.00" in csv
+    assert csv.splitlines()[0] == "Product Name,Tier,Users,Annual Price,3 Year Price" and "SeeSAR,Academic,25,25000.00,75000.00" in csv
     r = authed.post("/api/prices/upload", files={"file": ("prices.csv", csv.encode())}).json()
     assert r["failed_count"] == 0 and r["ok_count"] == 7
 
@@ -133,3 +133,46 @@ def test_migration_keeps_issued_totals_merges_duplicates_and_keeps_old_prices(tm
         assert c.execute(text("SELECT product_id, tier, users, annual_price FROM product_prices")).fetchall() == [(3, "Academic", 1, 500)]
         unit, amount = c.execute(text("SELECT unit_price, amount FROM quote_lines")).one()
         assert (float(unit), float(amount)) == (25000.0, 75000.0)       # now the annual price for 25 users; the total is unchanged
+
+
+def test_three_year_prices_are_saved_per_users_and_keep_when_not_sent(authed):
+    ids = seed(authed)
+    sid = ids["SeeSAR"]
+    put = lambda body: authed.put(f"/api/prices/{sid}/Academic", json=body)
+    r = put({"prices": {"1": 1000, "3": 2400}, "prices3": {"1": "2,700", "3": 6500}})
+    assert r.status_code == 200 and r.json()["prices3"]["Academic"] == {"1": 2700.0, "3": 6500.0}   # not 3 x annual
+    r = put({"prices": {"1": 1100, "3": 2400}})                                   # no prices3 sent: the 3-year prices stay
+    assert r.json()["prices3"]["Academic"] == {"1": 2700.0, "3": 6500.0}
+    r = put({"prices": {"1": 1100}, "prices3": {"1": "", "3": 6500}})
+    assert r.status_code == 422 and "enter the 1-year price first" in r.json()["detail"]["errors"]["3y3"]
+    r = put({"prices": {"1": 1100}, "prices3": {"1": ""}})                        # blank clears that 3-year price
+    assert r.json()["prices"]["Academic"] == {"1": 1100.0} and r.json()["prices3"]["Academic"] == {}
+    products = authed.get("/api/products").json()
+    assert next(p for p in products if p["id"] == sid)["prices3"]["Commercial"] == {"1": 9000.0, "25": 225000.0}   # seed's
+
+
+def test_three_year_prices_in_uploads_and_exports(authed):
+    ids = seed(authed)
+    up = lambda name, data, commit=True: authed.post(f"/api/prices/upload?commit={str(commit).lower()}", files={"file": (name, data)}).json()
+    csv = b"Product Name,Tier,Users,Annual Price,3 Year Price\nSeeSAR,Academic,1,1000,2700\nSeeSAR,Academic,2,1900,\n"
+    assert up("p.csv", csv)["failed_count"] == 0
+    d = authed.get(f"/api/prices/{ids['SeeSAR']}").json()
+    assert d["prices3"]["Academic"] == {"1": 2700.0, "3": 7200.0, "25": 75000.0} and d["prices"]["Academic"]["2"] == 1900.0   # blank = unchanged
+
+    book = _book({"Academic 3 Years": [["Product Name", 1, 2, 3], ["SeeSAR", 2800, None, 7000]],
+                  "Commercial 3 Years": [["Product Name", 1], ["Retro", 2500]]})
+    r = up("p.xlsx", book)
+    assert r["failed_count"] == 0 and r["ok_count"] == 3
+    assert authed.get(f"/api/prices/{ids['SeeSAR']}").json()["prices3"]["Academic"]["3"] == 7000.0
+    assert authed.get(f"/api/prices/{ids['Retro']}").json()["prices3"]["Commercial"] == {"1": 2500.0}
+
+    orphan = _book({"Academic 3 Years": [["Product Name", 7], ["SeeSAR", 100]]})
+    r = up("p.xlsx", orphan, commit=False)
+    assert r["failed_count"] == 1 and "needs a 1-year price" in r["problems"][0]["error"]
+
+    # what the export holds goes back in unchanged
+    x = authed.get("/api/prices/export.xlsx").content
+    wb = openpyxl.load_workbook(io.BytesIO(x))
+    assert wb.sheetnames == ["Academic", "Commercial", "Academic 3 Years", "Commercial 3 Years"]
+    assert up("again.xlsx", x)["failed_count"] == 0
+    assert authed.get(f"/api/prices/{ids['SeeSAR']}").json()["prices3"]["Academic"]["1"] == 2800.0

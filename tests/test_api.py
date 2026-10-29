@@ -19,7 +19,8 @@ def seed(c):
     for name, tier, prices in (("SeeSAR", "Academic", {"1": 1000, "3": 2400, "25": 25000}),
                                ("SeeSAR", "Commercial", {"1": 3000, "25": 75000}),
                                ("Retro", "Academic", {"1": 500}), ("Retro", "Commercial", {"1": 900})):
-        assert c.put(f"/api/prices/{ids[name]}/{tier}", json={"prices": prices}).status_code == 200
+        three = {u: v * 3 for u, v in prices.items()}      # quotes default to 3 years; 3 x annual keeps the numbers easy to read
+        assert c.put(f"/api/prices/{ids[name]}/{tier}", json={"prices": prices, "prices3": three}).status_code == 200
     return ids
 
 

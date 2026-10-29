@@ -110,10 +110,16 @@ def resolve_lines(db: Session, lines: list[LineInput], tier: str) -> list[Resolv
                 raise QuoteError(f"line {n}: {e}")
         if price is None and prod is not None:
             users = ln.users_label or prod.default_users
-            price = prod.price_for(tier, users)
-            if price is None and not comp:
+            total = prod.term_price(tier, users, ln.years)       # the price of the whole term: 1 year, or the 3-year price
+            if total is None and not comp:
                 what = f"for {users} user{'' if str(users).strip() == '1' else 's'} " if prod.price_basis != "per_license_year" else ""
-                raise QuoteError(f"line {n}: {prod.name} has no {tier} price {what}– add it in Prices, or type the price")
+                term = "" if ln.years == 1 else f"for {ln.years} years "
+                raise QuoteError(f"line {n}: {prod.name} has no {tier} price {what}{term}– add it in Prices, or type the price")
+            if total is not None and ln.years != 1 and not comp:
+                amount = total                                    # a multi-year price is the total, not annual x years
+                price = unit_from_total(total, ln.years)
+            else:
+                price = total
         out.append(ResolvedLine(
             product_id=prod.id if prod else None,
             label=ln.label or (prod.line_label or prod.name if prod else ""),

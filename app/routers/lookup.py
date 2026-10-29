@@ -23,11 +23,20 @@ def _prices(p: Product) -> dict:
     return out
 
 
+def _prices3(p: Product) -> dict:
+    """The price of a 3-year quote, same shape as _prices."""
+    out: dict[str, dict[str, float]] = {}
+    for pr in sorted(p.prices, key=lambda x: x.users):
+        if pr.three_year_price is not None:
+            out.setdefault(pr.tier, {})[str(pr.users)] = float(pr.three_year_price)
+    return out
+
+
 def product_json(p: Product) -> dict:
     return {"id": p.id, "name": p.name, "description": p.description, "label": p.line_label or p.name, "vendor": p.vendor,
             "segment": p.segment, "deployment": p.deployment, "default_users": p.default_users,
             "price_basis": p.price_basis, "active": p.active,
-            "prices": _prices(p)}
+            "prices": _prices(p), "prices3": _prices3(p)}
 
 
 @router.get("/config")

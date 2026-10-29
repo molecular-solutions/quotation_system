@@ -18,7 +18,7 @@ into a quotation **Word + PDF that looks exactly like `templates/master_quotatio
    **Preview** renders an unsaved quote without using a number.
 4. Saved quotes are frozen: later price or name changes never alter them. **Revise** makes `…-R1`, **Copy** a new number.
 
-Pricing: the **price for the number of users × years**, per row. Each product has its own fixed price for each number of users (1–25), separately for Academic and Commercial, kept on the **Prices** page; 2 users is not 2 × the 1-user price. The line's *Price / yr* is that annual price and the amount is *price × years*. For more than 25 users (or any count without a price) type the price on the quotation. The builder also lets you type the row's **Total amount**; the price is then worked out from it (total ÷ years) and the total stays exactly as typed. Text users such as *Floating* or *1 Group License* print as written and count as 1. A *Free* row prints “Complimentary Renewed Annually” and adds ₹0. Then
+Pricing: the **price for the number of users and the length of the quote**, per row. Each product has its own fixed price for each number of users (1–25), separately for Academic and Commercial, kept on the **Prices** page; 2 users is not 2 × the 1-user price. Each also has an optional **3-year price** (the total for 3 years, not 3 × annual). A 1-year quote uses the annual price and a 3-year quote uses the 3-year price (the line's *Price / yr* then shows a third of it, and the amount is the 3-year price exactly). **Any other length, a 3-year quote with no 3-year price, more than 25 users, or a count without a price has no catalogue price: type the price or the total on the quotation.** The builder also lets you type the row's **Total amount**; the price is then worked out from it (total ÷ years) and the total stays exactly as typed. Text users such as *Floating* or *1 Group License* print as written and count as 1. A *Free* row prints “Complimentary Renewed Annually” and adds ₹0. Then
 `List total → Discount (own row, no percentage) → one price row`. The price row always reads **TOTAL AMOUNT INC. GST** (GST % from the quote, default 18, added in). No separate GST rows are printed, and there is no "+ GST" choice.
 
 ## Run locally (development)
@@ -92,15 +92,20 @@ Settings (environment): `QUOTE_ADMIN_EMAIL`, `QUOTE_ADMIN_NAME`, `QUOTE_ADMIN_PA
 
 ## Prices page (admin)
 
-A product, a bundle (Academic / Commercial) and a number of users have one price: the **total for that many users for one year**
-(table `product_prices`: `product_id, tier, users, annual_price`, unique per product + tier + users). A *licence* product (Price Basis
+A product, a bundle (Academic / Commercial) and a number of users have one price: the **total for that many users for one year**,
+and optionally a **3-year price** (table `product_prices`: `product_id, tier, users, annual_price, three_year_price`, unique per product + tier + users). A *licence* product (Price Basis
 `per_license_year`: Floating, Group, …) has a single price, stored at 1 user; a complimentary product has none.
 
 * Pick a product on the left (⚠ = no prices yet, 12/25 = partly priced), then the Academic or Commercial tab, and type the price for each number of users — or
   select a cell and **paste a column from Excel**. The page warns about a price that doesn't rise with users or a missing count in between.
 * **Upload prices**: an Excel file with sheets `Academic` and `Commercial` (a row per product, a column per number of users 1–25; blank cells change nothing),
-  or a CSV/Excel with columns `Product Name, Tier, Users, Annual Price`. A preview lists problems row by row first. **⬇ Excel / CSV** exports the same shapes.
+  or a CSV/Excel with columns `Product Name, Tier, Users, Annual Price[, 3 Year Price]`. 3-year prices in the Excel shape go on sheets `Academic 3 Years` and `Commercial 3 Years` (a blank cell changes nothing). A preview lists problems row by row first. **⬇ Excel / CSV** exports the same shapes.
 * `seed/dummy_user_prices.csv` and `.xlsx` hold **placeholder** prices (made by `scripts/dummy_prices.py`); replace them with real ones.
+* **Real prices from the company's pricing chart** (`PRICING CHART - UPDATED 2026.xlsx`, one sheet per vendor): `scripts/import_pricing.py` reads the
+  *Quote Price (1 year)* and, where a table has one, *Quote Price (3 years)* column of every table, replaces the price lists of the products the chart covers, blanks the prices of products it does not mention, and adds the products the database lacks
+  (cores / Xunits / GPU / credits options and "Unlimited" rows become one licence product each). It is a **dry run** unless you pass `--apply`
+  (SQLite is backed up first), prints counts only (no prices), and stops if a table is not where `TABLES` in the script expects it.
+  `python scripts/import_pricing.py "PRICING CHART - UPDATED 2026.xlsx"`, then again with `--apply`. Which table feeds which product is the `TABLES` list at the top of the script.
 
 ## Descriptions, discount and Terms & Conditions
 

@@ -14,9 +14,11 @@ from app.services.quotes import (CustomerIn, LineInput, QuoteError, QuoteInput, 
 def catalog(db):
     a = Product(name="SeeSAR", deployment="Local", default_users="25", line_label="SeeSAR with YASARA Plugin")
     # price for N users is a fixed number per user count, not N x the 1-user price
-    a.prices = [ProductPrice(tier="Academic", users=1, annual_price=D("1000")), ProductPrice(tier="Academic", users=3, annual_price=D("2400")),
-                ProductPrice(tier="Academic", users=25, annual_price=D("25000")),
-                ProductPrice(tier="Commercial", users=1, annual_price=D("3000")), ProductPrice(tier="Commercial", users=25, annual_price=D("75000"))]
+    # (a 3-year price here happens to be 3 x annual, so the quote maths below stays easy to read; test_three_year_prices
+    # covers a 3-year price that is not)
+    price = lambda tier, users, annual: ProductPrice(tier=tier, users=users, annual_price=D(annual), three_year_price=D(annual) * 3)
+    a.prices = [price("Academic", 1, "1000"), price("Academic", 3, "2400"), price("Academic", 25, "25000"),
+                price("Commercial", 1, "3000"), price("Commercial", 25, "75000")]
     a.catalog_links = [ProductCatalogLink(block_key="seesar_csd")]
     b = Product(name="ADMET Predictor", deployment="Local", price_basis="complimentary")
     c = Product(name="No price yet")
@@ -119,9 +121,9 @@ def test_update_replaces_lines(db, catalog):
     a, b, _ = catalog
     q = create_quote(db, data(a, b))
     d = data(a, b, discount_pct=0)
-    d.lines = [LineInput(product_id=a.id, years=2, users_label="3")]
+    d.lines = [LineInput(product_id=a.id, years=3, users_label="3")]
     update_quote(db, q, d)
-    assert len(q.lines) == 1 and q.lines[0].amount == D("4800.00") and db.query(Quote).count() == 1
+    assert len(q.lines) == 1 and q.lines[0].amount == D("7200.00") and db.query(Quote).count() == 1
 
 
 def test_numbers_are_sequential_across_simultaneous_users(tmp_path):
@@ -209,8 +211,8 @@ def test_a_line_total_that_divides_evenly_is_not_marked_as_typed(db, catalog):
 def test_price_comes_from_the_users_row_not_from_a_per_user_multiple(db, catalog):
     a, _, _ = catalog
     for users, annual in (("1", "1000"), ("3", "2400"), ("25", "25000")):
-        q = create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=a.id, users_label=users, years=2)]))
-        assert (q.lines[0].unit_price, q.lines[0].amount) == (D(annual), D(annual) * 2)
+        q = create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=a.id, users_label=users, years=3)]))
+        assert (q.lines[0].unit_price, q.lines[0].amount) == (D(annual), D(annual) * 3)
     with pytest.raises(QuoteError, match="no Academic price for 5 users"):   # no row for 5: the user must type the price
         create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=a.id, users_label="5")]))
     q = create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=a.id, users_label="30", unit_price=D("31000"), years=1)]))
@@ -221,10 +223,10 @@ def test_price_comes_from_the_users_row_not_from_a_per_user_multiple(db, catalog
 
 def test_a_licence_product_has_one_price_whatever_the_users_text(db):
     p = Product(name="HPSee", price_basis="per_license_year", default_users="Floating")
-    p.prices = [ProductPrice(tier="Academic", users=1, annual_price=D("900000"))]
+    p.prices = [ProductPrice(tier="Academic", users=1, annual_price=D("900000"), three_year_price=D("2400000"))]
     db.add(p); db.commit()
-    q = create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=p.id, years=2)]))
-    assert (q.lines[0].users_label, q.lines[0].unit_price, q.lines[0].amount) == ("Floating", D("900000"), D("1800000.00"))
+    q = create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=p.id, years=3)]))
+    assert (q.lines[0].users_label, q.lines[0].unit_price, q.lines[0].amount) == ("Floating", D("800000"), D("2400000.00"))
 
 
 def test_a_typed_total_works_for_a_product_with_no_price(db, catalog):
@@ -234,3 +236,26 @@ def test_a_typed_total_works_for_a_product_with_no_price(db, catalog):
     assert q.lines[0].unit_price == D("25000.00") and q.lines[0].amount == D("50000.00")
     with pytest.raises(QuoteError, match="no Academic price"):
         create_quote(db, QuoteInput(customer=CustomerIn(name="Dr. Adam"), lines=[LineInput(product_id=c.id)]))
+
+
+def test_three_year_price_is_the_stored_total_and_other_lengths_are_typed(db):
+    from app.services.quotes import resolve_lines
+    p = Product(name="Tri")
+    p.prices = [ProductPrice(tier="Academic", users=1, annual_price=D("1000"), three_year_price=D("2500")),
+                ProductPrice(tier="Commercial", users=1, annual_price=D("2000"))]          # a commercial price with no 3-year price
+    db.add(p); db.commit()
+    one = lambda tier, years, **kw: resolve_lines(db, [LineInput(product_id=p.id, users_label="1", years=years, **kw)], tier)[0]
+
+    assert (one("Academic", 1).unit_price, one("Academic", 1).amount) == (D("1000"), None)
+    r = one("Academic", 3)
+    assert (r.unit_price, r.amount) == (D("833.33"), D("2500"))                  # the 3-year total as stored, not 3 x 833.33
+    q = create_quote(db, QuoteInput(customer=CustomerIn(name="X"), lines=[LineInput(product_id=p.id, users_label="1", years=3)]))
+    assert q.lines[0].amount == D("2500.00") and q.list_total == D("2500.00")
+
+    with pytest.raises(QuoteError, match="no Academic price for 1 user for 2 years"):
+        one("Academic", 2)                                                        # only 1 and 3 years are priced
+    with pytest.raises(QuoteError, match="no Commercial price for 1 user for 3 years"):
+        one("Commercial", 3)                                                      # no 3-year price: it is typed, never annual x 3
+    assert one("Commercial", 1).unit_price == D("2000")
+    assert one("Academic", 2, unit_price=D("900")).unit_price == D("900")         # a typed price always works
+    assert one("Commercial", 3, amount=D("5100")).amount == D("5100")

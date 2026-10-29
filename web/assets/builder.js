@@ -46,12 +46,13 @@ function builder() {
       this.more = { date: q.date, validUntil: q.valid_until, paymentTerms: q.payment_terms, preparedBy: q.prepared_by };
       this.lines = q.lines.map(l => {
         const p = this.products.find(x => x.id === l.product_id);
-        const current = p ? this.priceFor(p, q.tier, l.users_label) : undefined;
-        // keep the saved price as an override only when it differs from today's catalogue price
-        const frozen = l.complimentary || current === undefined || Math.abs(current - l.unit_price) > 0.001 ? l.unit_price : null;
+        const current = p ? this.termPrice(p, q.tier, l.users_label, l.years) : undefined;
+        // the line still equals today's catalogue price for its term: leave it blank so it follows the catalogue;
+        // otherwise keep the saved price (or typed total) as an override
+        const follows = !l.complimentary && current !== undefined && Math.abs(current - l.amount) < 0.005;
         return { key: uid(), product_id: l.product_id, description: l.description || '', label: l.label, deployment: l.deployment,
           users_label: l.users_label, years: l.years, complimentary: l.complimentary,
-          amount: l.amount_pinned ? l.amount : null, unit_price: l.complimentary || l.amount_pinned ? null : frozen };
+          amount: !follows && l.amount_pinned ? l.amount : null, unit_price: l.complimentary || follows || l.amount_pinned ? null : l.unit_price };
       });
       if (this.lines.length) this.defaultYears = this.lines[0].years;
     },
@@ -60,6 +61,12 @@ function builder() {
     priceFor(p, tier, users) {
       const u = p.price_basis === 'per_license_year' ? '1' : String(users).trim();
       return (p.prices[tier] || {})[u];
+    },
+    // the catalogue's price for the whole term: 1 year = annual price, 3 years = the 3-year price, any other length none
+    termPrice(p, tier, users, years) {
+      const u = p.price_basis === 'per_license_year' ? '1' : String(users).trim();
+      const y = Number(years);
+      return y === 1 ? (p.prices[tier] || {})[u] : y === 3 ? ((p.prices3 || {})[tier] || {})[u] : undefined;
     },
 
     // customer

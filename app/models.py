@@ -56,6 +56,18 @@ class Product(Base):
     def price_for(self, tier: str, users: int | str | None = 1) -> Decimal | None:
         """Annual price for this many users, or None when no price is stored for that count.
         A licence-style product (Floating, Group, ...) has a single price, stored at 1 user."""
+        row = self._price_row(tier, users)
+        return row.annual_price if row else None
+
+    def term_price(self, tier: str, users: int | str | None, years: int) -> Decimal | None:
+        """The price for the WHOLE term: 1 year = the annual price, 3 years = the 3-year price. Any other length,
+        or a 3-year quote with no 3-year price stored, has no catalogue price (it is typed on the quotation)."""
+        row = self._price_row(tier, users)
+        if row is None:
+            return None
+        return {1: row.annual_price, 3: row.three_year_price}.get(years)
+
+    def _price_row(self, tier: str, users: int | str | None) -> "ProductPrice | None":
         if self.price_basis == "per_license_year":
             users = 1
         else:
@@ -63,10 +75,7 @@ class Product(Base):
                 users = int(str(users).strip())
             except ValueError:
                 return None
-        for p in self.prices:
-            if p.tier == tier and p.users == users:
-                return p.annual_price
-        return None
+        return next((p for p in self.prices if p.tier == tier and p.users == users), None)
 
     @property
     def block_keys(self) -> list[str]:
@@ -83,6 +92,8 @@ class ProductPrice(Base):
     tier: Mapped[str] = mapped_column(String(20))
     users: Mapped[int] = mapped_column(Integer, default=1)
     annual_price: Mapped[Decimal] = mapped_column(Numeric(14, 2))
+    # the price of a 3-year quote (the TOTAL for 3 years, not 3 x annual); NULL = none, so it is typed on the quotation
+    three_year_price: Mapped[Decimal | None] = mapped_column(Numeric(14, 2), nullable=True)
     product: Mapped[Product] = relationship(back_populates="prices")
 
 

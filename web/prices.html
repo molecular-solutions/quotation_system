@@ -5,7 +5,7 @@
   <div class="top" id="top"></div>
   <main x-cloak>
     <div class="head"><div><h1>Prices</h1>
-      <div class="sub">The price for each number of users, per bundle. Type each price — there is no formula. Years are multiplied on the quotation.</div></div>
+      <div class="sub">The price for each number of users, per bundle. Type each price — there is no formula. A 1-year quote uses the annual price and a 3-year quote uses the 3-year price; for any other length, or a missing price, the price is typed on the quotation.</div></div>
       <div style="display:flex;gap:8px;align-items:center">
         <button class="btn ghost" @click="$refs.file.click()">⬆ Upload prices</button>
         <input type="file" x-ref="file" accept=".csv,.xlsx,.xlsm" hidden @change="pick($event.target.files[0]); $event.target.value = ''">
@@ -43,15 +43,17 @@
               <template x-for="t in tiers" :key="t"><button :class="{on: tier === t}" @click="tier = t" x-text="t + (dirty(t) ? ' •' : '')"></button></template>
             </div>
             <table class="pricetable">
-              <thead><tr><th>Users</th><th class="num">Annual price (₹) for this many users</th><th class="num">Per user</th><th></th></tr></thead>
+              <thead><tr><th>Users</th><th class="num">1-year price (₹) for this many users</th><th class="num">3-year price (₹), total</th><th class="num">Per user (1 yr)</th><th></th></tr></thead>
               <tbody>
                 <template x-for="n in userRange" :key="n">
                   <tr>
                     <td x-text="cur.max_users === 1 ? 'Licence' : n"></td>
                     <td class="num"><input type="text" inputmode="decimal" :data-n="n" x-model="edit[tier][n]" @input="errs[tier + n] = ''"
                           @paste.prevent="paste($event, n)" :class="{bad: errs[tier + n]}" placeholder="—"></td>
+                    <td class="num"><input type="text" inputmode="decimal" x-model="edit3[tier][n]" @input="errs[tier + '3y' + n] = ''"
+                          @paste.prevent="paste($event, n, true)" :class="{bad: errs[tier + '3y' + n]}" placeholder="—"></td>
                     <td class="num hint" x-text="perUser(n)"></td>
-                    <td class="rowwarn"><span class="badtxt" x-text="errs[tier + n] || rowWarn(n)"></span></td>
+                    <td class="rowwarn"><span class="badtxt" x-text="errs[tier + n] || errs[tier + '3y' + n] || rowWarn(n)"></span></td>
                   </tr>
                 </template>
               </tbody>

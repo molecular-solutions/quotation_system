@@ -1,7 +1,9 @@
 function pricesPage() {
   return {
     products: [], maxUsers: 25, filter: '', cur: null, tier: 'Academic', tiers: ['Academic', 'Commercial'],
-    edit: { Academic: {}, Commercial: {} }, orig: { Academic: {}, Commercial: {} }, errs: {}, saving: false,
+    edit: { Academic: {}, Commercial: {} }, orig: { Academic: {}, Commercial: {} },       // 1-year prices by number of users
+    edit3: { Academic: {}, Commercial: {} }, orig3: { Academic: {}, Commercial: {} },     // 3-year prices
+    errs: {}, saving: false,
     prev: null, file: null, uploadError: '', importing: false,
 
     get groups() {
@@ -11,7 +13,7 @@ function pricesPage() {
     },
     get userRange() { return this.cur ? Array.from({ length: this.cur.max_users }, (_, i) => i + 1) : []; },
     get anyDirty() { return this.tiers.some(t => this.dirty(t)); },
-    dirty(t) { return JSON.stringify(this.edit[t]) !== JSON.stringify(this.orig[t]); },
+    dirty(t) { return JSON.stringify([this.edit[t], this.edit3[t]]) !== JSON.stringify([this.orig[t], this.orig3[t]]); },
 
     // status chip in the product list: how many of the user counts have a price (worst of the two bundles)
     statusText(p) { const m = Math.min(p.counts.Academic, p.counts.Commercial); return m === p.max_users ? '✓' : m === 0 ? '⚠' : m + '/' + p.max_users; },
@@ -31,11 +33,15 @@ function pricesPage() {
     show(d) {
       this.cur = d; this.errs = {};
       for (const t of this.tiers) {
-        const e = {}; for (let n = 1; n <= d.max_users; n++) e[n] = d.prices[t][n] === undefined ? '' : String(d.prices[t][n]);
-        this.edit[t] = e; this.orig[t] = { ...e };
+        const e = {}, e3 = {};
+        for (let n = 1; n <= d.max_users; n++) {
+          e[n] = d.prices[t][n] === undefined ? '' : String(d.prices[t][n]);
+          e3[n] = d.prices3[t][n] === undefined ? '' : String(d.prices3[t][n]);
+        }
+        this.edit[t] = e; this.orig[t] = { ...e }; this.edit3[t] = e3; this.orig3[t] = { ...e3 };
       }
     },
-    reset() { for (const t of this.tiers) this.edit[t] = { ...this.orig[t] }; this.errs = {}; },
+    reset() { for (const t of this.tiers) { this.edit[t] = { ...this.orig[t] }; this.edit3[t] = { ...this.orig3[t] }; } this.errs = {}; },
 
     num(n) { const v = parseFloat(String(this.edit[this.tier][n]).replace(/[₹,\s]/g, '')); return isNaN(v) ? null : v; },
     perUser(n) { const v = this.num(n); return v === null ? '' : inr(v / n).replace(/\.00$/, ''); },
@@ -46,19 +52,23 @@ function pricesPage() {
       if (p === null) return this.cur.max_users > 1 && this.num(n - 1) === null ? 'no price for ' + (n - 1) + ' user' + (n - 1 === 1 ? '' : 's') : '';
       return v <= p ? 'not more than ' + (n - 1) + ' user' + (n - 1 === 1 ? '' : 's') : '';
     },
-    paste(ev, n) {                                  // paste a column (or a row) copied from Excel, filling down from this cell
+    paste(ev, n, three) {                           // paste a column (or a row) copied from Excel, filling down from this cell
       const cells = (ev.clipboardData.getData('text') || '').split(/[\r\n\t]+/).map(s => s.trim()).filter((s, i, a) => s !== '' || i < a.length - 1);
-      cells.forEach((v, i) => { if (n + i <= this.cur.max_users) { this.edit[this.tier][n + i] = v.replace(/[₹,\s]/g, ''); delete this.errs[this.tier + (n + i)]; } });
+      const into = three ? this.edit3[this.tier] : this.edit[this.tier], key = three ? '3y' : '';
+      cells.forEach((v, i) => { if (n + i <= this.cur.max_users) { into[n + i] = v.replace(/[₹,\s]/g, ''); delete this.errs[this.tier + key + (n + i)]; } });
     },
 
     async save() {
       this.saving = true; let failed = false;
       for (const t of this.tiers.filter(x => this.dirty(x))) {
         try {
-          const d = await api('PUT', `/api/prices/${this.cur.id}/${t}`, { prices: this.edit[t] });
-          this.cur.prices[t] = d.prices[t]; this.orig[t] = { ...this.edit[t] };
-          for (let n = 1; n <= d.max_users; n++) this.edit[t][n] = d.prices[t][n] === undefined ? '' : String(d.prices[t][n]);
-          this.orig[t] = { ...this.edit[t] };
+          const d = await api('PUT', `/api/prices/${this.cur.id}/${t}`, { prices: this.edit[t], prices3: this.edit3[t] });
+          this.cur.prices[t] = d.prices[t]; this.cur.prices3[t] = d.prices3[t];
+          for (let n = 1; n <= d.max_users; n++) {
+            this.edit[t][n] = d.prices[t][n] === undefined ? '' : String(d.prices[t][n]);
+            this.edit3[t][n] = d.prices3[t][n] === undefined ? '' : String(d.prices3[t][n]);
+          }
+          this.orig[t] = { ...this.edit[t] }; this.orig3[t] = { ...this.edit3[t] };
         } catch (e) {
           failed = true; this.tier = t;
           for (const [k, msg] of Object.entries(e.errors || {})) this.errs[t + k] = msg;

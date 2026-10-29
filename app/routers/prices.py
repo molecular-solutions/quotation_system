@@ -66,13 +66,17 @@ def read(product_id: int, db: Session = Depends(get_db)):
 
 @router.put("/{product_id}/{tier}")
 def save(product_id: int, tier: str, body: dict, db: Session = Depends(get_db)):
-    """Replace one bundle's price list: {"prices": {"1": 42000, "2": 78000, "3": ""}} (blank removes that count)."""
+    """Replace one bundle's price list: {"prices": {"1": 42000, "2": 78000, "3": ""}} (blank removes that count);
+    optional "prices3" is the same for the 3-year prices (left alone when absent)."""
     p = product_or_404(db, product_id)
     raw = body.get("prices")
     if not isinstance(raw, dict):
         raise HTTPException(422, {"message": "prices must be an object of users → price"})
     try:
-        errors = svc.set_tier(db, p, tier, raw)
+        raw3 = body.get("prices3")
+        if raw3 is not None and not isinstance(raw3, dict):
+            raise HTTPException(422, {"message": "prices3 must be an object of users → price"})
+        errors = svc.set_tier(db, p, tier, raw, raw3)
     except svc.PriceError as e:
         raise HTTPException(422, {"message": str(e)})
     if errors:
