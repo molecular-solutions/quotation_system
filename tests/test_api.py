@@ -4,8 +4,6 @@ import zipfile
 
 import pytest
 
-from app import auth
-
 needs_soffice = pytest.mark.skipif(not shutil.which("soffice"), reason="needs LibreOffice")
 
 
@@ -32,21 +30,37 @@ def payload(ids, **kw):
 
 
 def test_auth_gate(client, admin):
-    from tests.conftest import login
-    assert client.get("/api/products").status_code == 401
-    assert client.get("/", follow_redirects=False).status_code == 303
-    assert login(client, "boss@example.com", "nope").status_code == 401
-    assert client.get("/api/products").status_code == 401
-    assert login(client, "BOSS@example.com ", "test-pass").status_code == 200  # email is case-insensitive
+    from tests.access import login
+    assert client.get("/api/products").status_code == 401           # no token: not through Cloudflare Access
+    assert client.get("/", follow_redirects=False).status_code == 401
+    assert login(client, "BOSS@example.com ").status_code == 200    # email is case-insensitive
     assert client.get("/api/products").status_code == 200
     assert client.get("/", follow_redirects=False).status_code == 200
+    assert client.get("/login", follow_redirects=False).status_code == 404   # no app login page any more
 
 
-def test_login_rate_limit(client, admin):
-    from tests.conftest import login
-    codes = [client.post("/api/login", json={"email": "boss@example.com", "password": "bad"}).status_code for _ in range(7)]
-    assert codes[:5] == [401] * 5 and codes[5:] == [429, 429]
-    assert client.post("/api/login", json={"email": "boss@example.com", "password": "test-pass"}).status_code == 429
+def test_access_token_checks(client, admin):
+    from tests.access import KEY, OTHER_KEY, access_token
+    ok = lambda **kw: client.get("/api/me", headers={"Cf-Access-Jwt-Assertion": access_token("boss@example.com", **kw)}).status_code
+    assert ok() == 200
+    assert ok(aud="another-application") == 401                     # a token for some other Access application
+    assert ok(exp_in=-3600) == 401                                  # expired
+    assert ok(key=OTHER_KEY) == 401                                 # signed by someone else (the key the app trusts is KEY)
+    assert ok(iss="https://other.cloudflareaccess.com") == 401
+    assert client.get("/api/me", headers={"Cf-Access-Jwt-Assertion": "garbage"}).status_code == 401
+    # the plain email headers Cloudflare also sends are not enough on their own: anyone who can reach the container could forge them
+    assert client.get("/api/me", headers={"Cf-Access-Authenticated-User-Email": "boss@example.com"}).status_code == 401
+    # a service token carries no email
+    assert client.get("/api/me", headers={"Cf-Access-Jwt-Assertion": access_token(None, sub="svc")}).status_code == 401
+
+
+def test_signed_in_but_not_a_user_is_refused(client, admin):
+    from tests.access import login
+    r = login(client, "stranger@example.com")
+    assert r.status_code == 403 and "not set up" in r.json()["detail"]
+    page = client.get("/", follow_redirects=False)
+    assert page.status_code == 403 and "Ask an administrator" in page.text
+    assert client.get("/api/products").status_code == 403
 
 
 def test_calc_create_and_read(authed):

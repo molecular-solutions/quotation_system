@@ -5,7 +5,7 @@ into a quotation **Word + PDF that looks exactly like `templates/master_quotatio
 (built from `Quotation_Template.docx`, with the top section redone to match the Word-designed reference).
 
 * FastAPI + SQLAlchemy + SQLite (WAL) · Alpine.js UI (no build step) · LibreOffice for PDF
-* Per-user accounts created by an administrator; an **Admin** panel lists every quotation
+* Sign-in is done by **Cloudflare Access** (no passwords in the app); an administrator lists who may use it and their role; an **Admin** panel lists every quotation
 * Data (products, prices, customers, packages) lives in SQL and is managed on the **Data** page:
   upload `.csv` / `.xlsx`, or edit the table directly
 
@@ -29,52 +29,54 @@ pip install -r requirements-dev.txt
 # PDF needs LibreOffice and the Calibri-compatible Carlito font (fonts/ has it):
 mkdir -p ~/.fonts && cp fonts/*.ttf ~/.fonts && fc-cache -f
 python scripts/seed.py                       # first time: loads seed/products.csv
-QUOTE_ADMIN_EMAIL=you@example.com QUOTE_ADMIN_PASSWORD=pick-one-long QUOTE_SECRET_KEY=anything uvicorn app.main:app --reload
-# open http://localhost:8000
+QUOTE_ADMIN_EMAIL=you@example.com QUOTE_CF_TEAM_DOMAIN=your-team.cloudflareaccess.com QUOTE_CF_AUD=your-aud-tag uvicorn app.main:app --reload
+# every request needs the signed token Cloudflare Access adds, so a browser on localhost is refused (401);
+# use the tests (they sign their own tokens), or reach the app through the tunnel hostname
 pytest                                       # needs soffice + pdftoppm for the layout test
 ```
 
 ## Run in Docker (local test)
 
 ```bash
-cp .env.example .env     # set QUOTE_ADMIN_EMAIL, QUOTE_ADMIN_PASSWORD and QUOTE_SECRET_KEY
+cp .env.example .env     # set QUOTE_ADMIN_EMAIL, QUOTE_CF_TEAM_DOMAIN and QUOTE_CF_AUD
 docker compose up -d --build
-# open http://127.0.0.1:8100   (QUOTE_PORT in .env changes the port)
+# reached through the Cloudflare Tunnel; 127.0.0.1:8100 answers 401 to a browser (QUOTE_PORT in .env changes the port)
 ```
 
-The app listens on `127.0.0.1` only and there is no reverse proxy yet. Data is in the `quote-data` volume; a `backup`
+The app listens on `127.0.0.1` only. Data is in the `quote-data` volume; a `backup`
 service writes a daily database copy to `/data/backups` (14 kept) — also copy that folder off the server. The first
 start applies migrations and loads `seed/products.csv` if there are no products. `docker compose down` keeps the data;
 `docker compose down -v` deletes it.
 
-## Putting it behind Caddy (later, on the VPS)
+## Putting it behind Cloudflare Access
 
-The app container also joins the existing `molecular-discovery-network` as `quotation-app`, so the Caddy container that
-already runs there can reach it at `quotation-app:8000`. When ready, add a site block to that Caddy's config, e.g.
+A `cloudflared` container on `molecular-discovery-network` forwards `https://<hostname>` to `http://quotation-app:8000`
+(Zero Trust → Networks → Tunnels → Published application routes; service type **HTTP**). A self-hosted Access application
+on the same hostname lets Cloudflare ask people to sign in (One-time PIN by email) before anything reaches the app, and
+an **Allow** policy lists who may do that.
 
-```
-quotes.your-domain.com {
-	encode zstd gzip
-	reverse_proxy quotation-app:8000
-}
-```
+Cloudflare then adds a signed token (`Cf-Access-Jwt-Assertion`) to every request. The app checks its signature against
+`https://<team>.cloudflareaccess.com/cdn-cgi/access/certs` and its audience against the application's **AUD tag**, takes the
+verified email, and looks it up in the **users** table: no row, or a deactivated one, gets "403 not set up"; otherwise the
+row's role (admin or user) applies. The plain email header is never trusted, so something that reaches the container
+without going through Cloudflare (another container, `127.0.0.1:8100`) gets 401.
 
-reload Caddy, then set `QUOTE_COOKIE_SECURE=1` in `.env` and `docker compose up -d`. Nothing else changes.
-
-Settings (environment): `QUOTE_ADMIN_EMAIL`, `QUOTE_ADMIN_NAME`, `QUOTE_ADMIN_PASSWORD` (first administrator only), `QUOTE_SECRET_KEY`, `QUOTE_SESSION_HOURS` (12), `QUOTE_COOKIE_SECURE`
-(1 behind HTTPS), `QUOTE_DATA_DIR`, `DATABASE_URL` (defaults to SQLite in the data dir; a Postgres URL also works — back up with `pg_dump`).
+Settings (environment): `QUOTE_CF_TEAM_DOMAIN` and `QUOTE_CF_AUD` (both required; the app will not start without them),
+`QUOTE_ADMIN_EMAIL`, `QUOTE_ADMIN_NAME` (first administrator only), `QUOTE_DATA_DIR`, `DATABASE_URL` (defaults to SQLite in
+the data dir; a Postgres URL also works — back up with `pg_dump`).
 
 ## Users and the Admin panel
 
-* On first start the app creates one administrator from `QUOTE_ADMIN_EMAIL` / `QUOTE_ADMIN_PASSWORD` (existing quotations are assigned to them).
-  After that the environment password is ignored; change it on the **Account** page.
-* **Admin → Users**: add a person (name, email, role; password blank = generated). A box shows *Sign in URL, name, email, password*
-  with a **Copy login details** button — the password is shown once. **Reset password** issues a new one and signs the person out;
-  **Deactivate** blocks sign-in immediately but keeps their quotations. You cannot deactivate yourself or the last administrator.
+* On first start the app creates one administrator from `QUOTE_ADMIN_EMAIL` (existing quotations are assigned to them).
+  It must be the email that person signs in with at Cloudflare. If the database already has users, that variable is ignored.
+* **Admin → Users**: add a person (name, email, role). There are no passwords. They must also be in the Cloudflare Access
+  Allow policy to reach the app at all. **Deactivate** refuses them on their very next request but keeps their quotations;
+  a role change also applies at once. You cannot deactivate yourself or the last administrator.
 * **Admin → All quotations**: every quotation with who created it; filter by user, status or text; open, download Word/PDF.
 * Users see and edit only their own quotations (a revision stays with the quote's owner; a copy belongs to whoever made it).
   Administrators can open any quotation. **Data** and **Settings** (prices, products, numbering) are administrator-only.
-* Sign-in is by email + password, limited to 5 failed attempts per 5 minutes per client and per email. Passwords are stored as scrypt hashes.
+* **Log out** goes to `/cdn-cgi/access/logout`, which ends the Cloudflare session. How long people stay signed in is the
+  Access application's session duration.
 
 ## Data page
 

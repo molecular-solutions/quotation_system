@@ -37,17 +37,16 @@ class NewUser(BaseModel):
     name: str
     email: str
     role: str = "user"
-    password: str | None = None  # blank = generate one
 
 
 @router.post("/users", status_code=201)
 def create_user(body: NewUser, db: Session = Depends(get_db)):
     try:
-        user, password = users_svc.create_user(db, body.name, body.email, body.role, body.password or None)
+        user = users_svc.create_user(db, body.name, body.email, body.role)
     except users_svc.UserError as e:
         db.rollback()
         raise HTTPException(422, str(e))
-    return admin_user_json(db, user) | {"password": password}  # the only time the password is shown
+    return admin_user_json(db, user)
 
 
 class UserPatch(BaseModel):
@@ -77,20 +76,6 @@ def patch_user(user_id: int, body: UserPatch, me: User = Depends(require_admin),
         raise HTTPException(409, "There must always be at least one active administrator")
     db.commit()
     return admin_user_json(db, u)
-
-
-class PasswordReset(BaseModel):
-    password: str | None = None
-
-
-@router.post("/users/{user_id}/reset-password")
-def reset_password(user_id: int, body: PasswordReset, db: Session = Depends(get_db)):
-    u = get_user(db, user_id)
-    try:
-        password = users_svc.set_password(db, u, body.password or None)
-    except users_svc.UserError as e:
-        raise HTTPException(422, str(e))
-    return {"email": u.email, "name": u.name, "password": password}
 
 
 @router.get("/quotes")

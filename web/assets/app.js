@@ -4,7 +4,7 @@ window.api = async function (method, url, body, opts = {}) {
   if (body instanceof FormData) init.body = body;
   else if (body !== undefined) { init.headers['Content-Type'] = 'application/json'; init.body = JSON.stringify(body); }
   const r = await fetch(url, init);
-  if (r.status === 401 && !url.endsWith('/login')) { location.href = '/login'; throw new Error('login required'); }
+  if (r.status === 401) { location.href = '/'; throw new Error('login required'); }  // Cloudflare Access asks them to sign in again
   if (opts.raw) return r;
   const ct = r.headers.get('content-type') || '';
   const data = ct.includes('json') ? await r.json() : await r.text();
@@ -47,14 +47,7 @@ window.topbar = async function (active) {
   const pages = [['/', 'Quotes']].concat(me.role === 'admin' ? [['/data', 'Data'], ['/prices', 'Prices'], ['/settings', 'Settings'], ['/admin', 'Admin']] : []);
   const links = pages.map(([h, t]) => `<a href="${h}" class="${active === t ? 'on' : ''}">${t}</a>`).join('');
   el.innerHTML = `<img src="/assets/logo.png" alt="Molecular Solutions"><nav>${links}</nav>` +
-    `<a class="who" href="/account" title="Account and password"></a>` +
-    `<button class="link" onclick="api('POST','/api/logout').then(()=>location.href='/login')">Log out</button>`;
+    `<span class="who"></span>` +
+    `<button class="link" onclick="location.href='/cdn-cgi/access/logout'">Log out</button>`;
   el.querySelector('.who').textContent = me.name;
-};
-
-// Copy text to the clipboard (falls back for plain-http pages, where navigator.clipboard is unavailable).
-window.copyText = async function (text) {
-  try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
-  const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select();
-  let ok = false; try { ok = document.execCommand('copy'); } catch (e) {} t.remove(); return ok;
 };

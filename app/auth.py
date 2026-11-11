@@ -1,81 +1,70 @@
-"""Per-user sessions: a signed, expiring cookie naming the user, plus a login rate limit.
+"""Sign-in is done by Cloudflare Access, not by the app.
 
-The cookie also carries a fingerprint of the password hash, so changing or resetting a password signs that user out
-everywhere; deactivating a user is checked on every request."""
+Access puts a signed token (a JWT) in the `Cf-Access-Jwt-Assertion` header of every request that reaches the app through
+the tunnel. We check its signature against the team's public keys and its audience against this application's AUD tag,
+then take the verified email and look it up in the users table: who may use the app, and as what role, is decided there.
+The plain `Cf-Access-Authenticated-User-Email` header is never trusted; anything that can reach the container directly
+could forge it, but not a signed token."""
 from __future__ import annotations
 
-import hashlib
-import time
-from collections import defaultdict, deque
+import datetime as dt
+import logging
 
+import jwt
 from fastapi import Depends, HTTPException, Request
-from itsdangerous import BadSignature, SignatureExpired, URLSafeTimedSerializer
+from jwt import PyJWKClient
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app import config
 from app.database import get_db
 from app.models import User
 
-COOKIE = "mq_session"
-_signer = URLSafeTimedSerializer(config.SECRET_KEY, salt="quote-session-v2")
-_attempts: dict[str, deque] = defaultdict(deque)
-MAX_FAILS, WINDOW = 5, 300  # 5 wrong attempts per 5 minutes, per client and per email
+log = logging.getLogger(__name__)
+HEADER = "Cf-Access-Jwt-Assertion"
+NOT_SET_UP = "Your account is not set up for this system. Ask an administrator to add your email."
+_jwks: PyJWKClient | None = None
 
 
-def client_ip(request: Request) -> str:
-    fwd = request.headers.get("x-forwarded-for")  # set by the reverse proxy (Caddy)
-    return fwd.split(",")[0].strip() if fwd else (request.client.host if request.client else "?")
+def _keys() -> PyJWKClient:
+    global _jwks
+    if _jwks is None:  # keys are cached, and fetched again when a token names a key we have not seen (rotation)
+        _jwks = PyJWKClient(f"https://{config.CF_TEAM_DOMAIN}/cdn-cgi/access/certs", cache_keys=True, lifespan=3600)
+    return _jwks
 
 
-def _recent(key: str) -> deque:
-    q, now = _attempts[key], time.time()
-    while q and now - q[0] > WINDOW:
-        q.popleft()
-    return q
-
-
-def check_rate_limit(*keys: str) -> None:
-    if any(len(_recent(k)) >= MAX_FAILS for k in keys):
-        raise HTTPException(429, "Too many failed sign-in attempts. Try again in a few minutes.")
-
-
-def record_failure(*keys: str) -> None:
-    for k in keys:
-        _attempts[k].append(time.time())
-
-
-def clear_failures(*keys: str) -> None:
-    for k in keys:
-        _attempts.pop(k, None)
-
-
-def _fingerprint(user: User) -> str:
-    return hashlib.sha256(user.password_hash.encode()).hexdigest()[:16]
-
-
-def make_token(user: User) -> str:
-    return _signer.dumps({"u": user.id, "f": _fingerprint(user)})
-
-
-def user_from_request(request: Request, db: Session) -> User | None:
-    token = request.cookies.get(COOKIE)
-    if not token:
+def verified_email(request: Request) -> str | None:
+    """The email in a valid Access token, lower-cased, or None when there is no valid token."""
+    token = request.headers.get(HEADER)
+    if not token or not config.CF_TEAM_DOMAIN or not config.CF_AUD:
         return None
     try:
-        data = _signer.loads(token, max_age=config.SESSION_HOURS * 3600)
-        user = db.get(User, data["u"])
-    except (BadSignature, SignatureExpired, KeyError, TypeError):
+        claims = jwt.decode(token, _keys().get_signing_key_from_jwt(token).key, algorithms=["RS256"],
+                            audience=config.CF_AUD, issuer=f"https://{config.CF_TEAM_DOMAIN}", leeway=30,
+                            options={"require": ["exp", "iat", "iss", "aud"]})
+    except jwt.PyJWTError as e:  # bad signature, wrong audience, expired, or the keys could not be fetched
+        log.warning("Access token rejected: %s", e)
         return None
-    if user is None or not user.active or data.get("f") != _fingerprint(user):
-        return None
+    email = claims.get("email")  # a service token has no email and so gets no access
+    return email.strip().lower() if isinstance(email, str) and email.strip() else None
+
+
+def authenticate(request: Request, db: Session) -> User:
+    email = verified_email(request)
+    if email is None:
+        raise HTTPException(401, "Sign in through Cloudflare Access")
+    user = db.scalar(select(User).where(User.email == email))
+    if user is None or not user.active:  # deactivating a user takes effect on their very next request
+        raise HTTPException(403, NOT_SET_UP)
+    now = dt.datetime.now()
+    if user.last_login_at is None or now - user.last_login_at > dt.timedelta(hours=1):
+        user.last_login_at = now
+        db.commit()
     return user
 
 
 def current_user(request: Request, db: Session = Depends(get_db)) -> User:
-    user = user_from_request(request, db)
-    if user is None:
-        raise HTTPException(401, "Please log in")
-    return user
+    return authenticate(request, db)
 
 
 def require_admin(user: User = Depends(current_user)) -> User:

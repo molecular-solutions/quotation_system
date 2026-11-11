@@ -1,9 +1,9 @@
-# Local test setup: the app is published on http://127.0.0.1:8100 only. No reverse proxy yet.
-#   cp .env.example .env   # set QUOTE_ADMIN_EMAIL, QUOTE_ADMIN_PASSWORD and QUOTE_SECRET_KEY
+# The app is published on 127.0.0.1:8100 only and is reached through a Cloudflare Tunnel; Cloudflare Access signs people in.
+#   cp .env.example .env   # set QUOTE_ADMIN_EMAIL, QUOTE_CF_TEAM_DOMAIN and QUOTE_CF_AUD
 #   docker compose up -d --build
 #
-# The app also joins the existing `molecular-discovery-network`, so the Caddy container already running there can
-# proxy to `quotation-app:8000` later (see README, "Putting it behind Caddy").
+# The app also joins the existing `molecular-discovery-network`, so the cloudflared container there reaches it at
+# `quotation-app:8000` (see README, "Putting it behind Cloudflare Access").
 services:
   app:
     build: .
@@ -11,9 +11,8 @@ services:
     environment:
       QUOTE_ADMIN_EMAIL: ${QUOTE_ADMIN_EMAIL:?set QUOTE_ADMIN_EMAIL in .env}   # first administrator, created on first start
       QUOTE_ADMIN_NAME: ${QUOTE_ADMIN_NAME:-Administrator}
-      QUOTE_ADMIN_PASSWORD: ${QUOTE_ADMIN_PASSWORD:?set QUOTE_ADMIN_PASSWORD in .env}
-      QUOTE_SECRET_KEY: ${QUOTE_SECRET_KEY:?set QUOTE_SECRET_KEY in .env}
-      QUOTE_COOKIE_SECURE: ${QUOTE_COOKIE_SECURE:-0}   # 1 once served over HTTPS
+      QUOTE_CF_TEAM_DOMAIN: ${QUOTE_CF_TEAM_DOMAIN:?set QUOTE_CF_TEAM_DOMAIN in .env}   # <team>.cloudflareaccess.com
+      QUOTE_CF_AUD: ${QUOTE_CF_AUD:?set QUOTE_CF_AUD in .env}                           # the Access application's AUD tag
       QUOTE_SMTP_HOST: ${QUOTE_SMTP_HOST:-}            # outgoing mail for the Email button (optional)
       QUOTE_SMTP_PORT: ${QUOTE_SMTP_PORT:-587}
       QUOTE_SMTP_SECURITY: ${QUOTE_SMTP_SECURITY:-starttls}
@@ -32,8 +31,6 @@ services:
   backup:   # daily consistent copy of the database, 14 days kept (in the same volume: also copy it off-server)
     build: .
     restart: unless-stopped
-    environment:
-      QUOTE_SECRET_KEY: unused
     volumes:
       - quote-data:/data
     healthcheck: {disable: true}

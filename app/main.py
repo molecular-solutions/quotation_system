@@ -3,8 +3,10 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, Request
-from fastapi.responses import FileResponse, RedirectResponse
+from html import escape
+
+from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from sqlalchemy.orm import Session
@@ -21,6 +23,8 @@ WEB = Path(__file__).resolve().parents[1] / "web"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    if not (config.CF_TEAM_DOMAIN and config.CF_AUD):  # without these nobody could sign in; say so rather than start
+        raise SystemExit("Set QUOTE_CF_TEAM_DOMAIN and QUOTE_CF_AUD (Cloudflare Access team domain and application AUD tag)")
     config.FILES_DIR.mkdir(parents=True, exist_ok=True)
     migrations.upgrade()
     with SessionLocal() as db:
@@ -36,24 +40,27 @@ for r in (auth_routes.router, lookup.router, data.router, prices.router, quotes.
 app.mount("/assets", StaticFiles(directory=WEB / "assets"), name="assets")
 
 
+def denied(status: int, message: str) -> HTMLResponse:
+    return HTMLResponse(f"<!doctype html><meta charset=utf-8><title>Quotations</title><link rel=stylesheet href=/assets/app.css>"
+                        f"<body style='display:grid;place-items:center;min-height:100vh;text-align:center'>"
+                        f"<div class=card style='max-width:420px'><h1>Quotations</h1><p>{escape(message)}</p>"
+                        f"<p><a href=/cdn-cgi/access/logout>Sign in as someone else</a></p></div></body>", status_code=status)
+
+
 def page(name: str, admin_only: bool = False):
     def handler(request: Request, db: Session = Depends(get_db)):
-        user = auth.user_from_request(request, db)
-        if user is None:
-            return RedirectResponse("/login", status_code=303)
+        try:
+            user = auth.authenticate(request, db)
+        except HTTPException as e:
+            return denied(e.status_code, e.detail)
         if admin_only and user.role != "admin":
             return RedirectResponse("/", status_code=303)
         return FileResponse(WEB / name)
     return handler
 
 
-@app.get("/login")
-def login_page():
-    return FileResponse(WEB / "login.html")
-
-
 for path, file, admin_only in (("/", "quotes.html", False), ("/new", "builder.html", False),
-                               ("/quote/{quote_id}", "builder.html", False), ("/account", "account.html", False),
+                               ("/quote/{quote_id}", "builder.html", False),
                                ("/data", "data.html", True), ("/prices", "prices.html", True), ("/settings", "settings.html", True),
                                ("/admin", "admin.html", True)):
     app.add_api_route(path, page(file, admin_only), methods=["GET"], include_in_schema=False)

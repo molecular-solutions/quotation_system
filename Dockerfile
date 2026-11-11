@@ -27,6 +27,6 @@ USER quote
 ENV QUOTE_DATA_DIR=/data HOME=/home/quote PYTHONUNBUFFERED=1
 VOLUME /data
 EXPOSE 8000
-HEALTHCHECK --interval=30s --timeout=5s CMD python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/login')"
+HEALTHCHECK --interval=30s --timeout=5s CMD python -c "import urllib.request as u; u.urlopen('http://127.0.0.1:8000/assets/app.css')"
 # seed.py is a no-op once products exist; main.py applies migrations on startup
 CMD ["sh", "-c", "python scripts/seed.py && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*'"]
