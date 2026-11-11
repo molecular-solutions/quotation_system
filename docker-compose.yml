@@ -3,7 +3,16 @@
 #   docker compose up -d --build
 #
 # The app also joins the existing `molecular-discovery-network`, so the cloudflared container there reaches it at
-# `quotation-app:8000` (see README, "Putting it behind Cloudflare Access").
+# `quotation-app:8000` (see README, "Putting it behind Cloudflare Access"), and so it can reach the shared Postgres
+# container there (database `quotation`, role `quotation`; see README, "Database").
+# /data (uploaded files and database backups) lives in a folder on the SSD. If that folder is missing (SSD not mounted),
+# the containers refuse to start instead of silently writing to the root disk.
+x-data-volume: &data-volume
+  type: bind
+  source: ${QUOTE_DATA_HOST_DIR:?set QUOTE_DATA_HOST_DIR in .env (a folder on the SSD, owned by uid 10001)}
+  target: /data
+  bind: {create_host_path: false}
+
 services:
   app:
     build: .
@@ -13,6 +22,7 @@ services:
       QUOTE_ADMIN_NAME: ${QUOTE_ADMIN_NAME:-Administrator}
       QUOTE_CF_TEAM_DOMAIN: ${QUOTE_CF_TEAM_DOMAIN:?set QUOTE_CF_TEAM_DOMAIN in .env}   # <team>.cloudflareaccess.com
       QUOTE_CF_AUD: ${QUOTE_CF_AUD:?set QUOTE_CF_AUD in .env}                           # the Access application's AUD tag
+      DATABASE_URL: postgresql://${QUOTE_DB_USER:-quotation}:${QUOTE_DB_PASSWORD:?set QUOTE_DB_PASSWORD in .env}@${QUOTE_DB_HOST:-molecular-discovery-postgres-1}:5432/${QUOTE_DB_NAME:-quotation}
       QUOTE_SMTP_HOST: ${QUOTE_SMTP_HOST:-}            # outgoing mail for the Email button (optional)
       QUOTE_SMTP_PORT: ${QUOTE_SMTP_PORT:-587}
       QUOTE_SMTP_SECURITY: ${QUOTE_SMTP_SECURITY:-starttls}
@@ -21,23 +31,39 @@ services:
       QUOTE_SMTP_FROM: ${QUOTE_SMTP_FROM:-}
       QUOTE_SMTP_FROM_NAME: ${QUOTE_SMTP_FROM_NAME:-Molecular Solutions}
     volumes:
-      - quote-data:/data
+      - *data-volume
     ports: ["127.0.0.1:${QUOTE_PORT:-8100}:8000"]
     networks:
       default:
       molecular-discovery-network:
         aliases: [quotation-app]
 
-  backup:   # daily consistent copy of the database, 14 days kept (in the same volume: also copy it off-server)
-    build: .
+  backup:   # daily pg_dump of the database into /data/backups, newest 14 kept (also copy them off this machine)
+    image: postgres:16-alpine   # same major version as the server, so pg_dump matches it
     restart: unless-stopped
+    user: "10001:10001"         # the same owner as the app, so both can use /data
+    environment:
+      PGHOST: ${QUOTE_DB_HOST:-molecular-discovery-postgres-1}
+      PGDATABASE: ${QUOTE_DB_NAME:-quotation}
+      PGUSER: ${QUOTE_DB_USER:-quotation}
+      PGPASSWORD: ${QUOTE_DB_PASSWORD:?set QUOTE_DB_PASSWORD in .env}
     volumes:
-      - quote-data:/data
-    healthcheck: {disable: true}
-    command: ["sh", "-c", "while true; do python scripts/backup.py; sleep 86400; done"]
-
-volumes:
-  quote-data:
+      - *data-volume
+    networks: [molecular-discovery-network]
+    entrypoint: ["sh", "-c"]
+    command:
+      - |
+        mkdir -p /data/backups
+        while true; do
+          f=/data/backups/quotation-$$(date +%Y%m%d-%H%M).dump
+          if pg_dump -Fc -f "$$f.part" && mv "$$f.part" "$$f"; then
+            echo "backup written: $$f"
+            ls -1t /data/backups/quotation-*.dump | tail -n +15 | xargs -r rm -f
+          else
+            rm -f "$$f.part"; echo "backup FAILED" >&2
+          fi
+          sleep 86400
+        done
 
 networks:
   molecular-discovery-network:

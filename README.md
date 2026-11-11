@@ -35,18 +35,39 @@ QUOTE_ADMIN_EMAIL=you@example.com QUOTE_CF_TEAM_DOMAIN=your-team.cloudflareacces
 pytest                                       # needs soffice + pdftoppm for the layout test
 ```
 
-## Run in Docker (local test)
+## Run in Docker
 
 ```bash
-cp .env.example .env     # set QUOTE_ADMIN_EMAIL, QUOTE_CF_TEAM_DOMAIN and QUOTE_CF_AUD
+cp .env.example .env     # set QUOTE_ADMIN_EMAIL, QUOTE_CF_TEAM_DOMAIN, QUOTE_CF_AUD, QUOTE_DB_PASSWORD, QUOTE_DATA_HOST_DIR
 docker compose up -d --build
 # reached through the Cloudflare Tunnel; 127.0.0.1:8100 answers 401 to a browser (QUOTE_PORT in .env changes the port)
 ```
 
-The app listens on `127.0.0.1` only. Data is in the `quote-data` volume; a `backup`
-service writes a daily database copy to `/data/backups` (14 kept) — also copy that folder off the server. The first
-start applies migrations and loads `seed/products.csv` if there are no products. `docker compose down` keeps the data;
-`docker compose down -v` deletes it.
+The app listens on `127.0.0.1` only. The first start builds the schema, loads `seed/products.csv` if there are no products,
+and creates the first administrator if there are no users. `docker compose down` keeps all data.
+
+## Database
+
+The app uses **Postgres**: database `quotation`, owned by its own role `quotation`, inside the shared
+`molecular-discovery-postgres-1` container (reached over `molecular-discovery-network`; set by `DATABASE_URL`, which
+`docker-compose.yml` builds from `QUOTE_DB_*`). One-time setup of the role and database, as the Postgres superuser:
+
+```sql
+CREATE ROLE quotation LOGIN PASSWORD '<url-safe password>';
+CREATE DATABASE quotation OWNER quotation ENCODING 'UTF8';
+REVOKE ALL ON DATABASE quotation FROM PUBLIC;
+```
+
+* A new, empty Postgres database gets its schema straight from the models (the older migrations were written for SQLite)
+  and is marked as being at the latest migration; later migrations then apply as usual. SQLite still works for local runs
+  (leave `DATABASE_URL` unset).
+* `python scripts/sqlite_to_postgres.py <quotes.db>` copies an existing SQLite database into an empty Postgres one (refuses if the
+  target has rows, resets the id sequences, checks the row counts). Stop the app first.
+* The `backup` service runs `pg_dump` daily into `/data/backups/quotation-YYYYMMDD-HHMM.dump` and keeps the newest 14. Restore with
+  `pg_restore -d quotation --clean --if-exists <file>`. Copy the dumps off this machine too.
+* `/data` (uploaded files and the dumps) is a folder on the SSD, set by `QUOTE_DATA_HOST_DIR`, owned by uid 10001. If the SSD
+  is not mounted the containers refuse to start rather than write to the root disk.
+* Tests run on in-memory SQLite; set `QUOTE_TEST_DATABASE_URL` to an empty scratch Postgres to run them there.
 
 ## Putting it behind Cloudflare Access
 

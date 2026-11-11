@@ -7,6 +7,9 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_DIR = Path(os.environ.get("QUOTE_DATA_DIR", BASE_DIR / "data"))
 DATABASE_URL = os.environ.get("DATABASE_URL", f"sqlite:///{DATA_DIR / 'quotes.db'}")
+for _plain in ("postgresql://", "postgres://"):  # a plain Postgres URL means the psycopg 3 driver this app ships with
+    if DATABASE_URL.startswith(_plain):
+        DATABASE_URL = "postgresql+psycopg://" + DATABASE_URL.removeprefix(_plain)
 # Sign-in is done by Cloudflare Access; the app only checks the signed token it adds to every request.
 # CF_TEAM_DOMAIN: <team-name>.cloudflareaccess.com   CF_AUD: the Access application's "Application Audience (AUD) Tag".
 CF_TEAM_DOMAIN = os.environ.get("QUOTE_CF_TEAM_DOMAIN", "").strip().lower().removeprefix("https://").rstrip("/")

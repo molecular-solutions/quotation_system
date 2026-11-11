@@ -24,13 +24,22 @@ def cloudflare_keys(monkeypatch):
 
 @pytest.fixture()
 def db():
+    """In-memory SQLite by default; set QUOTE_TEST_DATABASE_URL (an empty scratch Postgres) to run the suite on that instead."""
     from sqlalchemy import create_engine
     from sqlalchemy.pool import StaticPool
-    engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
+    url = os.environ.get("QUOTE_TEST_DATABASE_URL")
+    if url:
+        engine = create_engine(url.replace("postgresql://", "postgresql+psycopg://", 1))
+        Base.metadata.drop_all(engine)
+    else:
+        engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool)
     Base.metadata.create_all(engine)
     s = sessionmaker(bind=engine, expire_on_commit=False)()
     yield s
     s.close()
+    if url:
+        Base.metadata.drop_all(engine)
+    engine.dispose()
 
 
 @pytest.fixture()

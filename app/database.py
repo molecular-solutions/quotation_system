@@ -13,7 +13,8 @@ class Base(DeclarativeBase):
 def make_engine(url: str = config.DATABASE_URL):
     if url.startswith("sqlite"):
         config.DATA_DIR.mkdir(parents=True, exist_ok=True)
-    engine = create_engine(url, connect_args={"check_same_thread": False} if url.startswith("sqlite") else {})
+    engine = create_engine(url, connect_args={"check_same_thread": False} if url.startswith("sqlite") else {},
+                           pool_pre_ping=True)  # reconnects after the database container restarts
     if url.startswith("sqlite"):
         @event.listens_for(engine, "connect")
         def _pragmas(conn, _):  # WAL = readers don't block the single writer
